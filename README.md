@@ -14,6 +14,20 @@ Once installed, it may be enabled in your Gruntfile with:
 grunt.loadTasks('node_modules/chronicles_of_grunt/tasks/');
 ```
 
+## Tasks
+
+### Versioning
+
+This task can be used to change the version of the current code base.
+The version numbers supported have format *x.y.z* for public release or
+*x.y.z-beta* for development release. The change is made to the `packages.json`
+file.
+#### Options
+##### file
+Type: `String`
+If the option is given, scane for VERSION and DEBUG variables from the given
+file and update them accordingly.
+
 ## License
 
 Copyright (c) 2015 Tommi Ronkainen  
@@ -21,4 +35,5 @@ Licensed under the GPL-2.0 license.
 
 ## Release History
 
-* 0.1.0 Bring 'versioning' tool from time2exercise.
+* 0.1.1 Make `versioning` option `file` optional.
+* 0.1.0 Bring `versioning` tool from time2exercise.
