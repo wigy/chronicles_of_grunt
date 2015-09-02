@@ -1,0 +1,3 @@
+
+[ ] A task 'libdiff' to take 'build' config and compare lib-files and
+    installed node-modules.
