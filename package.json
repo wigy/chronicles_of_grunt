@@ -1,0 +1,36 @@
+{
+  "name": "chronicles_of_grunt",
+  "description": "Wigy's collection of useful utilities for Grunt.",
+  "version": "0.1.0",
+  "homepage": "https://github.com/wigy/chronicles_of_grunt",
+  "author": {
+    "name": "Tommi Ronkainen",
+    "email": "tommi.ronkainen@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:wigy/chronicles_of_grunt.git"
+  },
+  "bugs": {
+    "url": "https://github.com/wigy/chronicles_of_grunt/issues"
+  },
+  "licenses": [
+    {
+      "type": "GPL-2.0",
+      "url": "https://github.com/wigy/chronicles_of_grunt/blob/master/LICENSE"
+    }
+  ],
+  "engines": {
+    "node": ">= 0.10.0"
+  },
+  "scripts": {
+    "test": "grunt nodeunit"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.5",
+    "grunt-contrib-jshint": "~0.6.4",
+    "grunt-contrib-nodeunit": "~0.2.0",
+    "grunt-contrib-watch": "~0.5.3"
+  },
+  "keywords": []
+}
