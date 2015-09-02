@@ -16,6 +16,11 @@ grunt.loadTasks('node_modules/chronicles_of_grunt/tasks/');
 
 ## Tasks
 
+### Usage
+
+This task is recommended default. It displays configured tasks that are
+available for developer.
+
 ### Versioning
 
 This task can be used to change the version of the current code base.
@@ -36,5 +41,6 @@ Licensed under the GPL-2.0 license.
 
 ## Release History
 
+* 0.2.0 Add new `usage` task.
 * 0.1.1 Make `versioning` option `file` optional.
 * 0.1.0 Bring `versioning` tool from time2exercise.
