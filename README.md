@@ -25,7 +25,8 @@ file.
 #### Options
 ##### file
 Type: `String`
-If the option is given, scane for VERSION and DEBUG variables from the given
+
+If the option is given, scan for VERSION and DEBUG variables from the given
 file and update them accordingly.
 
 ## License
