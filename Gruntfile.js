@@ -4,6 +4,7 @@ module.exports = function(grunt) {
 
   // Project configuration.
   grunt.initConfig({
+    usage: {options: {cog_development: true}},
     jshint: {
       tasks: {
         src: ['tasks/**/*.js']

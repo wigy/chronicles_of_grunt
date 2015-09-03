@@ -10,7 +10,14 @@ module.exports = function(grunt) {
 		// Exclude internally used tasks.
 		var excludes = ['default', 'usage', 'availabletasks'];
 
-		grunt.loadNpmTasks('grunt-available-tasks');
+		var options = this.options();
+
+		if (options.cog_development) {
+			grunt.loadNpmTasks('grunt-available-tasks');
+		} else {
+			grunt.loadTasks('node_modules/chronicles_of_grunt/node_modules/grunt-available-tasks/tasks/');
+		}
+
 		grunt.initConfig({availabletasks: {tasks: {options: {filter: 'exclude', tasks: excludes}}}});
 		grunt.task.run(['availabletasks']);
 	});
