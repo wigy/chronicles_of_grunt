@@ -26,11 +26,7 @@ module.exports = function(grunt) {
     };
 
     // Get the build configuration and set some variables.
-    var config = grunt.config.get('build');
-    if (!config) {
-        grunt.fail.fatal("Cannot find configuration for build.");
-    }
-
+    var config = grunt.config.get('build') || {};
     var work_dir = config.options.work_dir || '.';
 
     // Helper functions for file handling.
