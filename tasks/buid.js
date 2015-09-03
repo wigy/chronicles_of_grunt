@@ -11,7 +11,15 @@ module.exports = function(grunt) {
 
 	// Known library copy specifications.
 	var known = {
-		coa: {src: 'node_modules/chronicles_of_angular/lib/**', dst: 'lib/chronicles_of_angular', drop: 'node_modules/chronicles_of_angular/lib'},
+		lib: {
+			coa: {src: 'node_modules/chronicles_of_angular/lib/**', dst: 'lib/chronicles_of_angular', drop: 'node_modules/chronicles_of_angular/lib'},
+			jquery: {src: 'node_modules/jquery/dist/jquery.min.*', dst: 'lib', drop: 'node_modules/jquery/dist'},
+			bootstrap: {src: 'node_modules/bootstrap/dist/js/bootstrap.min.js', dst: 'lib', drop: 'node_modules/bootstrap/dist/js'},
+			angular: {src: 'node_modules/angular/angular.min.{js,js.map}', dst: 'lib', drop: 'node_modules/angular/'},
+		},
+		css: {
+			bootstrap: {src: 'node_modules/bootstrap/dist/css/bootstrap.min.css', dst: 'css', drop: 'node_modules/bootstrap/dist/css/'},
+		},
 	};
 
 	// Get the build configuration and set some variables.
@@ -27,19 +35,19 @@ module.exports = function(grunt) {
 	/**
      * Collect list of source file patterns and expand them to single files.
 	 */
-	function files(specs, default_dst) {
+	function files(specs, category) {
 		var ret = [];
 
 		if (specs) {
 			if (typeof(specs) == 'string') {
-				if (specs in known) {
-					ret = ret.concat(files(known[specs], default_dst));
+				if (specs in known[category]) {
+					ret = ret.concat(files(known[category][specs], category));
 				} else {
-					grunt.fail.fatal("Unknown file specification: " + specs);
+					grunt.fail.fatal("Unknown build file specification '" + specs +"' for '" + category + "'.");
 				}
 			} else if (specs instanceof Array) {
 				for (var i = 0; i < specs.length; i++) {
-					ret = ret.concat(files(specs[i], default_dst));
+					ret = ret.concat(files(specs[i], category));
 				}
 			} else if (typeof(specs) == 'object') {
 				// Here we expand pattens from 'src' and combine them with 'dst'.
@@ -56,7 +64,7 @@ module.exports = function(grunt) {
 					if (dst.substr(0, drop.length) === drop) {
 						dst = src[j].substr(drop.length);
 					}
-					file.dst = path.join(work_dir, specs.dst || default_dst, dst);
+					file.dst = path.join(work_dir, specs.dst || category, dst);
 					ret.push(file);
 				}
 			}
@@ -68,13 +76,25 @@ module.exports = function(grunt) {
 	var build = {
 
 		info: function() {
+
+			var matches;
+
 			grunt.log.ok("Build: info");
 			grunt.log.ok("");
 			grunt.log.ok("# External files:");
+			grunt.log.ok("");
+
 			grunt.log.ok("## Libraries:");
-			var libs = files(config.options.external.libs, 'lib');
-			for (var i = 0; i < libs.length; i++) {
-				grunt.log.ok(libs[i].src + ' -> ' + libs[i].dst);
+			matches = files(config.options.external.libs, 'lib');
+			for (var i = 0; i < matches.length; i++) {
+				grunt.log.ok(matches[i].src + ' -> ' + matches[i].dst);
+			}
+
+			grunt.log.ok("");
+			grunt.log.ok("## CSS-files:");
+			matches = files(config.options.external.css, 'css');
+			for (var i = 0; i < matches.length; i++) {
+				grunt.log.ok(matches[i].src + ' -> ' + matches[i].dst);
 			}
 		},
 
@@ -114,7 +134,7 @@ module.exports = function(grunt) {
 		grunt.log.ok("Build operations are:");
 		grunt.log.ok("");
 		grunt.log.ok("grunt build:info - display summary of the configured files and locations.");
-		grunt.log.ok("grunt build:libs - copy all required files from node-packages into the lib-directory.");
+		grunt.log.ok("grunt build:libs - copy all required files from node-packages into the work directory.");
 		grunt.log.ok("grunt build:index - scan all configured javascript and css files and update html-files using them.");
 		grunt.log.ok("grunt build:verify - run all verifications required for valid build.");
 		grunt.log.ok("grunt build:dist - collect and minify all application files into the dist-directory.");
