@@ -12,9 +12,9 @@ module.exports = function(grunt) {
             work_dir: "test/",
             build_dir: "test/dist",
             external: {
-                lib: [{src: 'node_modules/grunt-contrib-jshint/test/*.js'},
+                lib: [{src: 'node_modules/grunt-contrib-jshint/tasks/lib/*.js', dst: 'lib'},
                        {src: 'node_modules/grunt/lib/**/*.js', dst: 'lib/grunt-lib', drop: 'node_modules/grunt/lib'}],
-                css: [],
+                css: [{src: 'node_modules/grunt-contrib-watch/test/fixtures/**/*.css', dst: 'css'}],
                 font: [],
             },
             settings: [],

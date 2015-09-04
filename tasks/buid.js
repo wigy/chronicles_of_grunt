@@ -26,7 +26,7 @@ module.exports = function(grunt) {
     };
 
     // Get the build configuration and set some variables.
-    var config = grunt.config.get('build') || {};
+    var config = grunt.config.get('build') || {options: {}};
     var work_dir = config.options.work_dir || '.';
 
     // Helper functions for file handling.
@@ -53,7 +53,13 @@ module.exports = function(grunt) {
                 var j;
                 var src = grunt.file.expand(specs.src);
                 for (j=0; j < src.length; j++) {
-                    var drop = specs.drop || 'node_modules';
+                    var drop = specs.drop;
+					if (!drop) {
+						drop = specs.src;
+						while (drop.indexOf('*') >= 0) {
+							drop = path.dirname(drop);
+						}
+					}
                     var file = {};
                     file.src = src[j];
                     if (grunt.file.isDir(file.src)) {
@@ -85,12 +91,19 @@ module.exports = function(grunt) {
          return files(config.options.external.css, 'css');
      }
 
-     /**
-      * Find all external font files.
-      */
-      function extFontFiles() {
-          return files(config.options.external.css, 'font');
-      }
+    /**
+     * Find all external font files.
+     */
+    function extFontFiles() {
+		return files(config.options.external.font, 'font');
+    }
+
+	/**
+     * Find all external files.
+     */
+    function extFiles() {
+		return extLibFiles().concat(extCssFiles()).concat(extFontFiles());
+    }
 
     // Build functions.
     var build = {
@@ -120,6 +133,11 @@ module.exports = function(grunt) {
         libs: function() {
             grunt.log.ok("Build: libs");
             grunt.log.ok("");
+			var matches = extFiles();
+			for (var i = 0; i < matches.length; i++) {
+				grunt.log.ok(matches[i].src + ' -> ' + matches[i].dst);
+				grunt.file.copy(matches[i].src, matches[i].dst);
+			}
         },
 
         index: function() {
