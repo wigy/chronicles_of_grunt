@@ -92,11 +92,22 @@ module.exports = function(grunt) {
 
     /**
      * Scan file specs and remove duplicates.
+	 *
+	 * @param files {Array} List of resolved file specs.
+	 * @param duplicates {Array} Optional list of resolved file specs to consider duplicates.
      */
-    function removeDuplicates(files) {
+    function removeDuplicates(files, duplicates) {
+		var i;
         var ret = [];
         var found = {};
-        for (var i=0; i < files.length; i++) {
+
+		if (duplicates) {
+			for (i=0; i < duplicates.length; i++) {
+                found[duplicates[i].dst] = true;
+			}
+		}
+
+        for (i=0; i < files.length; i++) {
             if (!found[files[i].dst]) {
                 found[files[i].dst] = true;
                 ret.push(files[i]);
@@ -140,25 +151,25 @@ module.exports = function(grunt) {
         return files(config.options.src.config, 'config');
     }
 
+	/**
+     * Find all models.
+     */
+    function modelFiles() {
+		return removeDuplicates(files(config.options.src.models, 'models'), configFiles());
+    }
+
+	/**
+     * Find all models.
+     */
+    function dataFiles() {
+		return removeDuplicates(files(config.options.src.data, 'data'), configFiles().concat(modelFiles()));
+    }
+
     /**
      * Find all source code files (not models).
      */
     function codeFiles() {
-        return files(config.options.src.code, 'code');
-    }
-
-    /**
-     * Find all models.
-     */
-    function modelFiles() {
-        return files(config.options.src.models, 'models');
-    }
-
-    /**
-     * Find all models.
-     */
-    function dataFiles() {
-        return files(config.options.src.data, 'data');
+        return removeDuplicates(files(config.options.src.code, 'code'), configFiles().concat(modelFiles()).concat(dataFiles()));
     }
 
     /**
@@ -203,9 +214,6 @@ module.exports = function(grunt) {
         info: function() {
 
             grunt.log.ok("Build: info");
-            grunt.log.ok("");
-            grunt.log.ok("# External files:");
-
             dumpFiles('Libraries', extLibFiles);
             dumpFiles('CSS-files', extCssFiles);
             dumpFiles('Fonts', extFontFiles);
