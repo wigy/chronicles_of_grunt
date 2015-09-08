@@ -1,36 +1,27 @@
-'use strict';
-
 module.exports = function(grunt) {
 
   // Project configuration.
   grunt.initConfig({
-    usage: {
-        options: {cog_development: true}
-    },
     build: {
         options: {
+            cog_development: true,
             work_dir: "test/",
             build_dir: "test/dist",
             external: {
                 lib: [{src: 'node_modules/grunt-contrib-jshint/tasks/lib/*.js', dst: 'lib'},
                        {src: 'node_modules/grunt/lib/**/*.js', dst: 'lib/grunt-lib', drop: 'node_modules/grunt/lib'}],
                 css: [{src: 'node_modules/grunt-contrib-watch/test/fixtures/**/*.css', dst: 'css'}],
-                font: [],
+                fonts: [],
             },
-            settings: [],
-            models: [],
-            src: [],
+            src: {
+                config: ['Gruntfile.js'],
+                code: ['tasks/*.js'],
+                models: [],
+                data: [],
+            },
         }
     },
-    jshint: {
-      tasks: {
-        src: ['tasks/**/*.js']
-      },
-    },
   });
-
-  // These plugins provide necessary tasks.
-  grunt.loadNpmTasks('grunt-contrib-jshint');
 
   grunt.loadTasks('tasks/');
 
