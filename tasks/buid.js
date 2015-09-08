@@ -92,20 +92,20 @@ module.exports = function(grunt) {
 
     /**
      * Scan file specs and remove duplicates.
-	 *
-	 * @param files {Array} List of resolved file specs.
-	 * @param duplicates {Array} Optional list of resolved file specs to consider duplicates.
+     *
+     * @param files {Array} List of resolved file specs.
+     * @param duplicates {Array} Optional list of resolved file specs to consider duplicates.
      */
     function removeDuplicates(files, duplicates) {
-		var i;
+        var i;
         var ret = [];
         var found = {};
 
-		if (duplicates) {
-			for (i=0; i < duplicates.length; i++) {
+        if (duplicates) {
+            for (i=0; i < duplicates.length; i++) {
                 found[duplicates[i].dst] = true;
-			}
-		}
+            }
+        }
 
         for (i=0; i < files.length; i++) {
             if (!found[files[i].dst]) {
@@ -145,24 +145,31 @@ module.exports = function(grunt) {
     }
 
     /**
+     * Find all index files.
+     */
+    function indexFiles() {
+        return files(config.options.index, 'index');
+    }
+
+    /**
      * Find all configuration files.
      */
     function configFiles() {
         return files(config.options.src.config, 'config');
     }
 
-	/**
+    /**
      * Find all models.
      */
     function modelFiles() {
-		return removeDuplicates(files(config.options.src.models, 'models'), configFiles());
+        return removeDuplicates(files(config.options.src.models, 'models'), configFiles());
     }
 
-	/**
+    /**
      * Find all models.
      */
     function dataFiles() {
-		return removeDuplicates(files(config.options.src.data, 'data'), configFiles().concat(modelFiles()));
+        return removeDuplicates(files(config.options.src.data, 'data'), configFiles().concat(modelFiles()));
     }
 
     /**
@@ -191,7 +198,7 @@ module.exports = function(grunt) {
                 if (matches[i].src === matches[i].dst) {
                     grunt.log.ok(matches[i].dst);
                 } else {
-                    grunt.log.ok(matches[i].src + ' -> ' + matches[i].dst);
+                    grunt.log.ok(matches[i].dst + ' (from ' + matches[i].dst + ')');
                 }
             }
         }
@@ -214,9 +221,10 @@ module.exports = function(grunt) {
         info: function() {
 
             grunt.log.ok("Build: info");
-            dumpFiles('Libraries', extLibFiles);
-            dumpFiles('CSS-files', extCssFiles);
-            dumpFiles('Fonts', extFontFiles);
+            dumpFiles('External Libraries', extLibFiles);
+            dumpFiles('External CSS-files', extCssFiles);
+            dumpFiles('External Fonts', extFontFiles);
+            dumpFiles('Index files', indexFiles);
             dumpFiles('Configuration and utilities', configFiles);
             dumpFiles('Model files', modelFiles);
             dumpFiles('Data files', dataFiles);
