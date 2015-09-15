@@ -144,11 +144,25 @@ module.exports = function(grunt) {
         return removeDuplicates(extLibFiles().concat(extCssFiles()).concat(extFontFiles()));
     }
 
-    /**
-     * Find all index files.
+	/**
+     * Find application index files.
+     */
+    function appIndexFiles() {
+        return files(config.options.index.app, 'index');
+    }
+
+	/**
+     * Find test index files.
+     */
+    function testIndexFiles() {
+        return files(config.options.index.test, 'index');
+    }
+
+	/**
+     * Find test index files.
      */
     function indexFiles() {
-        return files(config.options.index, 'index');
+        return appIndexFiles().concat(testIndexFiles());
     }
 
     /**
