@@ -27,12 +27,6 @@ This task can be used to change the version of the current code base.
 The version numbers supported have format *x.y.z* for public release or
 *x.y.z-beta* for development release. The change is made to the `packages.json`
 file.
-#### Options
-##### file
-Type: `String`
-
-If the option is given, scan for VERSION and DEBUG variables from the given
-file and update them accordingly.
 
 ## License
 
