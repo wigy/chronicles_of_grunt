@@ -364,7 +364,7 @@ module.exports = function(grunt) {
         dist: function() {
             grunt.log.ok("Build: dist");
             grunt.log.ok("");
-
+/*
 			grunt.log.ok("Copying media files...");
 			grunt.log.ok("");
             var matches = distFilesUncompressed();
@@ -373,6 +373,14 @@ module.exports = function(grunt) {
                 grunt.log.ok(matches[i].dst + ' -> ' + dst);
                 grunt.file.copy(matches[i].dst, dst);
             }
+*/
+
+			grunt.log.ok("Compiling CSS...");
+			grunt.log.ok("");
+			var settings = {all: {files: {}}};
+			settings.all.files['dist/' + config.options.name + '.min.css'] = flatten(includeCssFiles());
+			grunt.config.set('cssmin', settings);
+			grunt.task.run('cssmin');
         },
 
         clean: function() {
@@ -383,7 +391,7 @@ module.exports = function(grunt) {
         verify: function() {
             grunt.log.ok("Build: verify");
             grunt.log.ok("");
-            var config = {
+            var settings = {
                 all: flatten(srcFiles()),
                 options: {
                     curly: true,
@@ -403,7 +411,7 @@ module.exports = function(grunt) {
                     }
                 },
             };
-            grunt.config.set('jshint', config);
+            grunt.config.set('jshint', settings);
             grunt.task.run('jshint');
         },
     };
