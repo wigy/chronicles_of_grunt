@@ -8,7 +8,7 @@ module.exports = function(grunt) {
 	grunt.registerTask('usage', 'Display grunt tasks meant for the developer.', function() {
 
 		// Exclude internally used tasks.
-		var excludes = ['default', 'usage', 'availabletasks', 'jshint'];
+		var excludes = ['default', 'usage', 'availabletasks', 'jshint', 'uglify', 'cssmin'];
 
 		var config = grunt.config.get('build') || {options: {}};
 

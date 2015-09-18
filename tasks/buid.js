@@ -12,9 +12,13 @@ module.exports = function(grunt) {
 
     // Load tasks.
     if (config.options.cog_development) {
-        grunt.loadNpmTasks('grunt-contrib-jshint');
+		grunt.loadNpmTasks('grunt-contrib-jshint');
+		grunt.loadNpmTasks('grunt-contrib-cssmin');
+		grunt.loadNpmTasks('grunt-contrib-uglify');
     } else {
-        grunt.loadTasks('node_modules/chronicles_of_grunt/node_modules/grunt-contrib-jshint/tasks/');
+		grunt.loadTasks('node_modules/chronicles_of_grunt/node_modules/grunt-contrib-jshint/tasks/');
+		grunt.loadTasks('node_modules/chronicles_of_grunt/node_modules/grunt-contrib-cssmin/tasks/');
+		grunt.loadTasks('node_modules/chronicles_of_grunt/node_modules/grunt-contrib-uglify/tasks/');
     }
 
     // Load Node-modules.
