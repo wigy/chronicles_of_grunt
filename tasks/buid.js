@@ -9,6 +9,7 @@ module.exports = function(grunt) {
     // Get the build configuration and set some variables.
     var config = grunt.config.get('build') || {options: {}};
     var work_dir = config.options.work_dir || '.';
+    var package = grunt.file.readJSON('package.json');
 
     // Load tasks.
     if (config.options.cog_development) {
@@ -379,7 +380,7 @@ module.exports = function(grunt) {
         dist: function() {
             grunt.log.ok("Build: dist");
             grunt.log.ok("");
-/*
+
 			grunt.log.ok("Copying media files...");
 			grunt.log.ok("");
             var matches = distFilesUncompressed();
@@ -395,15 +396,28 @@ module.exports = function(grunt) {
 			settings.all.files['dist/' + config.options.name + '.min.css'] = flatten(includeCssFiles());
 			grunt.config.set('cssmin', settings);
 			grunt.task.run('cssmin');
-			*/
 
 			grunt.log.ok("Collecting Javascript...");
 			grunt.log.ok("");
 			settings = {all: {}};
 			settings.all.src = flatten(includeJsFiles());
-			settings.all.dest = 'dist/' + config.options.name + '.min.js';
+			settings.all.dest = 'dist/' + config.options.name + '.js';
 			grunt.config.set('concat', settings);
 			grunt.task.run('concat');
+
+			grunt.log.ok("Compressing Javascript...");
+			grunt.log.ok("");
+			var banner = '';
+			banner += '/* ' + package.name + ' v' + package.version + '\n';
+			banner += ' * Copyright (c) ' + grunt.template.today("yyyy") + ' ' + package.author + '\n';
+			banner += ' */\n';
+			settings = {options: {banner: banner}, dist: {}};
+			settings.dist.src = 'dist/' + config.options.name + '.js';
+			settings.dist.dest = 'dist/' + config.options.name + '.min.js';
+			grunt.config.set('uglify', settings);
+			grunt.task.run('uglify');
+
+			// TODO: Index file
         },
 
         clean: function() {
