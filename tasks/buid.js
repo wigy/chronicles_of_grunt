@@ -15,10 +15,12 @@ module.exports = function(grunt) {
 		grunt.loadNpmTasks('grunt-contrib-jshint');
 		grunt.loadNpmTasks('grunt-contrib-cssmin');
 		grunt.loadNpmTasks('grunt-contrib-uglify');
+		grunt.loadNpmTasks('grunt-contrib-concat');
     } else {
 		grunt.loadTasks('node_modules/chronicles_of_grunt/node_modules/grunt-contrib-jshint/tasks/');
 		grunt.loadTasks('node_modules/chronicles_of_grunt/node_modules/grunt-contrib-cssmin/tasks/');
 		grunt.loadTasks('node_modules/chronicles_of_grunt/node_modules/grunt-contrib-uglify/tasks/');
+		grunt.loadTasks('node_modules/chronicles_of_grunt/node_modules/grunt-contrib-concat/tasks/');
     }
 
     // Load Node-modules.
@@ -229,7 +231,7 @@ module.exports = function(grunt) {
      * Find all code files needed to include in HTML index.
      */
     function includeJsFiles() {
-        return extLibFiles().concat(srcFiles());
+        return excludeFiles(extLibFiles(), /\.map$/).concat(srcFiles());
     }
 
     /**
@@ -244,7 +246,7 @@ module.exports = function(grunt) {
      */
     function distFilesUncompressed() {
         return extFontFiles().concat(picFiles()).concat(soundFiles());
-}
+	}
 
     /**
      * List files returned by the given listing function on screen.
@@ -263,6 +265,19 @@ module.exports = function(grunt) {
             }
         }
     }
+
+	/**
+	 * Remove specs whose destination matches to the given regex pattern.
+	 */
+	function excludeFiles(list, regex) {
+		var ret = [];
+		for (var i=0; i < list.length; i++) {
+			if (!regex.test(list[i].dst)) {
+				ret.push(list[i]);
+			}
+		}
+		return ret;
+	}
 
     /**
      * Collect destination files from file spec list.
@@ -373,14 +388,22 @@ module.exports = function(grunt) {
                 grunt.log.ok(matches[i].dst + ' -> ' + dst);
                 grunt.file.copy(matches[i].dst, dst);
             }
-*/
 
-			grunt.log.ok("Compiling CSS...");
+			grunt.log.ok("Compressing CSS...");
 			grunt.log.ok("");
 			var settings = {all: {files: {}}};
 			settings.all.files['dist/' + config.options.name + '.min.css'] = flatten(includeCssFiles());
 			grunt.config.set('cssmin', settings);
 			grunt.task.run('cssmin');
+			*/
+
+			grunt.log.ok("Collecting Javascript...");
+			grunt.log.ok("");
+			settings = {all: {}};
+			settings.all.src = flatten(includeJsFiles());
+			settings.all.dest = 'dist/' + config.options.name + '.min.js';
+			grunt.config.set('concat', settings);
+			grunt.task.run('concat');
         },
 
         clean: function() {
