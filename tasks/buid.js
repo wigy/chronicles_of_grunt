@@ -207,6 +207,20 @@ module.exports = function(grunt) {
         return removeDuplicates(files(config.options.src.css, 'css'), extCssFiles());
     }
 
+	/**
+     * Find all graphics files.
+     */
+    function picFiles() {
+        return files(config.options.src.pics, 'pics');
+    }
+
+	/**
+     * Find all audio files.
+     */
+    function soundFiles() {
+        return files(config.options.src.sounds, 'sounds');
+    }
+
     /**
      * Find all code files needed to include in HTML index.
      */
@@ -225,7 +239,7 @@ module.exports = function(grunt) {
      * List of files that goes to the actual distribution unmodified.
      */
     function distFilesUncompressed() {
-        return extFontFiles();
+        return extFontFiles().concat(picFiles()).concat(soundFiles());
 }
 
     /**
@@ -347,6 +361,8 @@ module.exports = function(grunt) {
             grunt.log.ok("Build: dist");
             grunt.log.ok("");
 
+			grunt.log.ok("Copying media files...");
+			grunt.log.ok("");
             var matches = distFilesUncompressed();
             for (var i = 0; i < matches.length; i++) {
                 var dst = path.join('dist', matches[i].dst);
