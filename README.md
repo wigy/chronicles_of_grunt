@@ -35,8 +35,9 @@ Licensed under the GPL-2.0 license.
 
 ## Release History
 
+* 0.5.0 Add `build:dist` task.
 * 0.4.0 Add `build:index` task.
-* 0.3.0 Add `build:info` amd `build:verify` tasks.
+* 0.3.0 Add `build:info` and `build:verify` tasks.
 * 0.2.0 Add new `usage` task.
 * 0.1.1 Make `versioning` option `file` optional.
 * 0.1.0 Bring `versioning` tool from time2exercise.

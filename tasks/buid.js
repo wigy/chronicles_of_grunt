@@ -13,15 +13,15 @@ module.exports = function(grunt) {
 
     // Load tasks.
     if (config.options.cog_development) {
-		grunt.loadNpmTasks('grunt-contrib-jshint');
-		grunt.loadNpmTasks('grunt-contrib-cssmin');
-		grunt.loadNpmTasks('grunt-contrib-uglify');
-		grunt.loadNpmTasks('grunt-contrib-concat');
+        grunt.loadNpmTasks('grunt-contrib-jshint');
+        grunt.loadNpmTasks('grunt-contrib-cssmin');
+        grunt.loadNpmTasks('grunt-contrib-uglify');
+        grunt.loadNpmTasks('grunt-contrib-concat');
     } else {
-		grunt.loadTasks('node_modules/chronicles_of_grunt/node_modules/grunt-contrib-jshint/tasks/');
-		grunt.loadTasks('node_modules/chronicles_of_grunt/node_modules/grunt-contrib-cssmin/tasks/');
-		grunt.loadTasks('node_modules/chronicles_of_grunt/node_modules/grunt-contrib-uglify/tasks/');
-		grunt.loadTasks('node_modules/chronicles_of_grunt/node_modules/grunt-contrib-concat/tasks/');
+        grunt.loadTasks('node_modules/chronicles_of_grunt/node_modules/grunt-contrib-jshint/tasks/');
+        grunt.loadTasks('node_modules/chronicles_of_grunt/node_modules/grunt-contrib-cssmin/tasks/');
+        grunt.loadTasks('node_modules/chronicles_of_grunt/node_modules/grunt-contrib-uglify/tasks/');
+        grunt.loadTasks('node_modules/chronicles_of_grunt/node_modules/grunt-contrib-concat/tasks/');
     }
 
     // Load Node-modules.
@@ -214,14 +214,14 @@ module.exports = function(grunt) {
         return removeDuplicates(files(config.options.src.css, 'css'), extCssFiles());
     }
 
-	/**
+    /**
      * Find all graphics files.
      */
     function picFiles() {
         return files(config.options.src.pics, 'pics');
     }
 
-	/**
+    /**
      * Find all audio files.
      */
     function soundFiles() {
@@ -247,7 +247,7 @@ module.exports = function(grunt) {
      */
     function distFilesUncompressed() {
         return extFontFiles().concat(picFiles()).concat(soundFiles());
-	}
+    }
 
     /**
      * List files returned by the given listing function on screen.
@@ -267,18 +267,18 @@ module.exports = function(grunt) {
         }
     }
 
-	/**
-	 * Remove specs whose destination matches to the given regex pattern.
-	 */
-	function excludeFiles(list, regex) {
-		var ret = [];
-		for (var i=0; i < list.length; i++) {
-			if (!regex.test(list[i].dst)) {
-				ret.push(list[i]);
-			}
-		}
-		return ret;
-	}
+    /**
+     * Remove specs whose destination matches to the given regex pattern.
+     */
+    function excludeFiles(list, regex) {
+        var ret = [];
+        for (var i=0; i < list.length; i++) {
+            if (!regex.test(list[i].dst)) {
+                ret.push(list[i]);
+            }
+        }
+        return ret;
+    }
 
     /**
      * Collect destination files from file spec list.
@@ -289,6 +289,62 @@ module.exports = function(grunt) {
             ret.push(files[i].dst);
         }
         return ret;
+    }
+
+    /**
+     * Refresh HTML-file to use the given Javascript and CSS files.
+     *
+     * @param dst {string} Target path to the HTML-file.
+     * @param jsFiles {Array} New list of Javascript-files to include.
+     * @param cssFiles {Array} New list of CSS-files to include.
+     */
+    function buildIndex(dst, jsFiles, cssFiles) {
+
+        var i;
+
+        // Construct javascript includes.
+        var js = "";
+        for (i=0; i < jsFiles.length; i++) {
+            if (/\.map$/.test(jsFiles[i])) {
+                // TODO: This should be part of file spec.
+                continue;
+            }
+            js += '    <script src="' + jsFiles[i] + '"></script>\n';
+        }
+
+        // Construct CSS includes.
+        var css = "";
+        for (i=0; i < cssFiles.length; i++) {
+            css += '    <link rel="stylesheet" href="' + cssFiles[i] + '">\n';
+        }
+
+        // Insert inclusions to the index filr.
+        var content = "";
+        var file = grunt.file.read(dst).trim();
+        var lines = file.split("\n");
+        var added = false;
+        for (j=0; j < lines.length; j++) {
+            if (/^\s*<script src=".*"><\/script>$/.test(lines[j])) {
+                // Drop javascript source file.
+                continue;
+            } else if (/^\s*<link rel="stylesheet" href=".*">$/.test(lines[j])) {
+                // Drop CSS file.
+                continue;
+            } else if (/^\s*<\/head>\s*$/.test(lines[j])) {
+                // Add the latest file lists.
+                added = true;
+                content += js;
+                content += css;
+                content += "  </head>\n";
+                continue;
+            } else {
+                content += lines[j] + "\n";
+            }
+        }
+        if (!added) {
+            grunt.fail.fatal("Cannot find </head> from index file: " + dst);
+        }
+        grunt.file.write(dst, content);
     }
 
     // Build functions.
@@ -319,105 +375,75 @@ module.exports = function(grunt) {
         },
 
         index: function() {
-            var i,j;
 
             grunt.log.ok("Build: index");
             grunt.log.ok("");
 
-            // Construct javascript includes.
-            var js = "";
             var jsFiles = flatten(includeJsFiles());
-            for (i=0; i < jsFiles.length; i++) {
-                if (/\.map$/.test(jsFiles[i])) {
-                    // TODO: This should be part of file spec.
-                    continue;
-                }
-                js += '    <script src="' + jsFiles[i] + '"></script>\n';
-            }
-
-            // Construct CSS includes.
-            var css = "";
+            grunt.log.ok('- Found ' + jsFiles.length + " Javascript-files.");
             var cssFiles = flatten(includeCssFiles());
-            for (i=0; i < cssFiles.length; i++) {
-                css += '    <link rel="stylesheet" href="' + cssFiles[i] + '">\n';
-            }
+            grunt.log.ok('- Found ' + cssFiles.length + " CSS-files.");
 
-            // Insert files to all index files.
             var indices = flatten(indexFiles());
-            for (i=0; i < indices.length; i++) {
+            for (var i=0; i < indices.length; i++) {
                 grunt.log.ok('Updating ' + indices[i]);
-                var content = "";
-                var file = grunt.file.read(indices[i]).trim();
-                var lines = file.split("\n");
-                var added = false;
-                for (j=0; j < lines.length; j++) {
-                    if (/^\s*<script src=".*"><\/script>$/.test(lines[j])) {
-                        // Drop javascript source file.
-                        continue;
-                    } else if (/^\s*<link rel="stylesheet" href=".*">$/.test(lines[j])) {
-                        // Drop CSS file.
-                        continue;
-                    } else if (/^\s*<\/head>\s*$/.test(lines[j])) {
-                        // Add the latest file lists.
-                        added = true;
-                        content += js;
-                        content += css;
-                        grunt.log.ok('- Found ' + jsFiles.length + " Javascript-files.");
-                        grunt.log.ok('- Found ' + cssFiles.length + " CSS-files.");
-                        content += "  </head>\n";
-                        continue;
-                    } else {
-                        content += lines[j] + "\n";
-                    }
-                }
-                if (!added) {
-                    grunt.fail.fatal("Cannot find </head> from index file: " + indices[i]);
-                }
-                grunt.file.write(indices[i], content);
+                buildIndex(indices[i], jsFiles, cssFiles);
             }
         },
 
         dist: function() {
+
+            var i, dst;
+
             grunt.log.ok("Build: dist");
             grunt.log.ok("");
 
-			grunt.log.ok("Copying media files...");
-			grunt.log.ok("");
+            grunt.log.ok("Copying media files...");
+            grunt.log.ok("");
             var matches = distFilesUncompressed();
-            for (var i = 0; i < matches.length; i++) {
-                var dst = path.join('dist', matches[i].dst);
+            for (i = 0; i < matches.length; i++) {
+                dst = path.join('dist', matches[i].dst);
                 grunt.log.ok(matches[i].dst + ' -> ' + dst);
                 grunt.file.copy(matches[i].dst, dst);
             }
 
-			grunt.log.ok("Compressing CSS...");
-			grunt.log.ok("");
-			var settings = {all: {files: {}}};
-			settings.all.files['dist/' + config.options.name + '.min.css'] = flatten(includeCssFiles());
-			grunt.config.set('cssmin', settings);
-			grunt.task.run('cssmin');
+            grunt.log.ok("Compressing CSS...");
+            grunt.log.ok("");
+            var settings = {all: {files: {}}};
+            settings.all.files['dist/' + config.options.name + '.min.css'] = flatten(includeCssFiles());
+            grunt.config.set('cssmin', settings);
+            grunt.task.run('cssmin');
 
-			grunt.log.ok("Collecting Javascript...");
-			grunt.log.ok("");
-			settings = {all: {}};
-			settings.all.src = flatten(includeJsFiles());
-			settings.all.dest = 'dist/' + config.options.name + '.js';
-			grunt.config.set('concat', settings);
-			grunt.task.run('concat');
+            grunt.log.ok("Collecting Javascript...");
+            grunt.log.ok("");
+            settings = {all: {}};
+            settings.all.src = flatten(includeJsFiles());
+            settings.all.dest = 'dist/' + config.options.name + '.js';
+            grunt.config.set('concat', settings);
+            grunt.task.run('concat');
 
-			grunt.log.ok("Compressing Javascript...");
-			grunt.log.ok("");
-			var banner = '';
-			banner += '/* ' + package.name + ' v' + package.version + '\n';
-			banner += ' * Copyright (c) ' + grunt.template.today("yyyy") + ' ' + package.author + '\n';
-			banner += ' */\n';
-			settings = {options: {banner: banner}, dist: {}};
-			settings.dist.src = 'dist/' + config.options.name + '.js';
-			settings.dist.dest = 'dist/' + config.options.name + '.min.js';
-			grunt.config.set('uglify', settings);
-			grunt.task.run('uglify');
+            grunt.log.ok("Compressing Javascript...");
+            grunt.log.ok("");
+            var banner = '';
+            banner += '/* ' + package.name + ' v' + package.version + '\n';
+            banner += ' * Copyright (c) ' + grunt.template.today("yyyy") + ' ' + package.author + '\n';
+            banner += ' */\n';
 
-			// TODO: Index file
+            settings = {options: {banner: banner}, dist: {}};
+            settings.dist.src = 'dist/' + config.options.name + '.js';
+            settings.dist.dest = 'dist/' + config.options.name + '.min.js';
+            grunt.config.set('uglify', settings);
+            grunt.task.run('uglify');
+
+            // Build index file(s).
+            grunt.log.ok("Building index...");
+            var indices = flatten(appIndexFiles());
+            for (i = 0; i < indices.length; i++) {
+                dst = 'dist/' + indices[i];
+                grunt.log.ok(indices[i] + ' -> ' + dst);
+                grunt.file.copy(indices[i], dst);
+                buildIndex(dst, [config.options.name + '.min.js'], [config.options.name + '.min.css']);
+            }
         },
 
         clean: function() {
