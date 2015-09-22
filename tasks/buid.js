@@ -17,11 +17,13 @@ module.exports = function(grunt) {
         grunt.loadNpmTasks('grunt-contrib-cssmin');
         grunt.loadNpmTasks('grunt-contrib-uglify');
         grunt.loadNpmTasks('grunt-contrib-concat');
+        grunt.loadNpmTasks('grunt-available-tasks');
     } else {
         grunt.loadTasks('node_modules/chronicles_of_grunt/node_modules/grunt-contrib-jshint/tasks/');
         grunt.loadTasks('node_modules/chronicles_of_grunt/node_modules/grunt-contrib-cssmin/tasks/');
         grunt.loadTasks('node_modules/chronicles_of_grunt/node_modules/grunt-contrib-uglify/tasks/');
         grunt.loadTasks('node_modules/chronicles_of_grunt/node_modules/grunt-contrib-concat/tasks/');
+        grunt.loadTasks('node_modules/chronicles_of_grunt/node_modules/grunt-available-tasks/tasks/');
     }
 
     // Load Node-modules.
@@ -477,23 +479,60 @@ module.exports = function(grunt) {
             grunt.config.set('jshint', settings);
             grunt.task.run('jshint');
         },
+
+        version: function(version) {
+            if (arguments.length === 0) {
+                grunt.log.ok("");
+                grunt.log.ok("Current version is", package.version);
+                grunt.log.ok("");
+                grunt.log.ok("You can make official release by giving new version number like 'x.y.z' or");
+                grunt.log.ok("you can start next release candidate by add postfix 'x.y.z-beta'.");
+                grunt.log.ok("To set new version, you run command: 'grunt version:x.y.z'");
+            } else {
+                if (!version.match(/^\d+\.\d+\.\d+(-beta)?$/)) {
+                    grunt.fail.fatal("Invalid version '" + version + "'.");
+                }
+                if (!(config.options.src && config.options.src.config)) {
+                    grunt.fail.fatal("Cannot find configured 'build.options.src.config' variable.");
+                }
+
+                // Update package.
+                var debugMode = (version.substr(version.length-4) === 'beta');
+                package.version = version;
+                grunt.file.write('package.json', JSON.stringify(package, null, 2));
+                grunt.log.ok("Set version", package.version, "to package.json.");
+
+                // Update other files.
+                var files = flatten(configFiles());
+                for (var i=0; i<files.length; i++) {
+                    var file = files[i];
+                    var newSettings, settings = grunt.file.read(file);
+                    newSettings = settings.replace(/^VERSION\s*=\s*'.*'/gm, "VERSION = '" + package.version + "'");
+                    if (newSettings !== settings) {
+                        grunt.log.ok("Updated version", package.version, "to", file);
+                        settings = newSettings;
+                    }
+                    newSettings = settings.replace(/^DEBUG\s*=\s[^;]*/gm, "DEBUG = " + debugMode.toString());
+                    if (newSettings !== settings) {
+                        grunt.log.ok("Set the debug mode to", debugMode, "in", file);
+                    }
+                    grunt.file.write(file, newSettings);
+                }
+            }
+        },
     };
 
-    grunt.registerTask('build', 'Handle all steps for standalone application Javascript development.', function(op) {
+    grunt.registerTask('info', 'Display summary of the configured files and locations.', build.info);
+    grunt.registerTask('libs', 'Scan all configured javascript and css files and update html-files using them.', build.libs);
+    grunt.registerTask('index', 'Scan all configured javascript and css files and update html-files using them.', build.index);
+    grunt.registerTask('verify', 'Run all verifications required for valid build.', build.verify);
+    grunt.registerTask('dist', 'Collect and minify all application files into the dist-directory.', build.dist);
+    grunt.registerTask('clean', 'Cleanup all build artifacts.', build.clean);
+    grunt.registerTask('version', 'Query and mark the version to the source files.', build.version);
 
-        if (op in build) {
-            return build[op]();
-        }
-
-        grunt.log.ok("");
-        grunt.log.ok("Build operations are:");
-        grunt.log.ok("");
-        grunt.log.ok("grunt build:info - display summary of the configured files and locations.");
-        grunt.log.ok("grunt build:libs - copy all required files from node-packages into the work directory.");
-        grunt.log.ok("grunt build:index - scan all configured javascript and css files and update html-files using them.");
-        grunt.log.ok("grunt build:verify - run all verifications required for valid build.");
-        grunt.log.ok("grunt build:dist - collect and minify all application files into the dist-directory.");
-        grunt.log.ok("grunt build:clean - cleanup all build artifacts.");
-        grunt.log.ok("");
+    grunt.registerTask('usage', 'Handle all steps for standalone application Javascript development.', function(op) {
+        var excludes = ['default', 'usage', 'availabletasks', 'jshint', 'uglify', 'cssmin', 'concat'];
+        grunt.initConfig({availabletasks: {tasks: {options: {filter: 'exclude', tasks: excludes}}}});
+        grunt.task.run(['availabletasks']);
     });
 };

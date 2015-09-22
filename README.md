@@ -35,6 +35,8 @@ Licensed under the GPL-2.0 license.
 
 ## Release History
 
+* 0.6.0 Rename tasks to be used without prefix and move all tasks to
+        the same file.
 * 0.5.0 Add `build:dist` task.
 * 0.4.0 Add `build:index` task.
 * 0.3.0 Add `build:info` and `build:verify` tasks.
