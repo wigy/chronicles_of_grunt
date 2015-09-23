@@ -1,6 +1,10 @@
 # Wigy's Chronicles of Grunt
 
-Wigy's collection of useful utilities for Grunt.
+Wigy's collection of useful utilities for Grunt. The focus of these utilities
+is to provide easy way to develop complete web-applications, that can be build
+as an install packages. The development itself happens directly in the browser,
+which loads entry point HTML-file of the application and works out of the box.
+To achieve this, certain conventions needs to be followed.
 
 ## Getting Started
 
@@ -14,19 +18,115 @@ Once installed, it may be enabled in your Gruntfile with:
 grunt.loadTasks('node_modules/chronicles_of_grunt/tasks/');
 ```
 
+## Configuration
+
+The recommended default task displays available commands:
+```js
+grunt.registerTask('default', ['usage']);
+```
+
+The configuration has few settings and definitions for every source file. Each
+source file specification can be:
+
+* A file glob pattern as a string.
+* Predefined label for known library as a string.
+* An array of other specifications.
+
+For example, here is a full configuration:
+```js
+build: {
+	options: {
+		name: "time2exercise",
+		external: {
+			lib: ['angular', 'jquery', 'bootstrap', 'coa'],
+			css: ['bootstrap'],
+			fonts: ['bootstrap'],
+		},
+		src: {
+			config: ['src/settings.js', 'src/utils.js'],
+			models: ['src/models/**/*.js'],
+			data: ['data/**/*.js'],
+			code: ['src/**/*.js'],
+			pics: ['pics/**/*png'],
+			sounds: ['sounds/**/*.mp3'],
+			css: ['css/*.css'],
+		},
+		index: {
+			app: 'index.html',
+			test: 'test.html',
+		},
+	}
+}
+```
+
+### `name`
+This is a code name of the project consisting of alphanumeric characters.
+
+### `external.lib`, `external.css`, `external.fonts`
+These defines external libraries in use. First one is for (minimized) code files,
+the second (minimized) CSS-files and the last one is for fonts. The following
+predefined constants are supported:
+* `angular` --- AngularJS
+* `jquery` --- jQuery
+* `bootstrap` --- Bootstrap
+* `coa` --- Wigy's Chronicles of Angular
+
+### `src.config`
+Configuration and other source code files that has to be included first.
+
+### `src.models`
+Data model source code files that are included second.
+
+### `src.data`
+Data files to be included after models.
+
+### `src.code`
+The rest of the source code files.
+
+### `src.css`
+CSS files of the application.
+
+### `src.pics`, `src.sounds`
+Media files needed by the application.
+
+### `index.app`, `index.test`
+Starting files for the application and for testing.
+
 ## Tasks
 
-### Usage
+### Task: `usage`
 
 This task is recommended default. It displays configured tasks that are
 available for developer.
 
-### Versioning
+### Task: `info`
+
+List summary of all existing application files according to the configuration.
+
+### Task: `libs`
+
+After all requirements are installed with `npm install --save`, this task can be used
+to copy all needed files from `node_modules` to the `lib` directory of the project root.
+
+### Task: `index`
+
+Based on the configuration, this builds a list of CSS and Javascript files and
+updates configured index-files to include all requirements.
+
+### Task: `verify`
+
+Run syntax checker for project files.
+
+### Task: `dist`
+
+Build functional minimized application into `dist` directory.
+
+### Task: `version`:*version*
 
 This task can be used to change the version of the current code base.
 The version numbers supported have format *x.y.z* for public release or
 *x.y.z-beta* for development release. The change is made to the `packages.json`
-file.
+file. If *version* is not given, then the current version is given.
 
 ## License
 
@@ -35,6 +135,7 @@ Licensed under the GPL-2.0 license.
 
 ## Release History
 
+* 1.0.0 Documentation and clean up.
 * 0.6.0 Rename tasks to be used without prefix and move all tasks to
         the same file.
 * 0.5.0 Add `build:dist` task.
@@ -43,3 +144,8 @@ Licensed under the GPL-2.0 license.
 * 0.2.0 Add new `usage` task.
 * 0.1.1 Make `versioning` option `file` optional.
 * 0.1.0 Bring `versioning` tool from time2exercise.
+
+## Future Plans
+
+* Task `version` could prepare *Release History* section and ask content for it.
+* Use `grunt-contrib-csslint` to check syntax for CSS.

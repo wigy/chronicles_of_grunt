@@ -1,7 +1,20 @@
 /*
+ * Chronicles of Grunt
  * (C) 2015 Tommi Ronkainen
  *
- * Licenced under GPL-2.
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
 module.exports = function(grunt) {
@@ -46,6 +59,25 @@ module.exports = function(grunt) {
     };
 
     // Helper functions for file handling.
+
+	/**
+	 * Safe fetch of configuration variable.
+	 */
+	function getConfig(name) {
+		var ret = config.options;
+		if (!name) {
+			return ret;
+		}
+		var parts = name.split('.');
+		for (var i=0; i < parts.length; i++) {
+			if (!ret) {
+				return null;
+			}
+			ret = ret[parts[i]];
+		}
+
+		return ret;
+	}
 
     /**
      * Collect list of source file patterns and expand them to single files.
@@ -129,21 +161,21 @@ module.exports = function(grunt) {
      * Find all external library code files.
      */
     function extLibFiles() {
-        return files(config.options.external.lib, 'lib');
+        return files(getConfig('external.lib'), 'lib');
     }
 
     /**
      * Find all exyternal CSS files.
      */
      function extCssFiles() {
-         return files(config.options.external.css, 'css');
+         return files(getConfig('external.css'), 'css');
      }
 
     /**
      * Find all external font files.
      */
     function extFontFiles() {
-        return files(config.options.external.fonts, 'fonts');
+        return files(getConfig('external.fonts'), 'fonts');
     }
 
     /**
@@ -157,14 +189,14 @@ module.exports = function(grunt) {
      * Find application index files.
      */
     function appIndexFiles() {
-        return files(config.options.index.app, 'index');
+        return files(getConfig('index.app'), 'index');
     }
 
     /**
      * Find test index files.
      */
     function testIndexFiles() {
-        return files(config.options.index.test, 'index');
+        return files(getConfig('index.test'), 'index');
     }
 
     /**
@@ -178,28 +210,28 @@ module.exports = function(grunt) {
      * Find all configuration files.
      */
     function configFiles() {
-        return files(config.options.src.config, 'config');
+        return files(getConfig('src.config'), 'config');
     }
 
     /**
      * Find all models.
      */
     function modelFiles() {
-        return removeDuplicates(files(config.options.src.models, 'models'), configFiles());
+        return removeDuplicates(files(getConfig('src.models'), 'models'), configFiles());
     }
 
     /**
      * Find all data files (not models).
      */
     function dataFiles() {
-        return removeDuplicates(files(config.options.src.data, 'data'), configFiles().concat(modelFiles()));
+        return removeDuplicates(files(getConfig('src.data'), 'data'), configFiles().concat(modelFiles()));
     }
 
     /**
      * Find all source code files (not data nor models).
      */
     function codeFiles() {
-        return removeDuplicates(files(config.options.src.code, 'code'), configFiles().concat(modelFiles()).concat(dataFiles()));
+        return removeDuplicates(files(getConfig('src.code'), 'code'), configFiles().concat(modelFiles()).concat(dataFiles()));
     }
 
     /**
@@ -213,21 +245,21 @@ module.exports = function(grunt) {
      * Find all CSS files.
      */
     function cssFiles() {
-        return removeDuplicates(files(config.options.src.css, 'css'), extCssFiles());
+        return removeDuplicates(files(getConfig('src.css'), 'css'), extCssFiles());
     }
 
     /**
      * Find all graphics files.
      */
     function picFiles() {
-        return files(config.options.src.pics, 'pics');
+        return files(getConfig('src.pics'), 'pics');
     }
 
     /**
      * Find all audio files.
      */
     function soundFiles() {
-        return files(config.options.src.sounds, 'sounds');
+        return files(getConfig('src.sounds'), 'sounds');
     }
 
     /**
@@ -354,7 +386,8 @@ module.exports = function(grunt) {
 
         info: function() {
 
-            grunt.log.ok("Build: info");
+			grunt.log.ok("Build: info");
+			grunt.log.ok("Project: " + getConfig('name'));
             dumpFiles('External Libraries', extLibFiles);
             dumpFiles('External CSS-files', extCssFiles);
             dumpFiles('External Fonts', extFontFiles);
@@ -412,7 +445,7 @@ module.exports = function(grunt) {
             grunt.log.ok("Compressing CSS...");
             grunt.log.ok("");
             var settings = {all: {files: {}}};
-            settings.all.files['dist/' + config.options.name + '.min.css'] = flatten(includeCssFiles());
+            settings.all.files['dist/' + getConfig('name') + '.min.css'] = flatten(includeCssFiles());
             grunt.config.set('cssmin', settings);
             grunt.task.run('cssmin');
 
@@ -420,7 +453,7 @@ module.exports = function(grunt) {
             grunt.log.ok("");
             settings = {all: {}};
             settings.all.src = flatten(includeJsFiles());
-            settings.all.dest = 'dist/' + config.options.name + '.js';
+            settings.all.dest = 'dist/' + getConfig('name') + '.js';
             grunt.config.set('concat', settings);
             grunt.task.run('concat');
 
@@ -432,8 +465,8 @@ module.exports = function(grunt) {
             banner += ' */\n';
 
             settings = {options: {banner: banner}, dist: {}};
-            settings.dist.src = 'dist/' + config.options.name + '.js';
-            settings.dist.dest = 'dist/' + config.options.name + '.min.js';
+            settings.dist.src = 'dist/' + getConfig('name') + '.js';
+            settings.dist.dest = 'dist/' + getConfig('name') + '.min.js';
             grunt.config.set('uglify', settings);
             grunt.task.run('uglify');
 
@@ -444,13 +477,8 @@ module.exports = function(grunt) {
                 dst = 'dist/' + indices[i];
                 grunt.log.ok(indices[i] + ' -> ' + dst);
                 grunt.file.copy(indices[i], dst);
-                buildIndex(dst, [config.options.name + '.min.js'], [config.options.name + '.min.css']);
+                buildIndex(dst, [getConfig('name') + '.min.js'], [getConfig('name') + '.min.css']);
             }
-        },
-
-        clean: function() {
-            grunt.log.ok("Build: clean");
-            grunt.log.ok("");
         },
 
         verify: function() {
@@ -492,10 +520,6 @@ module.exports = function(grunt) {
                 if (!version.match(/^\d+\.\d+\.\d+(-beta)?$/)) {
                     grunt.fail.fatal("Invalid version '" + version + "'.");
                 }
-                if (!(config.options.src && config.options.src.config)) {
-                    grunt.fail.fatal("Cannot find configured 'build.options.src.config' variable.");
-                }
-
                 // Update package.
                 var debugMode = (version.substr(version.length-4) === 'beta');
                 package.version = version;
@@ -527,7 +551,6 @@ module.exports = function(grunt) {
     grunt.registerTask('index', 'Scan all configured javascript and css files and update html-files using them.', build.index);
     grunt.registerTask('verify', 'Run all verifications required for valid build.', build.verify);
     grunt.registerTask('dist', 'Collect and minify all application files into the dist-directory.', build.dist);
-    grunt.registerTask('clean', 'Cleanup all build artifacts.', build.clean);
     grunt.registerTask('version', 'Query and mark the version to the source files.', build.version);
 
     grunt.registerTask('usage', 'Handle all steps for standalone application Javascript development.', function(op) {

@@ -4,6 +4,7 @@ module.exports = function(grunt) {
   grunt.initConfig({
     build: {
         options: {
+            name: 'cog',
             cog_development: true,
             work_dir: "test/",
             build_dir: "test/dist",
