@@ -547,7 +547,7 @@ module.exports = function(grunt) {
     };
 
     grunt.registerTask('info', 'Display summary of the configured files and locations.', build.info);
-    grunt.registerTask('libs', 'Scan all configured javascript and css files and update html-files using them.', build.libs);
+    grunt.registerTask('libs', 'Update fresh copies of libraries from installed node-modules.', build.libs);
     grunt.registerTask('index', 'Scan all configured javascript and css files and update html-files using them.', build.index);
     grunt.registerTask('verify', 'Run all verifications required for valid build.', build.verify);
     grunt.registerTask('dist', 'Collect and minify all application files into the dist-directory.', build.dist);
