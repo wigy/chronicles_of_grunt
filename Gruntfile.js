@@ -30,7 +30,10 @@ module.exports = function(grunt) {
             },
             test: {
                 unit: 'test/*_spec.js'
-            }
+            },
+            index: {
+                test: 'test.html'
+            },
         }
     },
   });

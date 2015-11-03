@@ -418,13 +418,13 @@ module.exports = function(grunt) {
 
         info: function() {
 
-			grunt.log.ok("Build: info");
 			grunt.log.ok("Project: " + getConfig('name'));
+			grunt.log.ok("Work dir: " + work_dir);
             dumpFiles('External Libraries', extLibFiles);
             dumpFiles('External CSS-files', extCssFiles);
             dumpFiles('External Fonts', extFontFiles);
             dumpFiles('Index files', indexFiles);
-            dumpFiles('Configuration and utilities', configFiles);
+            dumpFiles('Configuration and global utilities', configFiles);
             dumpFiles('Model files', modelFiles);
             dumpFiles('Data files', dataFiles);
             dumpFiles('Code files', codeFiles);

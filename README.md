@@ -144,8 +144,7 @@ Licensed under the GPL-2.0 license.
 
 * 1.1.0 New task `todo` to display TODO-notes from source code.
 * 1.0.0 Documentation and clean up.
-* 0.6.0 Rename tasks to be used without prefix and move all tasks to
-        the same file.
+* 0.6.0 Rename tasks to be used without prefix and move all tasks to the same file.
 * 0.5.0 Add `build:dist` task.
 * 0.4.0 Add `build:index` task.
 * 0.3.0 Add `build:info` and `build:verify` tasks.
@@ -155,8 +154,8 @@ Licensed under the GPL-2.0 license.
 
 ## Future Plans
 
-* Task `release` to run `verify` and `todo:die`` before asking comment for release history and
-  running `version`.
+* Task `release` to run `verify` and `todo:die` before asking comment for release history and running `version`.
 * Use `grunt-contrib-csslint` to check syntax for CSS.
 * Support for testing using Jasmine.
 * Support for doc-file like README.md and include them for TODO-checking.
+* A task to find every file that does not belong to any recognized category in the repository.
