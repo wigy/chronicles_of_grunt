@@ -16,7 +16,6 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-
 module.exports = function(grunt) {
 
     // Get the build configuration and set some variables.
@@ -31,12 +30,14 @@ module.exports = function(grunt) {
         grunt.loadNpmTasks('grunt-contrib-uglify');
         grunt.loadNpmTasks('grunt-contrib-concat');
         grunt.loadNpmTasks('grunt-available-tasks');
+        grunt.loadNpmTasks('grunt-contrib-jasmine');
     } else {
         grunt.loadTasks('node_modules/chronicles_of_grunt/node_modules/grunt-contrib-jshint/tasks/');
         grunt.loadTasks('node_modules/chronicles_of_grunt/node_modules/grunt-contrib-cssmin/tasks/');
         grunt.loadTasks('node_modules/chronicles_of_grunt/node_modules/grunt-contrib-uglify/tasks/');
         grunt.loadTasks('node_modules/chronicles_of_grunt/node_modules/grunt-contrib-concat/tasks/');
         grunt.loadTasks('node_modules/chronicles_of_grunt/node_modules/grunt-available-tasks/tasks/');
+        grunt.loadTasks('node_modules/chronicles_of_grunt/node_modules/grunt-contrib-jasmine/tasks/');
     }
 
     // Load Node-modules.
@@ -300,6 +301,20 @@ module.exports = function(grunt) {
     }
 
     /**
+     * Find all unit-test files.
+     */
+    function unitTestFiles() {
+        return files(getConfig('test.unit'), 'test');
+    }
+
+    /**
+     * Find all test files.
+     */
+    function testFiles() {
+        return unitTestFiles();
+    }
+
+    /**
      * List files returned by the given listing function on screen.
      */
     function dumpFiles(title, fn) {
@@ -413,6 +428,7 @@ module.exports = function(grunt) {
             dumpFiles('Data files', dataFiles);
             dumpFiles('Code files', codeFiles);
             dumpFiles('CSS-files', cssFiles);
+            dumpFiles('Unit tests', unitTestFiles);
         },
 
         libs: function() {
@@ -584,6 +600,10 @@ module.exports = function(grunt) {
                 }
             }
         },
+
+        test: function(testType) {
+
+        },
     };
 
     grunt.registerTask('info', 'Display summary of the configured files and locations.', build.info);
@@ -593,9 +613,10 @@ module.exports = function(grunt) {
     grunt.registerTask('dist', 'Collect and minify all application files into the dist-directory.', build.dist);
     grunt.registerTask('version', 'Query and mark the version to the source files.', build.version);
     grunt.registerTask('todo', 'Scan for TODO-entries from the source code and display them.', build.todo);
+    grunt.registerTask('test', 'Run all tests.', build.test);
 
     grunt.registerTask('usage', 'Handle all steps for standalone application Javascript development.', function(op) {
-        var excludes = ['default', 'usage', 'availabletasks', 'jshint', 'uglify', 'cssmin', 'concat'];
+        var excludes = ['default', 'usage', 'availabletasks', 'jshint', 'uglify', 'cssmin', 'concat', 'jasmine'];
         grunt.initConfig({availabletasks: {tasks: {options: {filter: 'exclude', tasks: excludes}}}});
         grunt.task.run(['availabletasks']);
     });

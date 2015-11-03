@@ -142,7 +142,7 @@ Licensed under the GPL-2.0 license.
 
 ## Release History
 
-* 1.0.1 New task `todo` to display TODO-notes from source code.
+* 1.1.0 New task `todo` to display TODO-notes from source code.
 * 1.0.0 Documentation and clean up.
 * 0.6.0 Rename tasks to be used without prefix and move all tasks to
         the same file.
@@ -159,3 +159,4 @@ Licensed under the GPL-2.0 license.
   running `version`.
 * Use `grunt-contrib-csslint` to check syntax for CSS.
 * Support for testing using Jasmine.
+* Support for doc-file like README.md and include them for TODO-checking.
