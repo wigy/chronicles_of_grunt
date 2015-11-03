@@ -42,6 +42,7 @@ module.exports = function(grunt) {
 
     // Load Node-modules.
     var path = require('path');
+    var ff = require('./file-filter.js');
 
     // Known library copy specifications.
     var known = {
