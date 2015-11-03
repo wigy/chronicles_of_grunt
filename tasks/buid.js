@@ -265,22 +265,6 @@ module.exports = function(grunt) {
     }
 
     /**
-     * Find all text based work files.
-     */
-    function workTextFiles() {
-
-        return srcFiles().concat(cssFiles());
-    }
-
-    /**
-     * Find all work files.
-     */
-    function workFiles() {
-
-        return workTextFiles().concat(picFiles()).concat(soundFiles());
-    }
-
-    /**
      * Find all code files needed to include in HTML index.
      */
     function includeJsFiles() {
@@ -314,6 +298,23 @@ module.exports = function(grunt) {
     function testFiles() {
         return unitTestFiles();
     }
+
+    /**
+     * Find all text based work files.
+     */
+    function workTextFiles() {
+
+        return indexFiles().concat(srcFiles()).concat(testFiles()).concat(cssFiles());
+    }
+
+    /**
+     * Find all work files.
+     */
+    function workFiles() {
+
+        return workTextFiles().concat(picFiles()).concat(soundFiles());
+    }
+
 
     /**
      * List files returned by the given listing function on screen.
