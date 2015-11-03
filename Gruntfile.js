@@ -6,8 +6,6 @@ module.exports = function(grunt) {
         options: {
             name: 'cog',
             cog_development: true,
-            work_dir: "test/",
-            build_dir: "test/dist",
             external: {
                 lib: [],
                 css: [],

@@ -62,6 +62,9 @@ build: {
 ### `name`
 This is a code name of the project consisting of alphanumeric characters.
 
+### `work_dir`
+This is a path prefix to be added on work files and defaults to `.`.
+
 ### `external.lib`, `external.css`, `external.fonts`
 These defines external libraries in use. First one is for (minimized) code files,
 the second (minimized) CSS-files and the last one is for fonts. The following
