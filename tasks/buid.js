@@ -223,7 +223,7 @@ module.exports = function(grunt) {
             grunt.log.ok("Build: verify");
             grunt.log.ok("");
             var settings = {
-                all: ff.flatten(ff.srcFiles()),
+                all: ff.flatten(ff.srcFiles().concat(ff.otherFiles())),
                 options: {
                     curly: true,
                     eqeqeq: true,

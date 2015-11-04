@@ -93,7 +93,7 @@ CSS files of the application.
 Media files needed by the application.
 
 ### `src.other`
-Other work files that are not part of the actual distribution.
+Other Javascript-files that are not part of the actual distribution.
 
 ### `index.app`, `index.test`
 Starting files for the application and for testing.
