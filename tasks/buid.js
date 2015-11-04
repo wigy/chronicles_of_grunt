@@ -309,6 +309,18 @@ module.exports = function(grunt) {
 
         test: function(testType) {
 
+            var src = ff.flatten(ff.srcFiles());
+            var specs = ff.flatten(ff.unitTestFiles());
+            var settings = {
+                all: {
+                    src: src,
+                    options: {
+                        specs: specs
+                    },
+                }
+            };
+            grunt.config.set('jasmine', settings);
+            grunt.task.run('jasmine');
         },
     };
 
