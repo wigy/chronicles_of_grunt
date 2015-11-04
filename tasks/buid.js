@@ -561,7 +561,7 @@ module.exports = function(grunt) {
             }
         },
 
-        todo: function() {
+        todo: function(die) {
 
             var files = flatten(workTextFiles());
             var TODO = "TODO" + ":";
@@ -570,6 +570,9 @@ module.exports = function(grunt) {
                 var lines = grunt.file.read(files[i]).split("\n");
                 for (var j=0; j<lines.length; j++) {
                     if( lines[j].indexOf(TODO) >= 0) {
+                        if (die == 'die') {
+                            grunt.fail.fatal("There are unfinished TODO-entries in line " + (j+1) +" of '" + files[i] + "'.\nSee 'grunt todo' for list of them.");
+                        }
                         if (!seen) {
                             seen = true;
                             grunt.log.ok("");

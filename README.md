@@ -147,6 +147,7 @@ Licensed under the GPL-2.0 license.
 
 ## Future Plans
 
-* Task `version` could prepare *Release History* section and ask content for it.
+* Task `release` to run `verify` and `todo:die`` before asking comment for release history and
+  running `version`.
 * Use `grunt-contrib-csslint` to check syntax for CSS.
 * Support for testing using Jasmine.
