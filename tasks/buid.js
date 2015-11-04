@@ -57,10 +57,6 @@ module.exports = function(grunt) {
         // Construct javascript includes.
         var js = "";
         for (i=0; i < jsFiles.length; i++) {
-            if (/\.map$/.test(jsFiles[i])) {
-                // TODO: This should be part of file spec.
-                continue;
-            }
             js += '    <script src="' + jsFiles[i] + '"></script>\n';
         }
 
@@ -116,7 +112,7 @@ module.exports = function(grunt) {
                         if (matches[i].src === matches[i].dst) {
                             grunt.log.ok(matches[i].dst);
                         } else {
-                            grunt.log.ok(matches[i].dst + ' (from ' + matches[i].dst + ')');
+                            grunt.log.ok(matches[i].dst + ' (from ' + matches[i].src + ')');
                         }
                     }
                 }
@@ -127,6 +123,7 @@ module.exports = function(grunt) {
             grunt.log.ok("Project: " + ff.getConfig('name'));
             grunt.log.ok("Work dir: " + ff.getConfig('work_dir', '.'));
             dumpFiles('External Libraries', ff.extLibFiles);
+            dumpFiles('External Library map files', ff.extLibMapFiles);
             dumpFiles('External CSS-files', ff.extCssFiles);
             dumpFiles('External Fonts', ff.extFontFiles);
             dumpFiles('Index files', ff.indexFiles);
@@ -330,7 +327,6 @@ module.exports = function(grunt) {
 
         test: function(testType) {
 
-            // TODO: Put libraries to vendor settings for testing.
             var src = ff.flatten(ff.srcFiles());
             var specs = ff.flatten(ff.unitTestFiles());
             var libs = ff.flatten(ff.extLibFiles());

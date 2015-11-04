@@ -163,10 +163,30 @@ module.exports = function(grunt) {
     }
 
     /**
-     * Find all external library code files.
+     * Only include specs whose destination matches to the given regex pattern.
+     */
+    function includeFiles(list, regex) {
+        var ret = [];
+        for (var i=0; i < list.length; i++) {
+            if (regex.test(list[i].dst)) {
+                ret.push(list[i]);
+            }
+        }
+        return ret;
+    }
+
+    /**
+     * Find all external library code files excluding map-files.
      */
     function extLibFiles() {
         return excludeFiles(files(getConfig('external.lib'), 'lib'), /\.map$/);
+    }
+
+    /**
+     * Find all external library map-files.
+     */
+    function extLibMapFiles() {
+        return includeFiles(files(getConfig('external.lib'), 'lib'), /\.map$/);
     }
 
     /**
@@ -184,10 +204,10 @@ module.exports = function(grunt) {
     }
 
     /**
-     * Find all external files.
+     * Find all external files including map-files.
      */
     function extFiles() {
-        return removeDuplicates(extLibFiles().concat(extCssFiles()).concat(extFontFiles()));
+        return removeDuplicates(extLibFiles().concat(extLibMapFiles()).concat(extCssFiles()).concat(extFontFiles()));
     }
 
     /**
@@ -344,6 +364,7 @@ module.exports = function(grunt) {
         getConfig: getConfig,
 
         extLibFiles: extLibFiles,
+        extLibMapFiles: extLibMapFiles,
         extCssFiles: extCssFiles,
         extFontFiles: extFontFiles,
         extFiles: extFiles,
