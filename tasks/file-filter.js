@@ -4,7 +4,6 @@ module.exports = function(grunt) {
     var path = require('path');
 
     // Known library file specifications.
-    // TODO: Add flag for cog_development and add different Jasmine paths for real use.
     var known = {
         lib: {
             coa: {src: 'node_modules/chronicles_of_angular/lib/**', dst: 'lib/chronicles_of_angular', drop: 'node_modules/chronicles_of_angular/lib'},
@@ -12,14 +11,22 @@ module.exports = function(grunt) {
             bootstrap: {src: 'node_modules/bootstrap/dist/js/bootstrap.min.js', dst: 'lib', drop: 'node_modules/bootstrap/dist/js'},
             angular: {src: 'node_modules/angular/angular.min.{js,js.map}', dst: 'lib', drop: 'node_modules/angular/'},
             jasmine: [
+                // Developer version for CoG.
                 {src: 'node_modules/grunt-contrib-jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.js', dst: null},
                 {src: 'node_modules/grunt-contrib-jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine-html.js', dst: null},
-                {src: 'node_modules/grunt-contrib-jasmine/node_modules/jasmine-core/lib/jasmine-core/boot.js', dst: null}
+                {src: 'node_modules/grunt-contrib-jasmine/node_modules/jasmine-core/lib/jasmine-core/boot.js', dst: null},
+                // For actual use.
+                {src: 'node_modules/chronicles_of_grunt/node_modules/grunt-contrib-jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.js', dst: null},
+                {src: 'node_modules/chronicles_of_grunt/node_modules/grunt-contrib-jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine-html.js', dst: null},
+                {src: 'node_modules/chronicles_of_grunt/node_modules/grunt-contrib-jasmine/node_modules/jasmine-core/lib/jasmine-core/boot.js', dst: null},
             ],
         },
         css: {
             bootstrap: {src: 'node_modules/bootstrap/dist/css/bootstrap.min.css', dst: 'css', drop: 'node_modules/bootstrap/dist/css/'},
-            jasmine: {src: 'node_modules/grunt-contrib-jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.css', dst: null},
+            jasmine: [
+                {src: 'node_modules/grunt-contrib-jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.css', dst: null},
+                {src: 'node_modules/chronicles_of_grunt/node_modules/grunt-contrib-jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.css', dst: null},
+            ],
         },
         fonts: {
             bootstrap: {src: 'node_modules/bootstrap/dist/fonts/*', dst: 'fonts', drop: 'node_modules/bootstrap/dist/fonts/'},
@@ -159,7 +166,7 @@ module.exports = function(grunt) {
      * Find all external library code files.
      */
     function extLibFiles() {
-        return files(getConfig('external.lib'), 'lib');
+        return excludeFiles(files(getConfig('external.lib'), 'lib'), /\.map$/);
     }
 
     /**
@@ -271,7 +278,7 @@ module.exports = function(grunt) {
      * Find all code files needed to include in HTML index.
      */
     function includeJsFiles() {
-        return excludeFiles(extLibFiles(), /\.map$/).concat(srcFiles());
+        return extLibFiles().concat(srcFiles());
     }
 
     /**
@@ -299,7 +306,7 @@ module.exports = function(grunt) {
      * Find all code files needed to include in HTML index for unit test.
      */
     function includeUnitTestJsFiles() {
-        return files(getConfig('external.unittestlib'), 'lib').concat(excludeFiles(extLibFiles(), /\.map$/).concat(srcFiles()).concat(unitTestFiles()));
+        return files(getConfig('external.unittestlib'), 'lib').concat(extLibFiles()).concat(srcFiles()).concat(unitTestFiles());
     }
 
     /**

@@ -330,13 +330,17 @@ module.exports = function(grunt) {
 
         test: function(testType) {
 
+            // TODO: Put libraries to vendor settings for testing.
             var src = ff.flatten(ff.srcFiles());
             var specs = ff.flatten(ff.unitTestFiles());
+            var libs = ff.flatten(ff.extLibFiles());
+
             var settings = {
                 all: {
                     src: src,
                     options: {
-                        specs: specs
+                        specs: specs,
+                        vendor: libs
                     },
                 }
             };
