@@ -122,8 +122,10 @@ module.exports = function(grunt) {
                 }
             }
 
-			grunt.log.ok("Project: " + ff.getConfig('name'));
-			grunt.log.ok("Work dir: " + ff.getConfig('work_dir', '.'));
+            grunt.log.ok("Build: info");
+            grunt.log.ok("");
+            grunt.log.ok("Project: " + ff.getConfig('name'));
+            grunt.log.ok("Work dir: " + ff.getConfig('work_dir', '.'));
             dumpFiles('External Libraries', ff.extLibFiles);
             dumpFiles('External CSS-files', ff.extCssFiles);
             dumpFiles('External Fonts', ff.extFontFiles);
@@ -149,18 +151,37 @@ module.exports = function(grunt) {
 
         index: function() {
 
+            var i, indices, jsFiles, cssFiles;
+
             grunt.log.ok("Build: index");
             grunt.log.ok("");
 
-            var jsFiles = ff.flatten(ff.includeJsFiles());
-            grunt.log.ok('- Found ' + jsFiles.length + " Javascript-files.");
-            var cssFiles = ff.flatten(ff.includeCssFiles());
-            grunt.log.ok('- Found ' + cssFiles.length + " CSS-files.");
+            var indices = ff.flatten(ff.appIndexFiles());
+            if (indices.length) {
+                grunt.log.ok("Application:");
+                jsFiles = ff.flatten(ff.includeJsFiles());
+                grunt.log.ok('- Found ' + jsFiles.length + " Javascript-files.");
+                cssFiles = ff.flatten(ff.includeCssFiles());
+                grunt.log.ok('- Found ' + cssFiles.length + " CSS-files.");
 
-            var indices = ff.flatten(ff.indexFiles());
-            for (var i=0; i < indices.length; i++) {
-                grunt.log.ok('Updating ' + indices[i]);
-                buildIndex(indices[i], jsFiles, cssFiles);
+                for (i=0; i < indices.length; i++) {
+                    grunt.log.ok('Updating ' + indices[i]);
+                    buildIndex(indices[i], jsFiles, cssFiles);
+                }
+            }
+
+            indices = ff.flatten(ff.testIndexFiles());
+            if (indices.length) {
+                grunt.log.ok("Unit Test:");
+                jsFiles = ff.flatten(ff.includeUnitTestJsFiles());
+                grunt.log.ok('- Found ' + jsFiles.length + " Javascript-files.");
+                cssFiles = ff.flatten(ff.includeUnitTestCssFiles());
+                grunt.log.ok('- Found ' + cssFiles.length + " CSS-files.");
+
+                for (i=0; i < indices.length; i++) {
+                    grunt.log.ok('Updating ' + indices[i]);
+                    buildIndex(indices[i], jsFiles, cssFiles);
+                }
             }
         },
 

@@ -13,6 +13,10 @@ module.exports = function(grunt) {
             test: {
                 unit: 'test/*_spec.js'
             },
+            external: {
+                 unittestlib: ['jasmine'],
+                 unittestcss: ['jasmine'],
+            },
             index: {
                 test: 'test.html'
             },

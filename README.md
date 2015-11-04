@@ -66,13 +66,18 @@ This is a code name of the project consisting of alphanumeric characters.
 This is a path prefix to be added on work files and defaults to `.`.
 
 ### `external.lib`, `external.css`, `external.fonts`
-These defines external libraries in use. First one is for (minimized) code files,
-the second (minimized) CSS-files and the last one is for fonts. The following
+These defines external libraries to use. First one is for (minimized) code files,
+the second (minimized) CSS-files and the third one is for fonts. The following
 predefined constants are supported:
 * `angular` --- AngularJS
 * `jquery` --- jQuery
 * `bootstrap` --- Bootstrap
 * `coa` --- Wigy's Chronicles of Angular
+
+### `external.unittestlib`, `external.unittestcss`
+These are external libraries for HTML-based unit test runner. Supported predefined
+constants are:
+* `jasmine` --- Jasmine unit testing.
 
 ### `src.config`
 Configuration and other source code files that has to be included first.

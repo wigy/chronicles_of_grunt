@@ -1,15 +1,25 @@
 module.exports = function(grunt) {
 
+    // Load Node-modules.
+    var path = require('path');
+
     // Known library file specifications.
+    // TODO: Add flag for cog_development and add different Jasmine paths for real use.
     var known = {
         lib: {
             coa: {src: 'node_modules/chronicles_of_angular/lib/**', dst: 'lib/chronicles_of_angular', drop: 'node_modules/chronicles_of_angular/lib'},
             jquery: {src: 'node_modules/jquery/dist/jquery.min.*', dst: 'lib', drop: 'node_modules/jquery/dist'},
             bootstrap: {src: 'node_modules/bootstrap/dist/js/bootstrap.min.js', dst: 'lib', drop: 'node_modules/bootstrap/dist/js'},
             angular: {src: 'node_modules/angular/angular.min.{js,js.map}', dst: 'lib', drop: 'node_modules/angular/'},
+            jasmine: [
+                {src: 'node_modules/grunt-contrib-jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.js', dst: null},
+                {src: 'node_modules/grunt-contrib-jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine-html.js', dst: null},
+                {src: 'node_modules/grunt-contrib-jasmine/node_modules/jasmine-core/lib/jasmine-core/boot.js', dst: null}
+            ],
         },
         css: {
             bootstrap: {src: 'node_modules/bootstrap/dist/css/bootstrap.min.css', dst: 'css', drop: 'node_modules/bootstrap/dist/css/'},
+            jasmine: {src: 'node_modules/grunt-contrib-jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.css', dst: null},
         },
         fonts: {
             bootstrap: {src: 'node_modules/bootstrap/dist/fonts/*', dst: 'fonts', drop: 'node_modules/bootstrap/dist/fonts/'},
@@ -48,13 +58,13 @@ module.exports = function(grunt) {
 
         if (specs) {
             if (typeof(specs) === 'string') {
-                if (/[^a-zA-Z]/.test(specs)) {
+                if (known[category] && specs in known[category]) {
+                    ret = ret.concat(files(known[category][specs], category));
+                } else if (/[^a-zA-Z]/.test(specs)) {
                     src = grunt.file.expand(specs);
                     for (i=0; i < src.length; i++) {
                         ret.push({src: src[i], dst: src[i], drop: ''});
                     }
-                } else if (known[category] && specs in known[category]) {
-                    ret = ret.concat(files(known[category][specs], category));
                 } else {
                     grunt.fail.fatal("Unknown build file specification '" + specs +"' for '" + category + "'.");
                 }
@@ -68,9 +78,14 @@ module.exports = function(grunt) {
                 for (j=0; j < src.length; j++) {
                     var drop = specs.drop;
                     if (!drop) {
-                        drop = specs.src;
-                        while (drop.indexOf('*') >= 0) {
-                            drop = path.dirname(drop);
+                        // If dst is null, then we keep the file where it is originally.
+                        if (specs.dst === null) {
+                            drop = '';
+                        } else {
+                            drop = specs.src;
+                            while (drop.indexOf('*') >= 0) {
+                                drop = path.dirname(drop);
+                            }
                         }
                     }
                     file = {};
@@ -82,7 +97,7 @@ module.exports = function(grunt) {
                     if (dst.substr(0, drop.length) === drop) {
                         dst = src[j].substr(drop.length);
                     }
-                    file.dst = path.join(work_dir, specs.dst || category, dst);
+                    file.dst = path.join(getConfig('work_dir', '.'), specs.dst === null ? '' : specs.dst || category, dst);
                     ret.push(file);
                 }
             }
@@ -274,10 +289,24 @@ module.exports = function(grunt) {
     }
 
     /**
-     * Find all unit-test files.
+     * Find all unit-test spec-files.
      */
     function unitTestFiles() {
         return files(getConfig('test.unit'), 'test');
+    }
+
+    /**
+     * Find all code files needed to include in HTML index for unit test.
+     */
+    function includeUnitTestJsFiles() {
+        return files(getConfig('external.unittestlib'), 'lib').concat(excludeFiles(extLibFiles(), /\.map$/).concat(srcFiles()).concat(unitTestFiles()));
+    }
+
+    /**
+     * Find all CSS files needed to include in HTML index for unit test.
+     */
+    function includeUnitTestCssFiles() {
+        return files(getConfig('external.unittestcss'), 'css');
     }
 
     /**
@@ -327,6 +356,8 @@ module.exports = function(grunt) {
         includeCssFiles: includeCssFiles,
         distFilesUncompressed: distFilesUncompressed,
         unitTestFiles: unitTestFiles,
+        includeUnitTestJsFiles: includeUnitTestJsFiles,
+        includeUnitTestCssFiles: includeUnitTestCssFiles,
         testFiles: testFiles,
         workTextFiles: workTextFiles,
         workFiles: workFiles
