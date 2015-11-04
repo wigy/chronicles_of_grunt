@@ -1,10 +1,11 @@
 # Wigy's Chronicles of Grunt
 
 Wigy's collection of useful utilities for Grunt. The focus of these utilities
-is to provide easy way to develop complete web-applications, that can be build
+is to provide easy way to develop complete web-applications, that can be built
 as an install packages. The development itself happens directly in the browser,
 which loads entry point HTML-file of the application and works out of the box.
-To achieve this, certain conventions needs to be followed.
+To achieve this, certain conventions needs to be followed and this toolkit
+helps you to perform necessary steps in the development process.
 
 ## Getting Started
 
@@ -34,7 +35,8 @@ source file specification can be:
 
 For example, here is a full configuration:
 ```js
-build: {
+grunt.initConfig({
+  build: {
     options: {
     name: "time2exercise",
     work_dir: ".",
@@ -61,7 +63,8 @@ build: {
         app: 'index.html',
         test: 'test.html',
     },
-}
+  }
+});
 ```
 
 ### `name`
