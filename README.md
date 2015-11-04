@@ -128,6 +128,10 @@ The version numbers supported have format *x.y.z* for public release or
 *x.y.z-beta* for development release. The change is made to the `packages.json`
 file. If *version* is not given, then the current version is given.
 
+### Task: `todo`
+
+Display all remaining TODO-entries found from the source code.
+
 ## License
 
 Copyright (c) 2015 Tommi Ronkainen
@@ -135,6 +139,7 @@ Licensed under the GPL-2.0 license.
 
 ## Release History
 
+* 1.0.1 New task `todo` to display TODO-notes from source code.
 * 1.0.0 Documentation and clean up.
 * 0.6.0 Rename tasks to be used without prefix and move all tasks to
         the same file.
