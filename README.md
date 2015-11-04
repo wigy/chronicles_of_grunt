@@ -150,6 +150,7 @@ Licensed under the GPL-2.0 license.
 
 ## Release History
 
+* 1.3.0 Support for `test` task in order to run unit-tests.
 * 1.2.0 Support new `other`-category for work files.
 * 1.1.1 Scan more files when checking for TODO-notes.
 * 1.1.0 New task `todo` to display TODO-notes from source code.
