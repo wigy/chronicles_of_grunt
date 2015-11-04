@@ -263,6 +263,22 @@ module.exports = function(grunt) {
     }
 
     /**
+     * Find all text based work files.
+     */
+    function workTextFiles() {
+
+        return srcFiles().concat(cssFiles());
+    }
+
+    /**
+     * Find all work files.
+     */
+    function workFiles() {
+
+        return workTextFiles().concat(picFiles()).concat(soundFiles());
+    }
+
+    /**
      * Find all code files needed to include in HTML index.
      */
     function includeJsFiles() {
@@ -544,6 +560,27 @@ module.exports = function(grunt) {
                 }
             }
         },
+
+        todo: function() {
+
+            var files = flatten(workTextFiles());
+            var TODO = "TODO" + ":";
+            for (var i=0; i<files.length; i++) {
+                var seen = false;
+                var lines = grunt.file.read(files[i]).split("\n");
+                for (var j=0; j<lines.length; j++) {
+                    if( lines[j].indexOf(TODO) >= 0) {
+                        if (!seen) {
+                            seen = true;
+                            grunt.log.ok("");
+                            grunt.log.ok("[", files[i], "]");
+                            grunt.log.ok("");
+                        }
+                        grunt.log.ok("Line", j+1, ":", lines[j]);
+                    }
+                }
+            }
+        },
     };
 
     grunt.registerTask('info', 'Display summary of the configured files and locations.', build.info);
@@ -552,6 +589,7 @@ module.exports = function(grunt) {
     grunt.registerTask('verify', 'Run all verifications required for valid build.', build.verify);
     grunt.registerTask('dist', 'Collect and minify all application files into the dist-directory.', build.dist);
     grunt.registerTask('version', 'Query and mark the version to the source files.', build.version);
+    grunt.registerTask('todo', 'Scan for TODO-entries from the source code and display them.', build.todo);
 
     grunt.registerTask('usage', 'Handle all steps for standalone application Javascript development.', function(op) {
         var excludes = ['default', 'usage', 'availabletasks', 'jshint', 'uglify', 'cssmin', 'concat'];

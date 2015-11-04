@@ -130,7 +130,7 @@ file. If *version* is not given, then the current version is given.
 
 ## License
 
-Copyright (c) 2015 Tommi Ronkainen  
+Copyright (c) 2015 Tommi Ronkainen
 Licensed under the GPL-2.0 license.
 
 ## Release History
@@ -149,7 +149,4 @@ Licensed under the GPL-2.0 license.
 
 * Task `version` could prepare *Release History* section and ask content for it.
 * Use `grunt-contrib-csslint` to check syntax for CSS.
-* Scan all `TODO:` entries from the source files and list them.
-* Versioning could have argument `next` to verify that there are no
-  TODO-entries and then ask comments and add them automatically here
-  after also choosing the next version number.
+* Support for testing using Jasmine.
