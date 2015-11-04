@@ -133,7 +133,7 @@ module.exports = function(grunt) {
             dumpFiles('Data files', ff.dataFiles);
             dumpFiles('Code files', ff.codeFiles);
             dumpFiles('CSS-files', ff.cssFiles);
-            dumpFiles('Other files', ff.otherFiles);
+            dumpFiles('Other Javascript-files', ff.otherFiles);
             dumpFiles('Unit tests', ff.unitTestFiles);
         },
 
