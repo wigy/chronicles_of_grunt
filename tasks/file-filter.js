@@ -220,9 +220,16 @@ module.exports = function(grunt) {
     /**
      * Find all source code files.
      */
-    function srcFiles() {
-        return removeDuplicates(configFiles().concat(modelFiles()).concat(dataFiles()).concat(codeFiles()));
-    }
+     function srcFiles() {
+         return removeDuplicates(configFiles().concat(modelFiles()).concat(dataFiles()).concat(codeFiles()));
+     }
+
+     /**
+      * Find other work files.
+      */
+     function otherFiles() {
+         return files(getConfig('src.other'), 'other');
+     }
 
     /**
      * Find all CSS files.
@@ -285,7 +292,7 @@ module.exports = function(grunt) {
      */
     function workTextFiles() {
 
-        return indexFiles().concat(srcFiles()).concat(testFiles()).concat(cssFiles());
+        return indexFiles().concat(srcFiles()).concat(testFiles()).concat(otherFiles()).concat(cssFiles());
     }
 
     /**
@@ -312,6 +319,7 @@ module.exports = function(grunt) {
         dataFiles: dataFiles,
         codeFiles: codeFiles,
         srcFiles: srcFiles,
+        otherFiles: otherFiles,
         cssFiles: cssFiles,
         picFiles: picFiles,
         soundFiles: soundFiles,

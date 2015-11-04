@@ -16,16 +16,8 @@ module.exports = function(grunt) {
         options: {
             name: 'cog',
             cog_development: true,
-            external: {
-                lib: [],
-                css: [],
-                fonts: [],
-            },
             src: {
-                config: ['Gruntfile.js'],
-                code: 'tasks/*.js',
-                models: [],
-                data: [],
+                other: ['Gruntfile.js', 'tasks/*.js']
             },
             test: {
                 unit: 'test/*_spec.js'

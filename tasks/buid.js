@@ -133,6 +133,7 @@ module.exports = function(grunt) {
             dumpFiles('Data files', ff.dataFiles);
             dumpFiles('Code files', ff.codeFiles);
             dumpFiles('CSS-files', ff.cssFiles);
+            dumpFiles('Other files', ff.otherFiles);
             dumpFiles('Unit tests', ff.unitTestFiles);
         },
 
@@ -198,7 +199,7 @@ module.exports = function(grunt) {
             grunt.log.ok("");
             var banner = '';
             banner += '/* ' + package.name + ' v' + package.version + '\n';
-            banner += ' * Copyright (c) ' + grunt.template.today("yyyy") + ' ' + package.author + '\n';
+            banner += ' * Copyright (c) ' + grunt.template.today("yyyy") + ' ' + package.author.name + '\n';
             banner += ' */\n';
 
             settings = {options: {banner: banner}, dist: {}};
