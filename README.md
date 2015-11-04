@@ -92,6 +92,9 @@ CSS files of the application.
 ### `src.pics`, `src.sounds`
 Media files needed by the application.
 
+### `src.other`
+Other work files that are not part of the actual distribution.
+
 ### `index.app`, `index.test`
 Starting files for the application and for testing.
 
@@ -142,6 +145,7 @@ Licensed under the GPL-2.0 license.
 
 ## Release History
 
+* 1.2.0 Support new `other`-category for work files.
 * 1.1.1 Scan more files when checking for TODO-notes.
 * 1.1.0 New task `todo` to display TODO-notes from source code.
 * 1.0.0 Documentation and clean up.
