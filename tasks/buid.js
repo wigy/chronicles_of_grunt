@@ -34,6 +34,7 @@ module.exports = function(grunt) {
         grunt.loadNpmTasks('grunt-contrib-concat');
         grunt.loadNpmTasks('grunt-available-tasks');
         grunt.loadNpmTasks('grunt-contrib-jasmine');
+        grunt.loadNpmTasks('grunt-contrib-csslint');
     } else {
         grunt.loadTasks('node_modules/chronicles_of_grunt/node_modules/grunt-contrib-jshint/tasks/');
         grunt.loadTasks('node_modules/chronicles_of_grunt/node_modules/grunt-contrib-cssmin/tasks/');
@@ -41,6 +42,7 @@ module.exports = function(grunt) {
         grunt.loadTasks('node_modules/chronicles_of_grunt/node_modules/grunt-contrib-concat/tasks/');
         grunt.loadTasks('node_modules/chronicles_of_grunt/node_modules/grunt-available-tasks/tasks/');
         grunt.loadTasks('node_modules/chronicles_of_grunt/node_modules/grunt-contrib-jasmine/tasks/');
+        grunt.loadTasks('node_modules/chronicles_of_grunt/node_modules/grunt-contrib-csslint/tasks/');
     }
 
     /**
@@ -153,7 +155,7 @@ module.exports = function(grunt) {
             grunt.log.ok("Build: index");
             grunt.log.ok("");
 
-            var indices = ff.flatten(ff.appIndexFiles());
+            indices = ff.flatten(ff.appIndexFiles());
             if (indices.length) {
                 grunt.log.ok("Application:");
                 jsFiles = ff.flatten(ff.includeJsFiles());
@@ -237,31 +239,46 @@ module.exports = function(grunt) {
             }
         },
 
-        verify: function() {
+        verify: function(what) {
+
+            var settings;
+
             grunt.log.ok("Build: verify");
             grunt.log.ok("");
-            var settings = {
-                all: ff.flatten(ff.srcFiles().concat(ff.otherFiles())),
-                options: {
-                    curly: true,
-                    eqeqeq: true,
-                    immed: true,
-                    latedef: true,
-                    newcap: true,
-                    noarg: true,
-                    sub: true,
-                    undef: false,
-                    unused: false,
-                    boss: true,
-                    eqnull: true,
-                    browser: true,
-                    globals: {
-                        jQuery: true
-                    }
-                },
-            };
-            grunt.config.set('jshint', settings);
-            grunt.task.run('jshint');
+            if (!what || what === "js") {
+                settings = {
+                    all: ff.flatten(ff.srcFiles().concat(ff.otherFiles())),
+                    options: {
+                        curly: true,
+                        eqeqeq: true,
+                        immed: true,
+                        latedef: true,
+                        newcap: true,
+                        noarg: true,
+                        sub: true,
+                        undef: false,
+                        unused: false,
+                        boss: true,
+                        eqnull: true,
+                        browser: true,
+                        globals: {
+                            jQuery: true
+                        }
+                    },
+                };
+                grunt.config.set('jshint', settings);
+                grunt.task.run('jshint');
+            }
+            if (!what || what === "css") {
+                settings = {
+                    src: ff.flatten(ff.cssFiles()),
+                    options: {
+                        "fallback-colors": false
+                    },
+                };
+                grunt.config.set('csslint', settings);
+                grunt.task.run('csslint');
+            }
         },
 
         version: function(version) {

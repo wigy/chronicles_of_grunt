@@ -134,7 +134,8 @@ updates configured index-files to include all requirements.
 
 ### Task: `verify`
 
-Run syntax checker for project files.
+Run syntax checker for project files. Alternatively `verify:js` can be used to verify
+Javascript code and `verify:css` can be used to verify CSS.
 
 ### Task: `dist`
 
@@ -149,7 +150,8 @@ file. If *version* is not given, then the current version is given.
 
 ### Task: `todo`
 
-Display all remaining TODO-entries found from the source code.
+Display all remaining TODO-entries found from the source code. Additional argument
+`todo:die` causes the script end with an error, if any TODO-entries are found.
 
 ## License
 
@@ -158,6 +160,7 @@ Licensed under the GPL-2.0 license.
 
 ## Release History
 
+* 1.3.1 Add CSS checking to `verify` task.
 * 1.3.0 Support for `test` task in order to run unit-tests.
 * 1.2.0 Support new `other`-category for work files.
 * 1.1.1 Scan more files when checking for TODO-notes.
@@ -174,7 +177,6 @@ Licensed under the GPL-2.0 license.
 ## Future Plans
 
 * Task `release` to run `verify` and `todo:die` before asking comment for release history and running `version`.
-* Use `grunt-contrib-csslint` to check syntax for CSS.
 * Support for doc-file like README.md and include them for TODO-checking.
 * A task to find every file that does not belong to any recognized category in the repository.
 * Support for testing system, which can test tasks of CoG (perhaps nodeunit).
