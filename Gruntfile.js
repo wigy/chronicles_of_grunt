@@ -2,8 +2,7 @@ module.exports = function(grunt) {
 
   // Project configuration.
   grunt.initConfig({
-    // TODO: Remove once working via CoG.
-    // TODO: Add test runner template test.html.
+    // TODO: Remove Jasmine config once working via CoG.
     jasmine: {
         all: {
             // TODO: How to ignore files that are not loadable in test? Add some flag?
