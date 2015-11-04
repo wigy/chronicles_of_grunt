@@ -160,23 +160,46 @@ Licensed under the GPL-2.0 license.
 
 ## Release History
 
-* 1.3.1 Add CSS checking to `verify` task.
-* 1.3.0 Support for `test` task in order to run unit-tests.
-* 1.2.0 Support new `other`-category for work files.
-* 1.1.1 Scan more files when checking for TODO-notes.
-* 1.1.0 New task `todo` to display TODO-notes from source code.
-* 1.0.0 Documentation and clean up.
-* 0.6.0 Rename tasks to be used without prefix and move all tasks to the same file.
-* 0.5.0 Add `build:dist` task.
-* 0.4.0 Add `build:index` task.
-* 0.3.0 Add `build:info` and `build:verify` tasks.
-* 0.2.0 Add new `usage` task.
-* 0.1.1 Make `versioning` option `file` optional.
-* 0.1.0 Bring `versioning` tool from time2exercise.
+* 1.3.1
+    - Add CSS checking to `verify` task.
+* 1.3.0
+    - Support for `test` task in order to run unit-tests.
+* 1.2.0
+    - Support new `other`-category for work files.
+* 1.1.1
+    - Scan more files when checking for TODO-notes.
+* 1.1.0
+    - New task `todo` to display TODO-notes from source code.
+* 1.0.0
+    - Documentation and clean up.
+* 0.6.0
+    - Rename tasks to be used without prefix and move all tasks to the same file.
+* 0.5.0
+    - Add `build:dist` task.
+* 0.4.0
+    - Add `build:index` task.
+* 0.3.0
+    - Add `build:info` and `build:verify` tasks.
+* 0.2.0
+    - Add new `usage` task.
+* 0.1.1
+    - Make `versioning` option `file` optional.
+* 0.1.0
+    - Bring `versioning` tool from time2exercise.
 
-## Future Plans
+## Next Version
+
+### Done
+
+### Not Yet Done
+
+- Check if `work_dir` has any useful meaning and possibly remove.
+- Add support for configurable `dist` directory.
+
+## Future Ideas
 
 * Task `release` to run `verify` and `todo:die` before asking comment for release history and running `version`.
 * Support for doc-file like README.md and include them for TODO-checking.
 * A task to find every file that does not belong to any recognized category in the repository.
+    - Add cofiguration variable `ignore` to silence complaining.
 * Support for testing system, which can test tasks of CoG (perhaps nodeunit).
