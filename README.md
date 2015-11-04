@@ -30,32 +30,37 @@ source file specification can be:
 
 * A file glob pattern as a string.
 * Predefined label for known library as a string.
-* An array of other specifications.
+* An array of either kind of previous specifications.
 
 For example, here is a full configuration:
 ```js
 build: {
-	options: {
-		name: "time2exercise",
-		external: {
-			lib: ['angular', 'jquery', 'bootstrap', 'coa'],
-			css: ['bootstrap'],
-			fonts: ['bootstrap'],
-		},
-		src: {
-			config: ['src/settings.js', 'src/utils.js'],
-			models: ['src/models/**/*.js'],
-			data: ['data/**/*.js'],
-			code: ['src/**/*.js'],
-			pics: ['pics/**/*png'],
-			sounds: ['sounds/**/*.mp3'],
-			css: ['css/*.css'],
-		},
-		index: {
-			app: 'index.html',
-			test: 'test.html',
-		},
-	}
+    options: {
+    name: "time2exercise",
+    work_dir: ".",
+    external: {
+        lib: ['angular', 'jquery', 'bootstrap', 'coa'],
+        css: ['bootstrap'],
+        fonts: ['bootstrap'],
+        unittestlib: ['jasmine'],
+        unittestcss: ['jasmine'],
+    },
+    src: {
+        config: ['src/settings.js', 'src/utils.js'],
+        models: ['src/models/**/*.js'],
+        data: ['data/**/*.js'],
+        code: ['src/**/*.js'],
+        pics: ['pics/**/*png'],
+        sounds: ['sounds/**/*.mp3'],
+        css: ['css/*.css'],
+    },
+    test: {
+        unit: 'test/*_spec.js'
+    },
+    index: {
+        app: 'index.html',
+        test: 'test.html',
+    },
 }
 ```
 
