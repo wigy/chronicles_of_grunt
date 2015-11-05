@@ -191,9 +191,11 @@ Licensed under the GPL-2.0 license.
 
 ### Done
 
+- Configurable output to make testing easier.
+
 ### Not Yet Done
 
-- Check if `work_dir` has any useful meaning and possibly remove.
+- Check if `work_dir` works correctly and fix.
 - Add support for configurable `dist` directory.
 
 ## Future Ideas

@@ -15,3 +15,4 @@ module.exports  =  {
         },
     }
 };
+// TODO: Move to Gruntfile.js if tests are run using shell.

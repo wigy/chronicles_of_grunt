@@ -12,6 +12,7 @@ module.exports = {
         // TODO: How to silence grunt?
         test.expect(1);
         // TODO: Implement an build-option to put all output to file.
+        // TODO: Run this in separate shell in test-subdirectory with own Gruntfile.js.
         grunt.task.run('info');
         // TODO: Write actual test.
         test.equal(1, 1);

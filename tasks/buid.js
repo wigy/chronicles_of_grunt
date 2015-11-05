@@ -23,8 +23,9 @@ module.exports = function(grunt) {
 
     // Load Node-modules.
     var path = require('path');
-    var ff = require('./file-filter.js')(grunt);
     var colors = require('colors');
+    var ff = require('./file-filter.js')(grunt);
+    var log = require('./log.js')(grunt);
 
     // Load tasks needed.
     if (ff.getConfig('cog_development')) {
@@ -110,22 +111,22 @@ module.exports = function(grunt) {
             function dumpFiles(title, fn) {
                 var matches = fn();
                 if (matches.length) {
-                    grunt.log.ok("");
-                    grunt.log.ok("## " + title + ":");
+                    log.info("");
+                    log.info("## " + title + ":");
                     for (var i = 0; i < matches.length; i++) {
                         if (matches[i].src === matches[i].dst) {
-                            grunt.log.ok(matches[i].dst);
+                            log.info(matches[i].dst);
                         } else {
-                            grunt.log.ok(matches[i].dst + ' (from ' + matches[i].src + ')');
+                            log.info(matches[i].dst + ' (from ' + matches[i].src + ')');
                         }
                     }
                 }
             }
 
-            grunt.log.ok("Build: info");
-            grunt.log.ok("");
-            grunt.log.ok("Project: " + ff.getConfig('name'));
-            grunt.log.ok("Work dir: " + ff.getConfig('work_dir', '.'));
+            log.info("Build: info");
+            log.info("");
+            log.info("Project: " + ff.getConfig('name'));
+            log.info("Work dir: " + ff.getConfig('work_dir', '.'));
             dumpFiles('External Libraries', ff.extLibFiles);
             dumpFiles('External Library map files', ff.extLibMapFiles);
             dumpFiles('External CSS-files', ff.extCssFiles);
@@ -141,11 +142,11 @@ module.exports = function(grunt) {
         },
 
         libs: function() {
-            grunt.log.ok("Build: libs");
-            grunt.log.ok("");
+            log.info("Build: libs");
+            log.info("");
             var matches = ff.extFiles();
             for (var i = 0; i < matches.length; i++) {
-                grunt.log.ok(matches[i].src + ' -> ' + matches[i].dst);
+                log.info(matches[i].src + ' -> ' + matches[i].dst);
                 grunt.file.copy(matches[i].src, matches[i].dst);
             }
         },
@@ -154,33 +155,33 @@ module.exports = function(grunt) {
 
             var i, indices, jsFiles, cssFiles;
 
-            grunt.log.ok("Build: index");
-            grunt.log.ok("");
+            log.info("Build: index");
+            log.info("");
 
             indices = ff.flatten(ff.appIndexFiles());
             if (indices.length) {
-                grunt.log.ok("Application:");
+                log.info("Application:");
                 jsFiles = ff.flatten(ff.includeJsFiles());
-                grunt.log.ok('- Found ' + jsFiles.length + " Javascript-files.");
+                log.info('- Found ' + jsFiles.length + " Javascript-files.");
                 cssFiles = ff.flatten(ff.includeCssFiles());
-                grunt.log.ok('- Found ' + cssFiles.length + " CSS-files.");
+                log.info('- Found ' + cssFiles.length + " CSS-files.");
 
                 for (i=0; i < indices.length; i++) {
-                    grunt.log.ok('Updating ' + indices[i]);
+                    log.info('Updating ' + indices[i]);
                     buildIndex(indices[i], jsFiles, cssFiles);
                 }
             }
 
             indices = ff.flatten(ff.testIndexFiles());
             if (indices.length) {
-                grunt.log.ok("Unit Test:");
+                log.info("Unit Test:");
                 jsFiles = ff.flatten(ff.includeUnitTestJsFiles());
-                grunt.log.ok('- Found ' + jsFiles.length + " Javascript-files.");
+                log.info('- Found ' + jsFiles.length + " Javascript-files.");
                 cssFiles = ff.flatten(ff.includeUnitTestCssFiles());
-                grunt.log.ok('- Found ' + cssFiles.length + " CSS-files.");
+                log.info('- Found ' + cssFiles.length + " CSS-files.");
 
                 for (i=0; i < indices.length; i++) {
-                    grunt.log.ok('Updating ' + indices[i]);
+                    log.info('Updating ' + indices[i]);
                     buildIndex(indices[i], jsFiles, cssFiles);
                 }
             }
@@ -190,35 +191,35 @@ module.exports = function(grunt) {
 
             var i, dst;
 
-            grunt.log.ok("Build: dist");
-            grunt.log.ok("");
+            log.info("Build: dist");
+            log.info("");
 
-            grunt.log.ok("Copying media files...");
-            grunt.log.ok("");
+            log.info("Copying media files...");
+            log.info("");
             var matches = ff.distFilesUncompressed();
             for (i = 0; i < matches.length; i++) {
                 dst = path.join('dist', matches[i].dst);
-                grunt.log.ok(matches[i].dst + ' -> ' + dst);
+                log.info(matches[i].dst + ' -> ' + dst);
                 grunt.file.copy(matches[i].dst, dst);
             }
 
-            grunt.log.ok("Compressing CSS...");
-            grunt.log.ok("");
+            log.info("Compressing CSS...");
+            log.info("");
             var settings = {all: {files: {}}};
             settings.all.files['dist/' + ff.getConfig('name') + '.min.css'] = ff.flatten(ff.includeCssFiles());
             grunt.config.set('cssmin', settings);
             grunt.task.run('cssmin');
 
-            grunt.log.ok("Collecting Javascript...");
-            grunt.log.ok("");
+            log.info("Collecting Javascript...");
+            log.info("");
             settings = {all: {}};
             settings.all.src = ff.flatten(ff.includeJsFiles());
             settings.all.dest = 'dist/' + ff.getConfig('name') + '.js';
             grunt.config.set('concat', settings);
             grunt.task.run('concat');
 
-            grunt.log.ok("Compressing Javascript...");
-            grunt.log.ok("");
+            log.info("Compressing Javascript...");
+            log.info("");
             var banner = '';
             banner += '/* ' + package.name + ' v' + package.version + '\n';
             banner += ' * Copyright (c) ' + grunt.template.today("yyyy") + ' ' + package.author.name + '\n';
@@ -231,11 +232,11 @@ module.exports = function(grunt) {
             grunt.task.run('uglify');
 
             // Build index file(s).
-            grunt.log.ok("Building index...");
+            log.info("Building index...");
             var indices = ff.flatten(ff.appIndexFiles());
             for (i = 0; i < indices.length; i++) {
                 dst = 'dist/' + indices[i];
-                grunt.log.ok(indices[i] + ' -> ' + dst);
+                log.info(indices[i] + ' -> ' + dst);
                 grunt.file.copy(indices[i], dst);
                 buildIndex(dst, [ff.getConfig('name') + '.min.js'], [ff.getConfig('name') + '.min.css']);
             }
@@ -245,8 +246,8 @@ module.exports = function(grunt) {
 
             var settings;
 
-            grunt.log.ok("Build: verify");
-            grunt.log.ok("");
+            log.info("Build: verify");
+            log.info("");
             if (!what || what === "js") {
                 settings = {
                     all: ff.flatten(ff.srcFiles().concat(ff.otherFiles())),
@@ -285,12 +286,12 @@ module.exports = function(grunt) {
 
         version: function(version) {
             if (arguments.length === 0) {
-                grunt.log.ok("");
-                grunt.log.ok("Current version is", package.version);
-                grunt.log.ok("");
-                grunt.log.ok("You can make official release by giving new version number like 'x.y.z' or");
-                grunt.log.ok("you can start next release candidate by add postfix 'x.y.z-beta'.");
-                grunt.log.ok("To set new version, you run command: 'grunt version:x.y.z'");
+                log.info("");
+                log.info("Current version is", package.version);
+                log.info("");
+                log.info("You can make official release by giving new version number like 'x.y.z' or");
+                log.info("you can start next release candidate by add postfix 'x.y.z-beta'.");
+                log.info("To set new version, you run command: 'grunt version:x.y.z'");
             } else {
                 if (!version.match(/^\d+\.\d+\.\d+(-beta)?$/)) {
                     grunt.fail.fatal("Invalid version '" + version + "'.");
@@ -299,7 +300,7 @@ module.exports = function(grunt) {
                 var debugMode = (version.substr(version.length-4) === 'beta');
                 package.version = version;
                 grunt.file.write('package.json', JSON.stringify(package, null, 2));
-                grunt.log.ok("Set version", package.version, "to package.json.");
+                log.info("Set version", package.version, "to package.json.");
 
                 // Update other files.
                 var files = ff.flatten(ff.configFiles());
@@ -308,12 +309,12 @@ module.exports = function(grunt) {
                     var newSettings, settings = grunt.file.read(file);
                     newSettings = settings.replace(/^VERSION\s*=\s*'.*'/gm, "VERSION = '" + package.version + "'");
                     if (newSettings !== settings) {
-                        grunt.log.ok("Updated version", package.version, "to", file);
+                        log.info("Updated version", package.version, "to", file);
                         settings = newSettings;
                     }
                     newSettings = settings.replace(/^DEBUG\s*=\s[^;]*/gm, "DEBUG = " + debugMode.toString());
                     if (newSettings !== settings) {
-                        grunt.log.ok("Set the debug mode to", debugMode, "in", file);
+                        log.info("Set the debug mode to", debugMode, "in", file);
                     }
                     grunt.file.write(file, newSettings);
                 }
@@ -333,18 +334,18 @@ module.exports = function(grunt) {
                         count++;
                         if (!seen) {
                             seen = true;
-                            grunt.log.ok("");
-                            grunt.log.ok(("   " + files[i])["blue"]);
-                            grunt.log.ok("");
+                            log.info("");
+                            log.info(("   " + files[i])["blue"]);
+                            log.info("");
                         }
-                        grunt.log.ok(("Line " + j+1 + "")["green"], lines[j].trim());
+                        log.info(("Line " + j+1 + "")["green"], lines[j].trim());
                     }
                 }
             }
 
-            grunt.log.ok("");
-            grunt.log.ok(("TODO-entries open: " + count)["magenta"])
-            grunt.log.ok("");
+            log.info("");
+            log.info(("TODO-entries open: " + count)["magenta"])
+            log.info("");
             if (count && die === 'die') {
                 grunt.fail.fatal("There are unfinished TODO-entries that needs to be resolved.\n" +
                                  "Please cancel or implement them or gather them to the version plan.");
