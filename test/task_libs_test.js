@@ -1,14 +1,12 @@
-var grunt = require('grunt');
-var child_process = require('child_process');
+var runner = require('./runner.js');
 
 module.exports = {
 
     'Task `libs`': function(test) {
         test.expect(1);
-        var out = child_process.spawnSync('grunt', ['info'], {cwd: 'test/workdir'});
-        console.log(out.stdout.toString())
-        // TODO: Write actual test.
-        test.equal(1, 1);
+        runner.run('info');
+        test.ok(runner.hasLine("Project: cog_unittest"), "shows project name incorrectly");
+        // TODO: Write test for some sample file listings.
         test.done();
   }
 };

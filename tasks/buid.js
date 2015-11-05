@@ -349,7 +349,7 @@ module.exports = function(grunt) {
             }
 
             log.info("");
-            log.info(("TODO-entries open: " + count)["magenta"])
+            log.info(("TODO-entries open: " + count)["magenta"]);
             log.info("");
             if (count && die === 'die') {
                 grunt.fail.fatal("There are unfinished TODO-entries that needs to be resolved.\n" +

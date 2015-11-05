@@ -7,7 +7,7 @@ module.exports = function(grunt) {
             name: 'cog',
             cog_development: true,
             src: {
-                other: ['Gruntfile.js', 'tasks/*.js', 'test/settings.js']
+                other: ['Gruntfile.js', 'tasks/*.js', 'test/runner.js']
             },
             test: {
                 unit: 'test/*_test.js'
