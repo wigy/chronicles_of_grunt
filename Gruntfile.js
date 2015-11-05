@@ -11,16 +11,15 @@ module.exports = function(grunt) {
         options: {
             name: 'cog',
             cog_development: true,
+            work_dir: 'test/work_dir',
             src: {
-                code: 'test/sample.js',
                 other: ['Gruntfile.js', 'tasks/*.js']
             },
             test: {
-                unit: 'test/*_spec.js'
+                unit: 'test/*_test.js'
             },
             external: {
-                 unittestlib: ['jasmine'],
-                 unittestcss: ['jasmine'],
+                 unittestlib: ['nodeunit']
             },
             index: {
                 test: 'test.html'
@@ -30,7 +29,6 @@ module.exports = function(grunt) {
   });
 
   grunt.loadTasks('tasks/');
-  grunt.loadTasks('node_modules/grunt-contrib-nodeunit/tasks/');
 
   // Default task.
   grunt.registerTask('default', ['usage']);

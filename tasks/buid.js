@@ -35,6 +35,7 @@ module.exports = function(grunt) {
         grunt.loadNpmTasks('grunt-available-tasks');
         grunt.loadNpmTasks('grunt-contrib-jasmine');
         grunt.loadNpmTasks('grunt-contrib-csslint');
+        grunt.loadNpmTasks('grunt-contrib-nodeunit');
     } else {
         grunt.loadTasks('node_modules/chronicles_of_grunt/node_modules/grunt-contrib-jshint/tasks/');
         grunt.loadTasks('node_modules/chronicles_of_grunt/node_modules/grunt-contrib-cssmin/tasks/');
@@ -43,6 +44,7 @@ module.exports = function(grunt) {
         grunt.loadTasks('node_modules/chronicles_of_grunt/node_modules/grunt-available-tasks/tasks/');
         grunt.loadTasks('node_modules/chronicles_of_grunt/node_modules/grunt-contrib-jasmine/tasks/');
         grunt.loadTasks('node_modules/chronicles_of_grunt/node_modules/grunt-contrib-csslint/tasks/');
+        grunt.loadTasks('node_modules/chronicles_of_grunt/node_modules/grunt-contrib-nodeunit/tasks/');
     }
 
     /**
@@ -344,21 +346,41 @@ module.exports = function(grunt) {
 
         test: function(testType) {
 
+            var settings;
+
+            // Select test runner.
+            var type = 'nodeunit';
+            // TODO: Check the library config and use it. Default to error.
+
+            // Collect files for test.
             var src = ff.flatten(ff.srcFiles());
             var specs = ff.flatten(ff.unitTestFiles());
             var libs = ff.flatten(ff.extLibFiles());
 
-            var settings = {
-                all: {
-                    src: src,
-                    options: {
-                        specs: specs,
-                        vendor: libs
-                    },
-                }
-            };
-            grunt.config.set('jasmine', settings);
-            grunt.task.run('jasmine');
+            // Run Jasmine.
+            if (type === 'jasmine') {
+                settings = {
+                    all: {
+                        src: src,
+                        options: {
+                            specs: specs,
+                            vendor: libs
+                        },
+                    }
+                };
+                grunt.config.set('jasmine', settings);
+                grunt.task.run('jasmine');
+            }
+
+            // Run nodeunit.
+            else if (type === 'nodeunit') {
+                settings = {
+                    all: specs,
+                    options: {}
+                };
+                grunt.config.set('nodeunit', settings);
+                grunt.task.run('nodeunit');
+            }
         },
     };
 
@@ -372,7 +394,7 @@ module.exports = function(grunt) {
     grunt.registerTask('test', 'Run all tests.', build.test);
 
     grunt.registerTask('usage', 'Handle all steps for standalone application Javascript development.', function(op) {
-        var excludes = ['default', 'usage', 'availabletasks', 'jshint', 'uglify', 'cssmin', 'concat', 'jasmine'];
+        var excludes = ['default', 'usage', 'availabletasks', 'jshint', 'uglify', 'cssmin', 'concat', 'jasmine', 'csslint', 'nodeunit'];
         grunt.initConfig({availabletasks: {tasks: {options: {filter: 'exclude', tasks: excludes}}}});
         grunt.task.run(['availabletasks']);
     });

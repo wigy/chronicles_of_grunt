@@ -1,5 +1,6 @@
 (function(){
 
+// TODO: Rename this file.
 var grunt = require('grunt');
 
 module.exports = {
@@ -18,6 +19,7 @@ module.exports = {
     'first test group': function(test) {
         // TODO: Write tests for every task we have.'
         // TODO: How to silence grunt?
+        test.expect(1);
         grunt.task.run('version');
         test.equal(false, false);
         test.done();
