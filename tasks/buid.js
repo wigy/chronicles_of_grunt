@@ -322,6 +322,7 @@ module.exports = function(grunt) {
 
         todo: function(die) {
 
+            var count = 0;
             var files = ff.flatten(ff.workTextFiles());
             var TODO = "TODO" + ":";
             for (var i=0; i<files.length; i++) {
@@ -329,18 +330,24 @@ module.exports = function(grunt) {
                 var lines = grunt.file.read(files[i]).split("\n");
                 for (var j=0; j<lines.length; j++) {
                     if( lines[j].indexOf(TODO) >= 0) {
-                        if (die === 'die') {
-                            grunt.fail.fatal("There are unfinished TODO-entries in line " + (j+1) +" of '" + files[i] + "'.\nSee 'grunt todo' for list of them.");
-                        }
+                        count++;
                         if (!seen) {
                             seen = true;
                             grunt.log.ok("");
-                            grunt.log.ok(("[ " + files[i] + "]")["blue"]);
+                            grunt.log.ok(("   " + files[i])["blue"]);
                             grunt.log.ok("");
                         }
                         grunt.log.ok(("Line " + j+1 + "")["green"], lines[j].trim());
                     }
                 }
+            }
+
+            grunt.log.ok("");
+            grunt.log.ok(("TODO-entries open: " + count)["magenta"])
+            grunt.log.ok("");
+            if (count && die === 'die') {
+                grunt.fail.fatal("There are unfinished TODO-entries that needs to be resolved.\n" +
+                                 "Please cancel or implement them or gather them to the version plan.");
             }
         },
 
