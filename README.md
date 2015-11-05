@@ -111,6 +111,9 @@ Other Javascript-files that are not part of the actual distribution.
 ### `index.app`, `index.test`
 Starting files for the application and for testing.
 
+### `log_file`
+If set, the output of tasks are written to that file.
+
 ## Tasks
 
 ### Task: `usage`

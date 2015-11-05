@@ -6,16 +6,14 @@ module.exports = function(grunt) {
         options: {
             name: 'cog_unittest',
             src: {
-                other: []
             },
             index: {
-                test: 'index.html'
             },
         }
     },
   });
 
-  grunt.loadTasks('../tasks/');
+  grunt.loadTasks('../../tasks/');
 
   // Default task.
   grunt.registerTask('default', ['usage']);

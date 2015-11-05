@@ -34,8 +34,8 @@ module.exports = function(grunt) {
         modules = 'node_modules/';
     } else if (fs.existsSync('node_modules/chronicles_of_grunt/node_modules/grunt-available-tasks')) {
         modules = 'node_modules/chronicles_of_grunt/node_modules/';
-    } else if (fs.existsSync('../node_modules/grunt-available-tasks')) {
-        modules = '../node_modules/';
+    } else if (fs.existsSync('../../node_modules/grunt-available-tasks')) {
+        modules = '../../node_modules/';
     } else {
         grunt.fail.fatal("Cannot find module path.");
     }
