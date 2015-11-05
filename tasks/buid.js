@@ -24,29 +24,34 @@ module.exports = function(grunt) {
     // Load Node-modules.
     var path = require('path');
     var colors = require('colors');
+    var fs = require('fs');
     var ff = require('./file-filter.js')(grunt);
     var log = require('./log.js')(grunt);
 
     // Load tasks needed.
-    if (ff.getConfig('cog_development')) {
-        grunt.loadNpmTasks('grunt-contrib-jshint');
-        grunt.loadNpmTasks('grunt-contrib-cssmin');
-        grunt.loadNpmTasks('grunt-contrib-uglify');
-        grunt.loadNpmTasks('grunt-contrib-concat');
-        grunt.loadNpmTasks('grunt-available-tasks');
-        grunt.loadNpmTasks('grunt-contrib-jasmine');
-        grunt.loadNpmTasks('grunt-contrib-csslint');
-        grunt.loadNpmTasks('grunt-contrib-nodeunit');
+    var modules;
+    if (fs.existsSync('node_modules/grunt-available-tasks')) {
+        modules = 'node_modules/';
+    } else if (fs.existsSync('node_modules/chronicles_of_grunt/node_modules/grunt-available-tasks')) {
+        modules = 'node_modules/chronicles_of_grunt/node_modules/';
+    } else if (fs.existsSync('../node_modules/grunt-available-tasks')) {
+        modules = '../node_modules/';
     } else {
-        grunt.loadTasks('node_modules/chronicles_of_grunt/node_modules/grunt-contrib-jshint/tasks/');
-        grunt.loadTasks('node_modules/chronicles_of_grunt/node_modules/grunt-contrib-cssmin/tasks/');
-        grunt.loadTasks('node_modules/chronicles_of_grunt/node_modules/grunt-contrib-uglify/tasks/');
-        grunt.loadTasks('node_modules/chronicles_of_grunt/node_modules/grunt-contrib-concat/tasks/');
-        grunt.loadTasks('node_modules/chronicles_of_grunt/node_modules/grunt-available-tasks/tasks/');
-        grunt.loadTasks('node_modules/chronicles_of_grunt/node_modules/grunt-contrib-jasmine/tasks/');
-        grunt.loadTasks('node_modules/chronicles_of_grunt/node_modules/grunt-contrib-csslint/tasks/');
-        grunt.loadTasks('node_modules/chronicles_of_grunt/node_modules/grunt-contrib-nodeunit/tasks/');
+        grunt.fail.fatal("Cannot find module path.");
     }
+
+    if (ff.getConfig('cog_development')) {
+        grunt.loadNpmTasks('grunt-shell');
+    }
+
+    grunt.loadTasks(modules + 'grunt-contrib-jshint/tasks/');
+    grunt.loadTasks(modules + 'grunt-contrib-cssmin/tasks/');
+    grunt.loadTasks(modules + 'grunt-contrib-uglify/tasks/');
+    grunt.loadTasks(modules + 'grunt-contrib-concat/tasks/');
+    grunt.loadTasks(modules + 'grunt-available-tasks/tasks/');
+    grunt.loadTasks(modules + 'grunt-contrib-jasmine/tasks/');
+    grunt.loadTasks(modules + 'grunt-contrib-csslint/tasks/');
+    grunt.loadTasks(modules + 'grunt-contrib-nodeunit/tasks/');
 
     /**
      * Refresh HTML-file to use the given Javascript and CSS files.

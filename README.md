@@ -195,7 +195,7 @@ Licensed under the GPL-2.0 license.
 
 ### Not Yet Done
 
-- Check if `work_dir` works correctly and fix.
+- Check if `work_dir` is needed and remove.
 - Add support for configurable `dist` directory.
 
 ## Future Ideas
