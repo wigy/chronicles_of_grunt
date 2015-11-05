@@ -2,11 +2,6 @@ module.exports = function(grunt) {
 
   // Project configuration.
   grunt.initConfig({
-    // TODO: Move to build.js when configuration shows nodeunit.
-    nodeunit: {
-        all: ['test/*_test.js'],
-        options: {}
-    },
     build: {
         options: {
             name: 'cog',
