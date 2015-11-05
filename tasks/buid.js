@@ -117,7 +117,7 @@ module.exports = function(grunt) {
                 var matches = fn();
                 if (matches.length) {
                     log.info("");
-                    log.info("## " + title + ":");
+                    log.info((title + ":")['green']);
                     for (var i = 0; i < matches.length; i++) {
                         if (matches[i].src === matches[i].dst) {
                             log.info(matches[i].dst);
