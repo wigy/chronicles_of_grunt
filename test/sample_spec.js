@@ -9,3 +9,6 @@ describe('Chronicles of Grunt', function() {
     });
 
 });
+
+// TODO: Drop this file.
+// TODO: Ability to detect testing system based on configured external testing lib.
