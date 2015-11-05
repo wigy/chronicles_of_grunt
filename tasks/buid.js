@@ -346,11 +346,27 @@ module.exports = function(grunt) {
 
         test: function(testType) {
 
+            /**
+             * Check the selected libraries for testing system.
+             */
+            function configuredUnitTesting() {
+                var lib = ff.getConfig('external.unittestlib');
+                if (lib.indexOf('jasmine') >= 0) {
+                    return 'jasmine';
+                }
+                if (lib.indexOf('nodeunit') >= 0) {
+                    return 'nodeunit';
+                }
+                return null;
+            }
+
             var settings;
 
             // Select test runner.
-            var type = 'nodeunit';
-            // TODO: Check the library config and use it. Default to error.
+            var type = configuredUnitTesting();
+            if (!type) {
+                grunt.fail.fatal("Testing system is not configured. Please set external.unittestlib to the 'jasmine' or 'nodeunit'.");
+            }
 
             // Collect files for test.
             var src = ff.flatten(ff.srcFiles());
