@@ -33,27 +33,27 @@ module.exports = function(grunt) {
         },
     };
 
-    // Configuration.
-    var config = grunt.config.get('build') || {options: {}};
-
     /**
 	 * Safe fetch of configuration variable.
 	 */
 	function getConfig(name, def) {
-		var ret = config.options;
-		if (!name) {
-			return ret;
-		}
-		var parts = name.split('.');
-		for (var i=0; i < parts.length; i++) {
-			if (!ret) {
-				return def;
-			}
-			ret = ret[parts[i]];
-		}
 
-		return ret || def;
-	}
+        var config = grunt.config.get('build') || {options: {}};
+        var ret = config.options;
+
+        if (!name) {
+            return ret;
+        }
+        var parts = name.split('.');
+        for (var i=0; i < parts.length; i++) {
+            if (!ret) {
+                return def;
+            }
+            ret = ret[parts[i]];
+        }
+
+        return ret || def;
+    }
 
     /**
      * Collect list of source file patterns and expand them to single files.

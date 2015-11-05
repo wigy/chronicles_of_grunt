@@ -203,3 +203,5 @@ Licensed under the GPL-2.0 license.
 * A task to find every file that does not belong to any recognized category in the repository.
     - Add cofiguration variable `ignore` to silence complaining.
 * Support for testing system, which can test tasks of CoG (perhaps nodeunit).
+* Test for `dist`, `index`, `info`, `libs`, `todo`, `verify` and `version` tasks.
+* Alternative handling for external, where ['jquery', 'bootstrap', 'jasmine'] will automatically added to correct categories.
