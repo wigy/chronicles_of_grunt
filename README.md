@@ -163,6 +163,12 @@ Licensed under the GPL-2.0 license.
 
 ## Release History
 
+* 1.4.0
+    - Configurable task output that can be written to a file.
+    - Functional testing system and a sample project for unit-testing.
+    - Unit-test for `index` task.
+    - Unit-test for `todo` task.
+    - Unit-test for `verify` task.
 * 1.3.1
     - Add CSS checking to `verify` task.
 * 1.3.0
@@ -194,16 +200,10 @@ Licensed under the GPL-2.0 license.
 
 ### Done
 
-- Configurable task output that can be written to a file.
-- Functional testing system and a sample project for unit-testing.
-- Unit-test for `index` task.
-- Unit-test for `todo` task.
-- Unit-test for `verify` task.
-
 ### Not Yet Done
 
-- Check if `work_dir` is needed and remove.
-- Add support for configurable `dist` directory.
+    - Check if `work_dir` is needed and remove.
+    - Add support for configurable `dist` directory.
 
 ## Future Ideas
 
