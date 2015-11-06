@@ -202,7 +202,6 @@ Licensed under the GPL-2.0 license.
 
 ### Not Yet Done
 
-    - Check if `work_dir` is needed and remove.
     - Add support for configurable `dist` directory.
 
 ## Future Ideas
@@ -213,6 +212,5 @@ Licensed under the GPL-2.0 license.
     - Add cofiguration variable `ignore` to silence complaining.
     - Also check if there are rules not matching anything in the configuration.
     - Maybe make it part of `verify` task.
-* Support for testing system, which can test tasks of CoG (perhaps nodeunit).
 * Test for `dist`, `index`, `libs`, `version` tasks.
 * Alternative handling for external, where ['jquery', 'bootstrap', 'jasmine'] will automatically added to correct categories.
