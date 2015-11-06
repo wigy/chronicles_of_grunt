@@ -1,10 +1,13 @@
 
 var child_process = require('child_process');
+var fs = require('fs');
 
 // Storage for the output lines of the latest run.
 var output = [];
 // Parsed version of the ouput.
 var parsed = {};
+// Storage for saved files.
+var saved = {};
 
 module.exports = {
 
@@ -24,6 +27,29 @@ module.exports = {
             }
         }
         return out;
+    },
+
+    /**
+     * Get the content of a file in the test directory.
+     */
+    read: function(filename) {
+        return fs.readFileSync('test/workdir/' + filename).toString();
+    },
+
+    /**
+     * Save the given file to the temporary storage.
+     */
+    save: function(filename) {
+        saved[filename] = module.exports.read(filename);
+    },
+
+
+    /**
+     * Restore the content of the given file from the temporary storage and delete the copy.
+     */
+    restore: function(filename) {
+        fs.writeFileSync('test/workdir/' + filename, saved[filename]);
+        delete saved[filename];
     },
 
     /**

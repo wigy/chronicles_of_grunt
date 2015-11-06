@@ -103,16 +103,16 @@ module.exports = function(grunt) {
                 var srcPrefix = '';
                 if (specs.src.substr(0,12) === 'node_modules') {
                     srcPrefix = prefix();
-                    if (srcPrefix.substr(-13) === 'node_modules/')
+                    if (srcPrefix.substr(-13) === 'node_modules/') {
                         srcPrefix = srcPrefix.substr(0, srcPrefix.length - 13);
+                    }
                 }
 
                 // Here we expand pattens from 'src' and combine them with 'dst'.
                 src = grunt.file.expand(srcPrefix + specs.src);
 
                 // Check required files.
-                if (src.length == 0 && specs.required) {
-                    console.log(srcPrefix, specs)
+                if (src.length === 0 && specs.required) {
                     grunt.fail.fatal("Cannot find required files '" + specs.src + "'.");
                 }
 

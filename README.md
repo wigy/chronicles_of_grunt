@@ -200,9 +200,9 @@ Licensed under the GPL-2.0 license.
 
 ### Done
 
-### Not Yet Done
+* Test for `index` task.
 
-    - Add support for configurable `dist` directory.
+### Not Yet Done
 
 ## Future Ideas
 
@@ -212,5 +212,5 @@ Licensed under the GPL-2.0 license.
     - Add cofiguration variable `ignore` to silence complaining.
     - Also check if there are rules not matching anything in the configuration.
     - Maybe make it part of `verify` task.
-* Test for `dist`, `index`, `libs`, `version` tasks.
+* Test for `dist`, `libs`, `version` tasks.
 * Alternative handling for external, where ['jquery', 'bootstrap', 'jasmine'] will automatically added to correct categories.
