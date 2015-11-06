@@ -414,7 +414,8 @@ module.exports = function(grunt) {
     grunt.registerTask('test', 'Run all tests.', build.test);
 
     grunt.registerTask('usage', 'Handle all steps for standalone application Javascript development.', function(op) {
-        var excludes = ['default', 'usage', 'availabletasks', 'jshint', 'uglify', 'cssmin', 'concat', 'jasmine', 'csslint', 'nodeunit'];
+        var excludes = ['default', 'usage', 'availabletasks', 'jshint', 'uglify', 'cssmin', 'concat', 'jasmine',
+                        'csslint', 'nodeunit', 'shell'];
         grunt.initConfig({availabletasks: {tasks: {options: {filter: 'exclude', tasks: excludes}}}});
         grunt.task.run(['availabletasks']);
     });
