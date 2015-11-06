@@ -29,16 +29,7 @@ module.exports = function(grunt) {
     var log = require('./log.js')(grunt);
 
     // Load tasks needed.
-    var modules;
-    if (fs.existsSync('node_modules/grunt-available-tasks')) {
-        modules = 'node_modules/';
-    } else if (fs.existsSync('node_modules/chronicles_of_grunt/node_modules/grunt-available-tasks')) {
-        modules = 'node_modules/chronicles_of_grunt/node_modules/';
-    } else if (fs.existsSync('../../node_modules/grunt-available-tasks')) {
-        modules = '../../node_modules/';
-    } else {
-        grunt.fail.fatal("Cannot find module path.");
-    }
+    var modules = ff.prefix();
 
     if (ff.getConfig('cog_development')) {
         grunt.loadNpmTasks('grunt-shell');

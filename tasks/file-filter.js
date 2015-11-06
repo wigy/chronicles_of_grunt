@@ -2,6 +2,7 @@ module.exports = function(grunt) {
 
     // Load Node-modules.
     var path = require('path');
+    var fs = require('fs');
 
     // Known library file specifications.
     var known = {
@@ -32,6 +33,23 @@ module.exports = function(grunt) {
             bootstrap: {src: 'node_modules/bootstrap/dist/fonts/*', dst: 'fonts', drop: 'node_modules/bootstrap/dist/fonts/'},
         },
     };
+
+    /**
+     * Find the path prefix to the node_modules containing needed utilities.
+     */
+    function prefix() {
+        var ret;
+        if (fs.existsSync('node_modules/grunt-available-tasks')) {
+            ret = 'node_modules/';
+        } else if (fs.existsSync('node_modules/chronicles_of_grunt/node_modules/grunt-available-tasks')) {
+            ret = 'node_modules/chronicles_of_grunt/node_modules/';
+        } else if (fs.existsSync('../../node_modules/grunt-available-tasks')) {
+            ret = '../../node_modules/';
+        } else {
+            grunt.fail.fatal("Cannot find module path.");
+        }
+        return ret;
+    }
 
     /**
 	 * Safe fetch of configuration variable.
@@ -80,8 +98,10 @@ module.exports = function(grunt) {
                     ret = ret.concat(files(specs[i], category));
                 }
             } else if (typeof(specs) === 'object') {
+
                 // Here we expand pattens from 'src' and combine them with 'dst'.
                 src = grunt.file.expand(specs.src);
+
                 for (j=0; j < src.length; j++) {
                     var drop = specs.drop;
                     if (!drop) {
@@ -362,6 +382,7 @@ module.exports = function(grunt) {
     return {
         flatten: flatten,
         getConfig: getConfig,
+        prefix: prefix,
 
         extLibFiles: extLibFiles,
         extLibMapFiles: extLibMapFiles,
