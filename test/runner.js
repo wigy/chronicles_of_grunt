@@ -43,8 +43,15 @@ module.exports = {
      * If a line ends with (:) then it is considered as a subtitle and will collect lines
      * under it under that name in the result object. If colon is in the middle, then left
      * side is taken as the name and the right side as a value.
+     *
+     * If `subtitle` is given, then the parsed content of that section is returned.
      */
-    parse: function() {
+    parse: function(subtitle) {
+
+        if (subtitle) {
+            var ret = module.exports.parse();
+            return ret[subtitle];
+        }
 
         if (Object.keys(parsed).length) {
             return parsed;

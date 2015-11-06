@@ -196,6 +196,7 @@ Licensed under the GPL-2.0 license.
 
 - Configurable output to make testing easier.
 - Unit-test for `index` task.
+- Unit-test for `todo` task.
 - Functional testing system and a sample project for unit-testing.
 
 ### Not Yet Done
@@ -212,5 +213,5 @@ Licensed under the GPL-2.0 license.
     - Also check if there are rules not matching anything in the configuration.
     - Maybe make it part of `verify` task.
 * Support for testing system, which can test tasks of CoG (perhaps nodeunit).
-* Test for `dist`, `index`, `libs`, `todo`, `verify` and `version` tasks.
+* Test for `dist`, `index`, `libs`, `verify` and `version` tasks.
 * Alternative handling for external, where ['jquery', 'bootstrap', 'jasmine'] will automatically added to correct categories.
