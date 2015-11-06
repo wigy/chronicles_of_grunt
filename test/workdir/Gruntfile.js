@@ -25,7 +25,7 @@ module.exports = function(grunt) {
   });
 
   grunt.loadTasks('../../tasks/');
-  // TODO: Test.
+  // TODO: Test in Gruntfile.js.
   // Default task.
   grunt.registerTask('default', ['usage']);
 };

@@ -57,7 +57,7 @@ module.exports = {
             return parsed;
         }
 
-        var subtitle;
+        subtitle = '';
         for (var i = 0; i < output.length; i++) {
             if (output[i] === 'Done, without errors.') {
                 break;
@@ -67,7 +67,7 @@ module.exports = {
                 parsed[match[1].trim()] = match[2].trim();
                 continue;
             }
-            if (output[i].substr(-1,1) == ':') {
+            if (output[i].substr(-1,1) === ':') {
                 subtitle = output[i].substr(0, output[i].length - 1).trim();
                 continue;
             }
@@ -84,5 +84,4 @@ module.exports = {
 
         return parsed;
     }
-    // TODO: Add regex based lookup and return all macthed expressions as an array (or single match as is).
 };

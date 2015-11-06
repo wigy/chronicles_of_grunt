@@ -15,9 +15,6 @@ module.exports = function(grunt) {
             external: {
                  unittestlib: ['nodeunit']
             },
-            index: {
-                test: 'test.html'
-            },
         }
     },
   });
