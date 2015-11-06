@@ -14,7 +14,8 @@ module.exports = function(grunt) {
               config: 'src/config.js',
               models: 'src/models.js',
               data: 'src/data/**/*.js',
-              css: ['src/*.css']
+              css: ['src/*.css'],
+              other: ['Gruntfile.js']
             },
             index: {
               app: 'index.html'
@@ -24,7 +25,7 @@ module.exports = function(grunt) {
   });
 
   grunt.loadTasks('../../tasks/');
-
+  // TODO: Test.
   // Default task.
   grunt.registerTask('default', ['usage']);
 };
