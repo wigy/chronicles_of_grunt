@@ -6,9 +6,10 @@ module.exports = function(grunt) {
         options: {
             name: 'cog_unittest',
             external: {
-                lib: ['bootstrap'],
-                css: ['bootstrap'],
-                fonts: ['bootstrap'],
+                lib: [],
+                css: [],
+                unittestlib: ['jasmine'],
+                unittestcss: ['jasmine'],
             },
             src: {
               config: 'src/config.js',

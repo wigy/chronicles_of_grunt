@@ -7,19 +7,14 @@ module.exports = function(grunt) {
     // Known library file specifications.
     var known = {
         lib: {
-            coa: {src: 'node_modules/chronicles_of_angular/lib/**', dst: 'lib/chronicles_of_angular', drop: 'node_modules/chronicles_of_angular/lib'},
+            coa: {src: 'node_modules/chronicles_of_angular/dist/**', dst: 'lib/chronicles_of_angular', drop: 'node_modules/chronicles_of_angular/lib'},
             jquery: {src: 'node_modules/jquery/dist/jquery.min.*', dst: 'lib', drop: 'node_modules/jquery/dist'},
             bootstrap: {src: 'node_modules/bootstrap/dist/js/bootstrap.min.js', dst: 'lib', drop: 'node_modules/bootstrap/dist/js'},
             angular: {src: 'node_modules/angular/angular.min.{js,js.map}', dst: 'lib', drop: 'node_modules/angular/'},
             jasmine: [
-                // Developer version for CoG.
                 {src: 'node_modules/grunt-contrib-jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.js', dst: null},
                 {src: 'node_modules/grunt-contrib-jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine-html.js', dst: null},
                 {src: 'node_modules/grunt-contrib-jasmine/node_modules/jasmine-core/lib/jasmine-core/boot.js', dst: null},
-                // For actual use.
-                {src: 'node_modules/chronicles_of_grunt/node_modules/grunt-contrib-jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.js', dst: null},
-                {src: 'node_modules/chronicles_of_grunt/node_modules/grunt-contrib-jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine-html.js', dst: null},
-                {src: 'node_modules/chronicles_of_grunt/node_modules/grunt-contrib-jasmine/node_modules/jasmine-core/lib/jasmine-core/boot.js', dst: null},
             ],
         },
         css: {
@@ -83,9 +78,13 @@ module.exports = function(grunt) {
 
         if (specs) {
             if (typeof(specs) === 'string') {
+                // Handle known file collections.
                 if (known[category] && specs in known[category]) {
-                    ret = ret.concat(files(known[category][specs], category));
+                    var spec = known[category][specs];
+                    spec.required = true;
+                   ret = ret.concat(files(spec, category));
                 } else if (/[^a-zA-Z]/.test(specs)) {
+                    // All strings containing non-alpha characters are direct file patterns.
                     src = grunt.file.expand(specs);
                     for (i=0; i < src.length; i++) {
                         ret.push({src: src[i], dst: src[i], drop: ''});
@@ -94,14 +93,30 @@ module.exports = function(grunt) {
                     grunt.fail.fatal("Unknown build file specification '" + specs +"' for '" + category + "'.");
                 }
             } else if (specs instanceof Array) {
+                // Handle array of specs one by one.
                 for (i = 0; i < specs.length; i++) {
                     ret = ret.concat(files(specs[i], category));
                 }
             } else if (typeof(specs) === 'object') {
 
-                // Here we expand pattens from 'src' and combine them with 'dst'.
-                src = grunt.file.expand(specs.src);
+                // Calculate path prefix for file sources.
+                var srcPrefix = '';
+                if (specs.src.substr(0,12) === 'node_modules') {
+                    srcPrefix = prefix();
+                    if (srcPrefix.substr(-13) === 'node_modules/')
+                        srcPrefix = srcPrefix.substr(0, srcPrefix.length - 13);
+                }
 
+                // Here we expand pattens from 'src' and combine them with 'dst'.
+                src = grunt.file.expand(srcPrefix + specs.src);
+
+                // Check required files.
+                if (src.length == 0 && specs.required) {
+                    console.log(srcPrefix, specs)
+                    grunt.fail.fatal("Cannot find required files '" + specs.src + "'.");
+                }
+
+                // Calculate resulting specifications.
                 for (j=0; j < src.length; j++) {
                     var drop = specs.drop;
                     if (!drop) {
@@ -109,22 +124,29 @@ module.exports = function(grunt) {
                         if (specs.dst === null) {
                             drop = '';
                         } else {
+                            // Otherwise look for the last directory not having wild-cards.
                             drop = specs.src;
                             while (drop.indexOf('*') >= 0) {
                                 drop = path.dirname(drop);
                             }
                         }
                     }
+                    // Construct final file description.
                     file = {};
+                    // Use source path as is and we can skip directories.
                     file.src = src[j];
                     if (grunt.file.isDir(file.src)) {
                         continue;
                     }
-                    dst = src[j];
+                    // Destination path is calculated.
+                    // Drop source prefix.
+                    dst = src[j].substr(srcPrefix.length);
+                    // Drop explicit dropping.
                     if (dst.substr(0, drop.length) === drop) {
-                        dst = src[j].substr(drop.length);
+                        dst = dst.substr(drop.length);
                     }
-                    file.dst = path.join(getConfig('work_dir', '.'), specs.dst === null ? '' : specs.dst || category, dst);
+                    // Add also explicit destination.
+                    file.dst = path.join(specs.dst === null ? '' : specs.dst, dst);
                     ret.push(file);
                 }
             }
