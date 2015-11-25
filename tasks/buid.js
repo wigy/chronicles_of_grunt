@@ -459,7 +459,7 @@ module.exports = function(grunt) {
 
     grunt.registerTask('usage', 'Display summary of available tasks.', function() {
         var excludes = ['default', 'usage', 'availabletasks', 'jshint', 'uglify', 'cssmin', 'concat', 'jasmine',
-                        'csslint', 'nodeunit', 'shell', 'prerelase', 'postrelease'];
+                        'csslint', 'nodeunit', 'shell', 'prerelease', 'postrelease'];
         grunt.initConfig({availabletasks: {tasks: {options: {filter: 'exclude', tasks: excludes}}}});
         grunt.task.run(['availabletasks']);
     });

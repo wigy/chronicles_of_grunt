@@ -163,6 +163,9 @@ Licensed under the GPL-2.0 license.
 
 ## Release History
 
+* 1.5.0
+    - Test for `index` task.
+    - Task `release` to run all checks before updating release history in README.md and updating version.
 * 1.4.0
     - Configurable task output that can be written to a file.
     - Functional testing system and a sample project for unit-testing.
@@ -200,17 +203,19 @@ Licensed under the GPL-2.0 license.
 
 ### Done
 
-* Test for `index` task.
-* Task `release` to run all checks before updating release history in README.md and updating version.
-
 ### Not Yet Done
+
+* Support for doc-file like README.md and include them for TODO-checking.
+* Test for `version` task.
+* Test for `release` task.
 
 ## Future Ideas
 
-* Support for doc-file like README.md and include them for TODO-checking.
 * A task to find every file that does not belong to any recognized category in the repository.
     - Add cofiguration variable `ignore` to silence complaining.
     - Also check if there are rules not matching anything in the configuration.
-    - Maybe make it part of `verify` task.
-* Test for `dist`, `libs`, `version` tasks.
+    - Make it part of `release` using 'die'-argument just like in `todo`.
+* Test for `dist` task.
+* Test for `libs` task.
+* Show "Not Yet Done" section from this file with `todo`.
 * Alternative handling for external, where ['jquery', 'bootstrap', 'jasmine'] will automatically added to correct categories.

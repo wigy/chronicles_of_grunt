@@ -17,7 +17,7 @@ module.exports = function(grunt) {
      */
     Readme.prototype.release = function(version) {
 
-        this.release_history.splice(0,0, {version: version, changes: this.next_version.done})
+        this.release_history.splice(0,0, {version: version, changes: this.next_version.done});
         this.next_version.done = [];
     };
 
