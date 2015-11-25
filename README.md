@@ -210,6 +210,7 @@ Licensed under the GPL-2.0 license.
 * Support for doc-file like README.md and include them for TODO-checking.
 * Test for `version` task.
 * Test for `release` task.
+* Check for tabs in `verify`.
 
 ## Future Ideas
 

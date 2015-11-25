@@ -12,16 +12,15 @@ module.exports = function(grunt) {
             bootstrap: {src: 'node_modules/bootstrap/dist/js/bootstrap.min.js', dst: 'lib', drop: 'node_modules/bootstrap/dist/js'},
             angular: {src: 'node_modules/angular/angular.min.{js,js.map}', dst: 'lib', drop: 'node_modules/angular/'},
             jasmine: [
-                {src: 'node_modules/grunt-contrib-jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.js', dst: null},
-                {src: 'node_modules/grunt-contrib-jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine-html.js', dst: null},
-                {src: 'node_modules/grunt-contrib-jasmine/node_modules/jasmine-core/lib/jasmine-core/boot.js', dst: null},
+                {src: 'node_modules/grunt-contrib-jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.js', dst: null, drop: ''},
+                {src: 'node_modules/grunt-contrib-jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine-html.js', dst: null, drop: ''},
+                {src: 'node_modules/grunt-contrib-jasmine/node_modules/jasmine-core/lib/jasmine-core/boot.js', dst: null, drop: ''},
             ],
         },
         css: {
             bootstrap: {src: 'node_modules/bootstrap/dist/css/bootstrap.min.css', dst: 'css', drop: 'node_modules/bootstrap/dist/css/'},
             jasmine: [
                 {src: 'node_modules/grunt-contrib-jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.css', dst: null},
-                {src: 'node_modules/chronicles_of_grunt/node_modules/grunt-contrib-jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.css', dst: null},
             ],
         },
         fonts: {
@@ -123,7 +122,7 @@ module.exports = function(grunt) {
                 // Calculate resulting specifications.
                 for (j=0; j < src.length; j++) {
                     var drop = specs.drop;
-                    if (!drop) {
+                    if (!drop && drop !=='') {
                         // If dst is null, then we keep the file where it is originally.
                         if (specs.dst === null) {
                             drop = '';
@@ -150,7 +149,7 @@ module.exports = function(grunt) {
                         dst = dst.substr(drop.length);
                     }
                     // Add also explicit destination.
-                    file.dst = path.join(specs.dst === null ? '' : specs.dst, dst);
+                    file.dst = path.join(specs.dst === null ? srcPrefix : specs.dst, dst);
                     ret.push(file);
                 }
             }
