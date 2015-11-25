@@ -152,6 +152,10 @@ file. If *version* is not given, then the current version is given.
 Display all remaining TODO-entries found from the source code. Additional argument
 `todo:die` causes the script end with an error, if any TODO-entries are found.
 
+### Task: `release`
+
+Run all checks for code and then update README.md file and the version.
+
 ## License
 
 Copyright (c) 2015 Tommi Ronkainen
