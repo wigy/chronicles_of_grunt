@@ -39,7 +39,6 @@ grunt.initConfig({
   build: {
     options: {
     name: "time2exercise",
-    work_dir: ".",
     external: {
         lib: ['angular', 'jquery', 'bootstrap', 'coa'],
         css: ['bootstrap'],
@@ -69,9 +68,6 @@ grunt.initConfig({
 
 ### `name`
 This is a code name of the project consisting of alphanumeric characters.
-
-### `work_dir`
-This is a path prefix to be added on work files and defaults to `.`.
 
 ### `external.lib`, `external.css`, `external.fonts`
 These defines external libraries to use. First one is for (minimized) code files,
@@ -201,12 +197,12 @@ Licensed under the GPL-2.0 license.
 ### Done
 
 * Test for `index` task.
+* Task `release` to run all checks before updating release history in README.md and updating version.
 
 ### Not Yet Done
 
 ## Future Ideas
 
-* Task `release` to run `verify` and `todo:die` before asking comment for release history and running `version`.
 * Support for doc-file like README.md and include them for TODO-checking.
 * A task to find every file that does not belong to any recognized category in the repository.
     - Add cofiguration variable `ignore` to silence complaining.

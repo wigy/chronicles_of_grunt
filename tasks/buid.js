@@ -27,6 +27,7 @@ module.exports = function(grunt) {
     var fs = require('fs');
     var ff = require('./file-filter.js')(grunt);
     var log = require('./log.js')(grunt);
+    var readme = require('./readme.js')(grunt);
 
     // Load tasks needed.
     var modules = ff.prefix();
@@ -401,6 +402,42 @@ module.exports = function(grunt) {
                 grunt.task.run('nodeunit');
             }
         },
+
+        prerelease: function() {
+            // Check that we are in development mode.
+            if (/^[.0-9]+$/.test(package.version)) {
+                grunt.fail.fatal("Cannot make release from this version.\nMust have a non-release version like 1.1.0-beta as the current version.");
+            }
+            // Check that all has been done.
+            var parsed = readme.parse();
+            if (parsed.next_version.not_yet_done.length > 0) {
+                grunt.fail.fatal("There are things 'Not Yet Done' section of 'Next Version':\n * " + parsed.next_version.not_yet_done.join("\n * "));
+            }
+            // Check that somthing has been done.
+            if (parsed.next_version.done.length === 0) {
+                grunt.fail.fatal("There are not any entries in 'Done' section of 'Next Version'.");
+            }
+
+            log.info("Running release requirements next....");
+        },
+
+        postrelease: function() {
+            // Calculate new version and print out summary.
+            var parsed = readme.parse();
+            var version = package.version.replace(/[^0-9.]+$/, '');
+            log.info("All checks passed!");
+            log.info("Ready for the release:");
+            log.info("");
+            log.info("  Version: " + version["cyan"]);
+            log.info("  Changes:");
+            for (var i=0; i < parsed.next_version.done.length; i++) {
+                log.info("  * " + parsed.next_version.done[i]["cyan"]);
+            }
+            log.info("");
+            // Re-calculate versioning data.
+            parsed.release(version);
+            console.log(parsed.getHistory())
+        },
     };
 
     grunt.registerTask('info', 'Display summary of the configured files and locations.', build.info);
@@ -411,10 +448,14 @@ module.exports = function(grunt) {
     grunt.registerTask('version', 'Query and mark the version to the source files.', build.version);
     grunt.registerTask('todo', 'Scan for TODO-entries from the source code and display them.', build.todo);
     grunt.registerTask('test', 'Run all tests.', build.test);
+    grunt.registerTask('prerelease', 'Pre checks for the relase.', build.prerelease);
+    grunt.registerTask('postrelease', 'File updating tasks relase.', build.postrelease);
+// TODO: Use this grunt.registerTask('release', 'Make all sanity checks and if passed, create next release version.', ['prerelease', 'verify', 'todo:die', 'test', 'postrelease']);
+    grunt.registerTask('release', 'Make all sanity checks and if passed, create next release version.', ['postrelease']);
 
-    grunt.registerTask('usage', 'Handle all steps for standalone application Javascript development.', function(op) {
+    grunt.registerTask('usage', 'Display summary of available tasks.', function(op) {
         var excludes = ['default', 'usage', 'availabletasks', 'jshint', 'uglify', 'cssmin', 'concat', 'jasmine',
-                        'csslint', 'nodeunit', 'shell'];
+                        'csslint', 'nodeunit', 'shell', 'prerelase', 'postrelease'];
         grunt.initConfig({availabletasks: {tasks: {options: {filter: 'exclude', tasks: excludes}}}});
         grunt.task.run(['availabletasks']);
     });
