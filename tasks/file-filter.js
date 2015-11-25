@@ -87,8 +87,8 @@ module.exports = function(grunt) {
                     var spec = known[category][specs];
                     spec.required = true;
                    ret = ret.concat(files(spec, category));
+                // All strings containing non-alpha characters are direct file patterns.
                 } else if (/[^a-zA-Z]/.test(specs)) {
-                    // All strings containing non-alpha characters are direct file patterns.
                     src = grunt.file.expand(specs);
                     for (i=0; i < src.length; i++) {
                         ret.push({src: src[i], dst: src[i], drop: ''});
