@@ -203,6 +203,8 @@ Licensed under the GPL-2.0 license.
 
 ### Done
 
+* Fix file lookup failing to find files.
+
 ### Not Yet Done
 
 * Support for doc-file like README.md and include them for TODO-checking.

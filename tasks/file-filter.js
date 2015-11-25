@@ -32,14 +32,18 @@ module.exports = function(grunt) {
     /**
      * Find the path prefix to the node_modules containing needed utilities.
      */
-    function prefix() {
+    function prefix(pattern) {
+        if (!pattern) {
+            pattern = 'grunt-available-tasks';
+        }
+        pattern = pattern.replace(/^node_modules\//, '');
         var ret;
-        if (fs.existsSync('node_modules/grunt-available-tasks')) {
+        if (grunt.file.expand('node_modules/' + pattern).length) {
             ret = 'node_modules/';
-        } else if (fs.existsSync('node_modules/chronicles_of_grunt/node_modules/grunt-available-tasks')) {
-            ret = 'node_modules/chronicles_of_grunt/node_modules/';
-        } else if (fs.existsSync('../../node_modules/grunt-available-tasks')) {
+        } else if (grunt.file.expand('../../node_modules/' + pattern).length) {
             ret = '../../node_modules/';
+        } else if (grunt.file.expand('node_modules/chronicles_of_grunt/node_modules/' + pattern).length) {
+            ret = 'node_modules/chronicles_of_grunt/node_modules/';
         } else {
             grunt.fail.fatal("Cannot find module path.");
         }
@@ -102,7 +106,7 @@ module.exports = function(grunt) {
                 // Calculate path prefix for file sources.
                 var srcPrefix = '';
                 if (specs.src.substr(0,12) === 'node_modules') {
-                    srcPrefix = prefix();
+                    srcPrefix = prefix(specs.src);
                     if (srcPrefix.substr(-13) === 'node_modules/') {
                         srcPrefix = srcPrefix.substr(0, srcPrefix.length - 13);
                     }
