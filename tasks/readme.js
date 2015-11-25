@@ -6,9 +6,9 @@ module.exports = function(grunt) {
     /**
      * A class to wrap README-data.
      */
-    function Readme(data) {
-        this.next_version = data.next_version;
-        this.release_history = data.release_history;
+    function Readme() {
+        this.next_version = {'done': [], 'not_yet_done': []};
+        this.release_history = [];
     }
     Readme.prototype = {};
 
@@ -19,12 +19,13 @@ module.exports = function(grunt) {
 
         this.release_history.splice(0,0, {version: version, changes: this.next_version.done})
         this.next_version.done = [];
-    }
+    };
 
     /**
-     * Construct README-string for Release History section.
+     * Construct a string for `Release History` section.
      */
     Readme.prototype.getHistory = function() {
+
         var ret = "## Release History\n\n";
         for (var i=0; i < this.release_history.length; i++) {
             ret += '* ' + this.release_history[i].version + '\n';
@@ -32,6 +33,35 @@ module.exports = function(grunt) {
             ret += '    - ' + this.release_history[i].changes[j] + '\n';
             }
         }
+        ret += '\n';
+
+        return ret;
+    };
+
+    /**
+     * Construct a string for `Next Version` section.
+     */
+    Readme.prototype.getNextVersion = function() {
+
+        var i;
+        var ret = "## Next Version\n\n";
+
+        ret += "### Done\n\n";
+        for (i=0; i < this.next_version.done.length; i++) {
+            ret += '* ' + this.next_version.done[i] + '\n';
+        }
+        if (i) {
+            ret += '\n';
+        }
+
+        ret += "### Not Yet Done\n\n";
+        for (i=0; i < this.next_version.not_yet_done.length; i++) {
+            ret += '* ' + this.next_version.not_yet_done[i] + '\n';
+        }
+        if (i) {
+            ret += '\n';
+        }
+
         return ret;
     };
 
@@ -39,16 +69,13 @@ module.exports = function(grunt) {
      * Parse README.md file of the project.
      *
      * @param path {string} Path to the file to parse (defaults to README.md).
-     * @return {object} A structrure presenting README.md content of interest.
      *
-     * The object `obj` will have a list of lines (without bullet) that has been implemented in
-     * `obj.next_version.done` and list of lines that has not yet been implemented in
-     * `obj.next_version.not_yet_done`. In addition, `obj.release_history` will contain a list
+     * This object will have a list of lines (without bullet) that has been implemented in
+     * `this.next_version.done` and list of lines that has not yet been implemented in
+     * `this.next_version.not_yet_done`. In addition, `this.release_history` will contain a list
      * of versions in a format [{version: '1.2.3', changes: ['change 1', 'change 2']}, ...]
      */
-    function parse(path) {
-        // TODO: Move to class.
-        var ret = {'next_version': {'done': [], 'not_yet_done': []}, 'release_history': []};
+    Readme.prototype.parse = function(path) {
         if (!path) {
             path = 'README.md';
         }
@@ -67,7 +94,7 @@ module.exports = function(grunt) {
                 if (line === '') {
                     continue;
                 }
-                ret[title][subtitle].push(line);
+                this[title][subtitle].push(line);
             } else if (title === 'release_history') {
                 line = lines[i].trim();
                 if (/^[-*]\s+v?[.0-9]+$/.test(line)) {
@@ -77,19 +104,50 @@ module.exports = function(grunt) {
                     if (line === '') {
                         continue;
                     }
-                    if (ret.release_history.length === 0 ||
-                        ret.release_history[ret.release_history.length - 1].version !== subsubtitle) {
-                        ret.release_history.push({version: subsubtitle, changes: []});
+                    if (this.release_history.length === 0 ||
+                        this.release_history[this.release_history.length - 1].version !== subsubtitle) {
+                        this.release_history.push({version: subsubtitle, changes: []});
                     }
-                    ret.release_history[ret.release_history.length - 1].changes.push(line);
+                    this.release_history[this.release_history.length - 1].changes.push(line);
                 }
             }
         }
-        return new Readme(ret);
-    }
-
-    return {
-        parse: parse
     };
 
+    /**
+     * Write the file from the current data by overriding standard sections.
+     */
+    Readme.prototype.write = function(path) {
+        if (!path) {
+            path = 'README.md';
+        }
+        var line, title = null, clip = false, lines = grunt.file.read(path).split("\n");
+        var result = '';
+        for (var i = 0; i < lines.length; i++) {
+            if (/^##\s+/.test(lines[i])) {
+                title = lines[i].substr(3).trim();
+                clip = false;
+                if (title === 'Next Version') {
+                    clip = true;
+                    result += this.getNextVersion();
+                } else if (title === 'Release History') {
+                    clip = true;
+                    result += this.getHistory();
+                }
+            }
+            if (!clip) {
+                result += lines[i] + '\n';
+            }
+        }
+        grunt.file.write(path, result.trim());
+    };
+
+    return {
+        parse: function(path) {
+
+            var ret = new Readme();
+            ret.parse(path);
+            return ret;
+        }
+    };
 };

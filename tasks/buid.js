@@ -418,7 +418,8 @@ module.exports = function(grunt) {
                 grunt.fail.fatal("There are not any entries in 'Done' section of 'Next Version'.");
             }
 
-            log.info("Running release requirements next....");
+            log.info("Looking good.");
+            log.info("Running standard release checks next.");
         },
 
         postrelease: function() {
@@ -434,9 +435,13 @@ module.exports = function(grunt) {
                 log.info("  * " + parsed.next_version.done[i]["cyan"]);
             }
             log.info("");
-            // Re-calculate versioning data.
+            log.info("Once commited and tagged, you can start next iteration by assigning new development version");
+            log.info("and making plans by collecting goals for the next version into README.md.");
+            log.info("");
+            // Re-calculate versioning data and write it back.
             parsed.release(version);
-            console.log(parsed.getHistory())
+            parsed.write();
+            grunt.task.run('version:' + version);
         },
     };
 
@@ -450,10 +455,9 @@ module.exports = function(grunt) {
     grunt.registerTask('test', 'Run all tests.', build.test);
     grunt.registerTask('prerelease', 'Pre checks for the relase.', build.prerelease);
     grunt.registerTask('postrelease', 'File updating tasks relase.', build.postrelease);
-// TODO: Use this grunt.registerTask('release', 'Make all sanity checks and if passed, create next release version.', ['prerelease', 'verify', 'todo:die', 'test', 'postrelease']);
-    grunt.registerTask('release', 'Make all sanity checks and if passed, create next release version.', ['postrelease']);
+    grunt.registerTask('release', 'Make all sanity checks and if passed, create next release version.', ['prerelease', 'verify', 'todo:die', 'test', 'postrelease']);
 
-    grunt.registerTask('usage', 'Display summary of available tasks.', function(op) {
+    grunt.registerTask('usage', 'Display summary of available tasks.', function() {
         var excludes = ['default', 'usage', 'availabletasks', 'jshint', 'uglify', 'cssmin', 'concat', 'jasmine',
                         'csslint', 'nodeunit', 'shell', 'prerelase', 'postrelease'];
         grunt.initConfig({availabletasks: {tasks: {options: {filter: 'exclude', tasks: excludes}}}});
