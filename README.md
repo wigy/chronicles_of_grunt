@@ -156,6 +156,10 @@ Display all remaining TODO-entries found from the source code. Additional argume
 
 Run all checks for code and then update README.md file and the version.
 
+### Task: `docs`
+
+Build API-documentation to `doc`-directory using *JSDoc*.
+
 ## License
 
 Copyright (c) 2015 Tommi Ronkainen
@@ -205,21 +209,23 @@ Licensed under the GPL-2.0 license.
 
 * Fix file lookup failing to find files.
 * Do not create empty dist-files if there are no source files.
+* New task `docs` to build API-documentation.
 
 ### Not Yet Done
 
-* Support for doc-file like README.md and include them for TODO-checking.
 * Test for `version` task.
 * Test for `release` task.
 * Check for tabs in `verify`.
 
 ## Future Ideas
 
+* Support for doc-file like README.md and include them for TODO-checking.
 * A task to find every file that does not belong to any recognized category in the repository.
     - Add cofiguration variable `ignore` to silence complaining.
     - Also check if there are rules not matching anything in the configuration.
     - Make it part of `release` using 'die'-argument just like in `todo`.
 * Test for `dist` task.
 * Test for `libs` task.
+* Test for `docs` task.
 * Show "Not Yet Done" section from this file with `todo`.
 * Alternative handling for external, where ['jquery', 'bootstrap', 'jasmine'] will automatically added to correct categories.

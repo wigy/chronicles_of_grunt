@@ -19,7 +19,7 @@
 module.exports = function(grunt) {
 
     // Get the build configuration and set some variables.
-    var package = grunt.file.readJSON('package.json');
+    var pckg = grunt.file.readJSON('package.json');
 
     // Load Node-modules.
     var path = require('path');
@@ -44,6 +44,7 @@ module.exports = function(grunt) {
     grunt.loadTasks(modules + 'grunt-contrib-jasmine/tasks/');
     grunt.loadTasks(modules + 'grunt-contrib-csslint/tasks/');
     grunt.loadTasks(modules + 'grunt-contrib-nodeunit/tasks/');
+    grunt.loadTasks(modules + 'grunt-jsdoc/tasks/');
 
     /**
      * Refresh HTML-file to use the given Javascript and CSS files.
@@ -224,8 +225,8 @@ module.exports = function(grunt) {
             log.info("Compressing Javascript...");
             log.info("");
             var banner = '';
-            banner += '/* ' + package.name + ' v' + package.version + '\n';
-            banner += ' * Copyright (c) ' + grunt.template.today("yyyy") + ' ' + package.author.name + '\n';
+            banner += '/* ' + pckg.name + ' v' + pckg.version + '\n';
+            banner += ' * Copyright (c) ' + grunt.template.today("yyyy") + ' ' + pckg.author.name + '\n';
             banner += ' */\n';
 
             settings = {options: {banner: banner}, dist: {}};
@@ -294,7 +295,7 @@ module.exports = function(grunt) {
     function taskVersion(version) {
         if (arguments.length === 0) {
             log.info("");
-            log.info("Current version is", package.version);
+            log.info("Current version is", pckg.version);
             log.info("");
             log.info("You can make official release by giving new version number like 'x.y.z' or");
             log.info("you can start next release candidate by add postfix 'x.y.z-beta'.");
@@ -305,18 +306,18 @@ module.exports = function(grunt) {
             }
             // Update package.
             var debugMode = (version.substr(version.length-4) === 'beta');
-            package.version = version;
-            grunt.file.write('package.json', JSON.stringify(package, null, 2));
-            log.info("Set version", package.version, "to package.json.");
+            pckg.version = version;
+            grunt.file.write('package.json', JSON.stringify(pckg, null, 2));
+            log.info("Set version", pckg.version, "to package.json.");
 
             // Update other files.
             var files = ff.flatten(ff.configFiles());
             for (var i=0; i<files.length; i++) {
                 var file = files[i];
                 var newSettings, settings = grunt.file.read(file);
-                newSettings = settings.replace(/^VERSION\s*=\s*'.*'/gm, "VERSION = '" + package.version + "'");
+                newSettings = settings.replace(/^VERSION\s*=\s*'.*'/gm, "VERSION = '" + pckg.version + "'");
                 if (newSettings !== settings) {
-                    log.info("Updated version", package.version, "to", file);
+                    log.info("Updated version", pckg.version, "to", file);
                     settings = newSettings;
                 }
                 newSettings = settings.replace(/^DEBUG\s*=\s[^;]*/gm, "DEBUG = " + debugMode.toString());
@@ -416,7 +417,7 @@ module.exports = function(grunt) {
 
     function taskPreRelease() {
         // Check that we are in development mode.
-        if (/^[.0-9]+$/.test(package.version)) {
+        if (/^[.0-9]+$/.test(pckg.version)) {
             grunt.fail.fatal("Cannot make release from this version.\nMust have a non-release version like 1.1.0-beta as the current version.");
         }
         // Check that all has been done.
@@ -436,7 +437,7 @@ module.exports = function(grunt) {
     function taskPostRelease() {
         // Calculate new version and print out summary.
         var parsed = readme.parse();
-        var version = package.version.replace(/[^0-9.]+$/, '');
+        var version = pckg.version.replace(/[^0-9.]+$/, '');
         log.info("All checks passed!");
         log.info("Ready for the release:");
         log.info("");
@@ -455,6 +456,20 @@ module.exports = function(grunt) {
         grunt.task.run('version:' + version);
     }
 
+    function taskDocs(what) {
+
+        var settings = {
+            dist: {
+                src: ff.flatten(ff.srcFiles().concat(ff.otherFiles())),
+                options: {
+                    destination: 'doc'
+                }
+            }
+        }
+        grunt.config.set('jsdoc', settings);
+        grunt.task.run('jsdoc');
+    }
+
     grunt.registerTask('info', 'Display summary of the configured files and locations.', taskInfo);
     grunt.registerTask('libs', 'Update fresh copies of libraries from installed node-modules.', taskLibs);
     grunt.registerTask('index', 'Scan all configured javascript and css files and update html-files using them.', taskIndex);
@@ -465,11 +480,12 @@ module.exports = function(grunt) {
     grunt.registerTask('test', 'Run all tests.', taskTest);
     grunt.registerTask('prerelease', 'Pre checks for the relase.', taskPreRelease);
     grunt.registerTask('postrelease', 'File updating tasks relase.', taskPostRelease);
-    grunt.registerTask('release', 'Make all sanity checks and if passed, create next release version.', ['prerelease', 'verify', 'todo:die', 'test', 'dist', 'postrelease']);
+    grunt.registerTask('release', 'Make all sanity checks and if passed, create next release version.', ['prerelease', 'verify', 'todo:die', 'test', 'dist', 'docs', 'postrelease']);
+    grunt.registerTask('docs', 'Build all documentation.', taskDocs);
 
     grunt.registerTask('usage', 'Display summary of available tasks.', function() {
         var excludes = ['default', 'usage', 'availabletasks', 'jshint', 'uglify', 'cssmin', 'concat', 'jasmine',
-                        'csslint', 'nodeunit', 'shell', 'prerelease', 'postrelease'];
+                        'csslint', 'nodeunit', 'shell', 'prerelease', 'postrelease', 'jsdoc'];
         grunt.initConfig({availabletasks: {tasks: {options: {filter: 'exclude', tasks: excludes}}}});
         grunt.task.run(['availabletasks']);
     });
