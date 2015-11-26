@@ -186,7 +186,7 @@ module.exports = function(grunt) {
 
     function taskDist() {
 
-        var i, dst;
+        var i, dst, settings;
 
         log.info("Build: dist");
         log.info("");
@@ -207,14 +207,14 @@ module.exports = function(grunt) {
         if (cssFiles.length) {
             log.info("Compressing CSS...");
             log.info("");
-            var settings = {all: {files: {}}};
+            settings = {all: {files: {}}};
             compressedCssFiles.push('dist/' + ff.getConfig('name') + '.min.css');
             settings.all.files[compressedCssFiles[0]] = ff.flatten(cssFiles);
             grunt.config.set('cssmin', settings);
             grunt.task.run('cssmin');
         }
 
-        var jsFiles = ff.includeJsFiles()
+        var jsFiles = ff.includeJsFiles();
         var compressedJsFiles = [];
         if (jsFiles.length) {
             log.info("Collecting Javascript...");
@@ -491,7 +491,8 @@ module.exports = function(grunt) {
                     destination: 'doc',
                 }
             }
-        }
+        };
+
         grunt.config.set('jsdoc', settings);
         grunt.task.run('jsdoc');
     }
