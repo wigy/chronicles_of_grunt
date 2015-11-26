@@ -220,6 +220,7 @@ Licensed under the GPL-2.0 license.
 
 ## Future Ideas
 
+* Task `auto` to use grunt-watch to build docs for example (argument could specify).
 * Support for doc-file like README.md and include them for TODO-checking.
 * A task to find every file that does not belong to any recognized category in the repository.
     - Add cofiguration variable `ignore` to silence complaining.

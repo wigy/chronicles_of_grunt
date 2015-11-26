@@ -134,7 +134,7 @@ module.exports = function(grunt) {
         dumpFiles('CSS-files', ff.cssFiles);
         dumpFiles('Other Javascript-files', ff.otherFiles);
         dumpFiles('Unit test libraries', ff.unitTestLibraryFiles);
-        dumpFiles('Unit CSS-files', ff.includeUnitTestCssFiles);
+        dumpFiles('Unit test CSS-files', ff.includeUnitTestCssFiles);
         dumpFiles('Unit tests', ff.unitTestFiles);
     }
 
@@ -488,7 +488,7 @@ module.exports = function(grunt) {
             dist: {
                 src: ff.flatten(ff.srcFiles().concat(ff.otherFiles())),
                 options: {
-                    destination: 'doc'
+                    destination: 'doc',
                 }
             }
         }
