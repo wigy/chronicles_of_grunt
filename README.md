@@ -210,12 +210,11 @@ Licensed under the GPL-2.0 license.
 * Fix file lookup failing to find files.
 * Do not create empty dist-files if there are no source files.
 * New task `docs` to build API-documentation.
+* Test for `version` task.
 
 ### Not Yet Done
 
-* Test for `version` task.
 * Test for `release` task.
-* Check for tabs in `verify`.
 
 ## Future Ideas
 
@@ -227,5 +226,6 @@ Licensed under the GPL-2.0 license.
 * Test for `dist` task.
 * Test for `libs` task.
 * Test for `docs` task.
+* Check for tabs in `verify`.
 * Show "Not Yet Done" section from this file with `todo`.
 * Alternative handling for external, where ['jquery', 'bootstrap', 'jasmine'] will automatically added to correct categories.
