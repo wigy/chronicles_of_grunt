@@ -16,6 +16,7 @@ module.exports = function(grunt) {
                 {src: 'node_modules/grunt-contrib-jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine-html.js', dst: null, drop: ''},
                 {src: 'node_modules/grunt-contrib-jasmine/node_modules/jasmine-core/lib/jasmine-core/boot.js', dst: null, drop: ''},
             ],
+            nodeunit: [],
             'angular-mock': [
                 {src: 'node_modules/angular-mocks/angular-mocks.js', dst: null, drop: ''},
             ],

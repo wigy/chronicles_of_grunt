@@ -167,6 +167,15 @@ Licensed under the GPL-2.0 license.
 
 ## Release History
 
+* 1.6.0
+    - Fix file lookup failing to find files.
+    - Do not create empty dist-files if there are no source files.
+    - New task `docs` to build API-documentation.
+    - Test for `version` task.
+    - Test for `release` task.
+    - Show version in info-task.
+    - Display unit-test libraries and css with `info`-task.
+    - Support for *Angular mock* unit-test library.
 * 1.5.0
     - Test for `index` task.
     - Task `release` to run all checks before updating release history in README.md and updating version.
@@ -206,15 +215,6 @@ Licensed under the GPL-2.0 license.
 ## Next Version
 
 ### Done
-
-* Fix file lookup failing to find files.
-* Do not create empty dist-files if there are no source files.
-* New task `docs` to build API-documentation.
-* Test for `version` task.
-* Test for `release` task.
-* Show version in info-task.
-* Display unit-test libraries and css with `info`-task.
-* Support for *Angular mock* unit-test library.
 
 ### Not Yet Done
 
