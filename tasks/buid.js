@@ -349,7 +349,7 @@ module.exports = function(grunt) {
                         log.info(("   " + files[i])["blue"]);
                         log.info("");
                     }
-                    log.info(("Line " + j+1 + "")["green"], lines[j].trim());
+                    log.info(("Line " + (j+1) + "")["green"], lines[j].trim());
                 }
             }
         }
