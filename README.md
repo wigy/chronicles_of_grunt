@@ -167,7 +167,7 @@ Licensed under the GPL-2.0 license.
 
 ## Release History
 
-* 1.6.0
+* v1.6.0
     - Fix file lookup failing to find files.
     - Do not create empty dist-files if there are no source files.
     - New task `docs` to build API-documentation.
@@ -176,40 +176,40 @@ Licensed under the GPL-2.0 license.
     - Show version in info-task.
     - Display unit-test libraries and css with `info`-task.
     - Support for *Angular mock* unit-test library.
-* 1.5.0
+* v1.5.0
     - Test for `index` task.
     - Task `release` to run all checks before updating release history in README.md and updating version.
-* 1.4.0
+* v1.4.0
     - Configurable task output that can be written to a file.
     - Functional testing system and a sample project for unit-testing.
     - Unit-test for `index` task.
     - Unit-test for `todo` task.
     - Unit-test for `verify` task.
-* 1.3.1
+* v1.3.1
     - Add CSS checking to `verify` task.
-* 1.3.0
+* v1.3.0
     - Support for `test` task in order to run unit-tests.
-* 1.2.0
+* v1.2.0
     - Support new `other`-category for work files.
-* 1.1.1
+* v1.1.1
     - Scan more files when checking for TODO-notes.
-* 1.1.0
+* v1.1.0
     - New task `todo` to display TODO-notes from source code.
-* 1.0.0
+* v1.0.0
     - Documentation and clean up.
-* 0.6.0
+* v0.6.0
     - Rename tasks to be used without prefix and move all tasks to the same file.
-* 0.5.0
+* v0.5.0
     - Add `build:dist` task.
-* 0.4.0
+* v0.4.0
     - Add `build:index` task.
-* 0.3.0
+* v0.3.0
     - Add `build:info` and `build:verify` tasks.
-* 0.2.0
+* v0.2.0
     - Add new `usage` task.
-* 0.1.1
+* v0.1.1
     - Make `versioning` option `file` optional.
-* 0.1.0
+* v0.1.0
     - Bring `versioning` tool from time2exercise.
 
 ## Next Version

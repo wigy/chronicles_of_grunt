@@ -17,7 +17,7 @@ module.exports = function(grunt) {
      */
     Readme.prototype.release = function(version) {
 
-        this.release_history.splice(0,0, {version: version, changes: this.next_version.done});
+        this.release_history.splice(0,0, {version: 'v' + version, changes: this.next_version.done});
         this.next_version.done = [];
     };
 
@@ -99,6 +99,9 @@ module.exports = function(grunt) {
                 line = lines[i].trim();
                 if (/^[-*]\s+v?[.0-9]+$/.test(line)) {
                     subsubtitle = line.substr(2).trim();
+                    if (subsubtitle[0] !== 'v') {
+                        subsubtitle = 'v' + subsubtitle;
+                    }
                 } else if (subsubtitle) {
                     line = line.replace(/^\s*[-*]\s+/, '').trim();
                     if (line === '') {

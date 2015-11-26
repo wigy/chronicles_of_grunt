@@ -10,7 +10,7 @@ module.exports = {
         var content = runner.read('README.md');
         runner.restore('README.md');
         runner.restore('package.json');
-        test.equal(content, "## Release History\n\n* 0.0.1\n    - Basic set up for running release testing.\n* 0.0.0\n    - Initial file collection.\n\n## Next Version\n\n### Done\n\n### Not Yet Done");
+        test.equal(content, "## Release History\n\n* v0.0.1\n    - Basic set up for running release testing.\n* v0.0.0\n    - Initial file collection.\n\n## Next Version\n\n### Done\n\n### Not Yet Done");
 
         test.done();
   }
