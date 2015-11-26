@@ -8,6 +8,6 @@
 
 ### Done
 
-* Baseic set up for running release testing.
+* Basic set up for running release testing.
 
 ### Not Yet Done
