@@ -133,6 +133,8 @@ module.exports = function(grunt) {
         dumpFiles('Code files', ff.codeFiles);
         dumpFiles('CSS-files', ff.cssFiles);
         dumpFiles('Other Javascript-files', ff.otherFiles);
+        dumpFiles('Unit test libraries', ff.unitTestLibraryFiles);
+        dumpFiles('Unit CSS-files', ff.includeUnitTestCssFiles);
         dumpFiles('Unit tests', ff.unitTestFiles);
     }
 
@@ -389,7 +391,8 @@ module.exports = function(grunt) {
         var src = ff.flatten(ff.srcFiles());
         var specs = ff.flatten(ff.unitTestFiles());
         var libs = ff.flatten(ff.extLibFiles());
-
+        // Add all other than Jasmine-libs to vendor list.
+        libs = libs.concat(ff.flatten(ff.removeDuplicates(ff.unitTestLibraryFiles(), ff.files(['jasmine'], 'lib'))));
         // Run Jasmine.
         if (type === 'jasmine') {
             settings = {

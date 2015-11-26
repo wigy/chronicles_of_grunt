@@ -16,6 +16,9 @@ module.exports = function(grunt) {
                 {src: 'node_modules/grunt-contrib-jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine-html.js', dst: null, drop: ''},
                 {src: 'node_modules/grunt-contrib-jasmine/node_modules/jasmine-core/lib/jasmine-core/boot.js', dst: null, drop: ''},
             ],
+            'angular-mock': [
+                {src: 'node_modules/angular-mocks/angular-mocks.js', dst: null, drop: ''},
+            ],
         },
         css: {
             bootstrap: {src: 'node_modules/bootstrap/dist/css/bootstrap.min.css', dst: 'css', drop: 'node_modules/bootstrap/dist/css/'},
@@ -368,10 +371,17 @@ module.exports = function(grunt) {
     }
 
     /**
+     * Find all unit-test library files.
+     */
+    function unitTestLibraryFiles() {
+        return files(getConfig('external.unittestlib'), 'lib');
+    }
+
+    /**
      * Find all code files needed to include in HTML index for unit test.
      */
     function includeUnitTestJsFiles() {
-        return files(getConfig('external.unittestlib'), 'lib').concat(extLibFiles()).concat(srcFiles()).concat(unitTestFiles());
+        return extLibFiles().concat(unitTestLibraryFiles()).concat(srcFiles()).concat(unitTestFiles());
     }
 
     /**
@@ -408,6 +418,8 @@ module.exports = function(grunt) {
         flatten: flatten,
         getConfig: getConfig,
         prefix: prefix,
+        files: files,
+        removeDuplicates: removeDuplicates,
 
         extLibFiles: extLibFiles,
         extLibMapFiles: extLibMapFiles,
@@ -430,6 +442,7 @@ module.exports = function(grunt) {
         includeCssFiles: includeCssFiles,
         distFilesUncompressed: distFilesUncompressed,
         unitTestFiles: unitTestFiles,
+        unitTestLibraryFiles: unitTestLibraryFiles,
         includeUnitTestJsFiles: includeUnitTestJsFiles,
         includeUnitTestCssFiles: includeUnitTestCssFiles,
         testFiles: testFiles,

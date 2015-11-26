@@ -213,6 +213,8 @@ Licensed under the GPL-2.0 license.
 * Test for `version` task.
 * Test for `release` task.
 * Show version in info-task.
+* Display unit-test libraries and css with `info`-task.
+* Support for *Angular mock* unit-test library.
 
 ### Not Yet Done
 
