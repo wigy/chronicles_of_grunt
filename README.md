@@ -211,10 +211,10 @@ Licensed under the GPL-2.0 license.
 * Do not create empty dist-files if there are no source files.
 * New task `docs` to build API-documentation.
 * Test for `version` task.
+* Test for `release` task.
+* Show version in info-task.
 
 ### Not Yet Done
-
-* Test for `release` task.
 
 ## Future Ideas
 

@@ -121,6 +121,7 @@ module.exports = function(grunt) {
         log.info("Build: info");
         log.info("");
         log.info("Project: " + ff.getConfig('name'));
+        log.info("Version: " + pckg.version);
         dumpFiles('External Libraries', ff.extLibFiles);
         dumpFiles('External Library map files', ff.extLibMapFiles);
         dumpFiles('External CSS-files', ff.extCssFiles);
