@@ -434,6 +434,28 @@ module.exports = function(grunt) {
         log.info("Running standard release checks next.");
     }
 
+    function taskRelease(skipped) {
+        var args = Array.prototype.slice.call(arguments);
+        var tasks = ['prerelease'];
+        if (args.indexOf('verify') < 0) {
+            tasks.push('verify');
+        }
+        if (args.indexOf('todo') < 0) {
+            tasks.push('todo:die');
+        }
+        if (args.indexOf('test') < 0) {
+            tasks.push('test');
+        }
+        if (args.indexOf('dist') < 0) {
+            tasks.push('dist');
+        }
+        if (args.indexOf('docs') < 0) {
+            tasks.push('docs');
+        }
+        tasks.push('postrelease');
+        grunt.task.run(tasks);
+    }
+
     function taskPostRelease() {
         // Calculate new version and print out summary.
         var parsed = readme.parse();
@@ -480,7 +502,7 @@ module.exports = function(grunt) {
     grunt.registerTask('test', 'Run all tests.', taskTest);
     grunt.registerTask('prerelease', 'Pre checks for the relase.', taskPreRelease);
     grunt.registerTask('postrelease', 'File updating tasks relase.', taskPostRelease);
-    grunt.registerTask('release', 'Make all sanity checks and if passed, create next release version.', ['prerelease', 'verify', 'todo:die', 'test', 'dist', 'docs', 'postrelease']);
+    grunt.registerTask('release', 'Make all sanity checks and if passed, create next release version.', taskRelease);
     grunt.registerTask('docs', 'Build all documentation.', taskDocs);
 
     grunt.registerTask('usage', 'Display summary of available tasks.', function() {
