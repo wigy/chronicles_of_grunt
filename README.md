@@ -204,6 +204,7 @@ Licensed under the GPL-2.0 license.
 ### Done
 
 * Fix file lookup failing to find files.
+* Do not create empty dist-files if there are no source files.
 
 ### Not Yet Done
 
