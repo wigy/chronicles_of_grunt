@@ -193,6 +193,7 @@ module.exports = function(grunt) {
 
         var matches = ff.distFilesUncompressed();
         if (matches.length) {
+            log.info("");
             log.info("Copying media files...");
             log.info("");
             for (i = 0; i < matches.length; i++) {
@@ -202,9 +203,26 @@ module.exports = function(grunt) {
             }
         }
 
+        // Copy libraries.
+        var compressedJsFiles = [];
+        var libs = ff.extLibFiles();
+        if (libs.length) {
+            log.info("");
+            log.info("Copying libraries...");
+            log.info("");
+            for (i = 0; i < libs.length; i++) {
+                dst = 'dist/' + libs[i].dst;
+                log.info(libs[i].dst + ' -> ' + dst);
+                grunt.file.copy(libs[i].dst, dst);
+                compressedJsFiles.push(libs[i].dst);
+            }
+        }
+
+        // Collect CSS.
         var cssFiles = ff.includeCssFiles();
         var compressedCssFiles = [];
         if (cssFiles.length) {
+            log.info("");
             log.info("Compressing CSS...");
             log.info("");
             settings = {all: {files: {}}};
@@ -214,9 +232,10 @@ module.exports = function(grunt) {
             grunt.task.run('cssmin');
         }
 
-        var jsFiles = ff.includeJsFiles();
-        var compressedJsFiles = [];
+        // Compress code.
+        var jsFiles = ff.srcFiles();
         if (jsFiles.length) {
+            log.info("");
             log.info("Collecting Javascript...");
             log.info("");
             settings = {all: {}};
@@ -225,6 +244,7 @@ module.exports = function(grunt) {
             grunt.config.set('concat', settings);
             grunt.task.run('concat');
 
+            log.info("");
             log.info("Compressing Javascript...");
             log.info("");
             var banner = '';
@@ -235,7 +255,7 @@ module.exports = function(grunt) {
             settings = {options: {banner: banner}, dist: {}};
             compressedJsFiles.push(ff.getConfig('name') + '.min.js');
             settings.dist.src = 'dist/' + ff.getConfig('name') + '.js';
-            settings.dist.dest = 'dist/' + compressedJsFiles[0];
+            settings.dist.dest = 'dist/' + ff.getConfig('name') + '.min.js';
             grunt.config.set('uglify', settings);
             grunt.task.run('uglify');
         }
@@ -243,7 +263,9 @@ module.exports = function(grunt) {
         // Build index file(s).
         var indices = ff.flatten(ff.appIndexFiles());
         if (indices.length) {
+            log.info("");
             log.info("Building index...");
+            log.info("");
             for (i = 0; i < indices.length; i++) {
                 dst = 'dist/' + indices[i];
                 log.info(indices[i] + ' -> ' + dst);

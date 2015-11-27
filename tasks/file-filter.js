@@ -7,7 +7,7 @@ module.exports = function(grunt) {
     // Known library file specifications.
     var known = {
         lib: {
-            coa: {src: 'node_modules/chronicles_of_angular/dist/**', dst: 'lib/chronicles_of_angular', drop: 'node_modules/chronicles_of_angular/lib'},
+            coa: {src: 'node_modules/chronicles_of_angular/dist/coa.min.js', dst: 'lib', drop: 'node_modules/chronicles_of_angular/dist'},
             jquery: {src: 'node_modules/jquery/dist/jquery.min.*', dst: 'lib', drop: 'node_modules/jquery/dist'},
             bootstrap: {src: 'node_modules/bootstrap/dist/js/bootstrap.min.js', dst: 'lib', drop: 'node_modules/bootstrap/dist/js'},
             angular: {src: 'node_modules/angular/angular.min.{js,js.map}', dst: 'lib', drop: 'node_modules/angular/'},

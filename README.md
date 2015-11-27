@@ -216,12 +216,16 @@ Licensed under the GPL-2.0 license.
 
 ### Done
 
-### Not Yet Done
+* Do not include libraries to the compressed distribution version.
 
-## Future Ideas
+### Not Yet Done
 
 * Task `auto` to use grunt-watch to build docs for example (argument could specify).
 * Support for doc-file like README.md and include them for TODO-checking.
+* Support for angular-jsdoc.
+
+## Future Ideas
+
 * A task to find every file that does not belong to any recognized category in the repository.
     - Add cofiguration variable `ignore` to silence complaining.
     - Also check if there are rules not matching anything in the configuration.
@@ -232,3 +236,4 @@ Licensed under the GPL-2.0 license.
 * Check for tabs in `verify`.
 * Show "Not Yet Done" section from this file with `todo`.
 * Alternative handling for external, where ['jquery', 'bootstrap', 'jasmine'] will automatically added to correct categories.
+* Pre-defined libraries could have 'requires' attributes, which inserts listed libs before itself to the resolved file list.
