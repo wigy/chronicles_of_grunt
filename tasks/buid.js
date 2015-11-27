@@ -45,6 +45,7 @@ module.exports = function(grunt) {
     grunt.loadTasks(modules + 'grunt-contrib-csslint/tasks/');
     grunt.loadTasks(modules + 'grunt-contrib-nodeunit/tasks/');
     grunt.loadTasks(modules + 'grunt-jsdoc/tasks/');
+    grunt.loadTasks(modules + 'grunt-contrib-clean/tasks/');
 
     /**
      * Refresh HTML-file to use the given Javascript and CSS files.
@@ -258,6 +259,7 @@ module.exports = function(grunt) {
             settings.dist.dest = 'dist/' + ff.getConfig('name') + '.min.js';
             grunt.config.set('uglify', settings);
             grunt.task.run('uglify');
+            grunt.task.run('cleanup');
         }
 
         // Build index file(s).
@@ -519,6 +521,16 @@ module.exports = function(grunt) {
         grunt.task.run('jsdoc');
     }
 
+    function taskCleanup() {
+
+        var settings = {
+            all: ['dist/' + ff.getConfig('name') + '.js']
+        };
+
+        grunt.config.set('clean', settings);
+        grunt.task.run('clean');
+    }
+
     grunt.registerTask('info', 'Display summary of the configured files and locations.', taskInfo);
     grunt.registerTask('libs', 'Update fresh copies of libraries from installed node-modules.', taskLibs);
     grunt.registerTask('index', 'Scan all configured javascript and css files and update html-files using them.', taskIndex);
@@ -531,10 +543,11 @@ module.exports = function(grunt) {
     grunt.registerTask('postrelease', 'File updating tasks relase.', taskPostRelease);
     grunt.registerTask('release', 'Make all sanity checks and if passed, create next release version.', taskRelease);
     grunt.registerTask('docs', 'Build all documentation.', taskDocs);
+    grunt.registerTask('cleanup', 'Remove unnecessary files.', taskCleanup);
 
     grunt.registerTask('usage', 'Display summary of available tasks.', function() {
         var excludes = ['default', 'usage', 'availabletasks', 'jshint', 'uglify', 'cssmin', 'concat', 'jasmine',
-                        'csslint', 'nodeunit', 'shell', 'prerelease', 'postrelease', 'jsdoc'];
+                        'csslint', 'nodeunit', 'shell', 'prerelease', 'postrelease', 'jsdoc', 'clean', 'cleanup'];
         grunt.initConfig({availabletasks: {tasks: {options: {filter: 'exclude', tasks: excludes}}}});
         grunt.task.run(['availabletasks']);
     });

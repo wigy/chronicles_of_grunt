@@ -217,13 +217,13 @@ Licensed under the GPL-2.0 license.
 ### Done
 
 * Do not include libraries to the compressed distribution version.
+* Remove uncompressed Javascript-file from the dist-folder after compiling.
 
 ### Not Yet Done
 
 * Task `auto` to use grunt-watch to build docs for example (argument could specify).
 * Support for doc-file like README.md and include them for TODO-checking.
 * Support for angular-jsdoc.
-* Remove uncompressed Javascript-file from the dist-folder after compiling.
 
 ## Future Ideas
 
