@@ -152,6 +152,11 @@ file. If *version* is not given, then the current version is given.
 Display all remaining TODO-entries found from the source code. Additional argument
 `todo:die` causes the script end with an error, if any TODO-entries are found.
 
+### Task: `test`
+
+Run all unit-tests defined. Optional arguments are matched against test file names
+and if given, only files containing arguments as substrings are selected for running.
+
 ### Task: `release`
 
 Run all checks for code and then update README.md file and the version.
@@ -224,11 +229,11 @@ Licensed under the GPL-2.0 license.
 * Do not include libraries to the compressed distribution version.
 * Remove uncompressed Javascript-file from the dist-folder after compiling.
 * Task `auto` to use grunt-watch to build docs or running tests or syntax checking.
+* Ability to run just a single test at time.
 
 ### Not Yet Done
 
 * Support for doc-file like README.md and include them for TODO-checking.
-* Ability to run just a single test at time.
 * Test for `docs` task.
 
 ## Future Ideas

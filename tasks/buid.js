@@ -391,8 +391,8 @@ module.exports = function(grunt) {
     function taskTest(which) {
 
         /**
-            * Check the selected libraries for testing system.
-            */
+          * Check the selected libraries for testing system.
+          */
         function configuredUnitTesting() {
             var lib = ff.getConfig('external.unittestlib');
             if (lib.indexOf('jasmine') >= 0) {
@@ -416,8 +416,28 @@ module.exports = function(grunt) {
         var src = ff.flatten(ff.srcFiles());
         var specs = ff.flatten(ff.unitTestFiles());
         var libs = ff.flatten(ff.extLibFiles());
+
         // Add all other than Jasmine-libs to vendor list.
         libs = libs.concat(ff.flatten(ff.removeDuplicates(ff.unitTestLibraryFiles(), ff.files(['jasmine'], 'lib'))));
+
+        // Select defined tests.
+        var args = Array.prototype.slice.call(arguments);
+        if (args.length) {
+            var selected = [];
+            for (var i = 0; i < args.length; i++) {
+                for (var j = 0; j < specs.length; j++) {
+                    if (specs[j].indexOf(args[i]) >= 0) {
+                        selected.push(specs[j]);
+                    }
+                }
+            }
+
+            if (!selected.length) {
+                grunt.fail.fatal("No tests match to the given arguments.");
+            }
+            specs = selected;
+        }
+
         // Run Jasmine.
         if (type === 'jasmine') {
             settings = {
