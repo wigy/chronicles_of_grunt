@@ -1,3 +1,7 @@
+/**
+ * File lookup tools.
+ * @module file-filter
+ */
 module.exports = function(grunt) {
 
     // Load Node-modules.

@@ -1,5 +1,6 @@
 /**
- * Configurable output wrapper to make testing easier.
+ * Configurable output wrapper.
+ * @module log
  */
 module.exports = function(grunt) {
 
@@ -19,7 +20,17 @@ module.exports = function(grunt) {
     }
 
     return {
-        info: function(message) {
+
+        /**
+         * Write one or more messages either to the grunt log or to the file.
+         * If the configuration variable <code>build.options.log_file</code>
+         * defines a path, then that file is used. Otherwise the messages are
+         * written to the <i>Grunt</i>-log.
+         *
+         * @param arg1 {any} First message.
+         * @param argN {any} Last message.
+         */
+        info: function(arg1, arg2, argN) {
             var args = Array.prototype.slice.call(arguments);
             var msg = args.join(' ') + "\n";
 

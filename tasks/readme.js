@@ -1,3 +1,8 @@
+/**
+ *  Utilities to parse and manipulate README.md file.
+ *
+ *  @module readme
+ */
 module.exports = function(grunt) {
 
     // Load Node-modules.
@@ -5,6 +10,8 @@ module.exports = function(grunt) {
 
     /**
      * A class to wrap README-data.
+     *
+     * @class Readme
      */
     function Readme() {
         this.next_version = {'done': [], 'not_yet_done': []};
@@ -14,6 +21,7 @@ module.exports = function(grunt) {
 
     /**
      * Update data by copying done entries to the new released version.
+     * @param version {String} New version to be set.
      */
     Readme.prototype.release = function(version) {
 
@@ -22,7 +30,8 @@ module.exports = function(grunt) {
     };
 
     /**
-     * Construct a string for `Release History` section.
+     * Construct a string for <i>Release History</i> section.
+     * @return {String} A <i>Release History</i> section as a string.
      */
     Readme.prototype.getHistory = function() {
 
@@ -40,6 +49,8 @@ module.exports = function(grunt) {
 
     /**
      * Construct a string for `Next Version` section.
+     *
+     * @return {String} A <i>Next Version</i> section as a string.
      */
     Readme.prototype.getNextVersion = function() {
 
@@ -68,12 +79,12 @@ module.exports = function(grunt) {
     /**
      * Parse README.md file of the project.
      *
-     * @param path {string} Path to the file to parse (defaults to README.md).
-     *
      * This object will have a list of lines (without bullet) that has been implemented in
-     * `this.next_version.done` and list of lines that has not yet been implemented in
-     * `this.next_version.not_yet_done`. In addition, `this.release_history` will contain a list
-     * of versions in a format [{version: '1.2.3', changes: ['change 1', 'change 2']}, ...]
+     * <code>this.next_version.done</code> and list of lines that has not yet been implemented in
+     * <code>this.next_version.not_yet_done</code>. In addition, <code>this.release_history</code> will contain a list
+     * of versions in a format <code>[{version: '1.2.3', changes: ['change 1', 'change 2']}, ...]</code>.
+     *
+     * @param path {string} Path of the file to parse (defaults to README.md).
      */
     Readme.prototype.parse = function(path) {
         if (!path) {
@@ -119,6 +130,8 @@ module.exports = function(grunt) {
 
     /**
      * Write the file from the current data by overriding standard sections.
+     *
+     * @param path {string} Path to the file to write (defaults to README.md).
      */
     Readme.prototype.write = function(path) {
         if (!path) {

@@ -18,7 +18,7 @@
  */
 module.exports = function(grunt) {
 
-    // Get the build configuration and set some variables.
+    // Get the package configuration.
     var pckg = grunt.file.readJSON('package.json');
 
     // Load Node-modules.
@@ -103,8 +103,8 @@ module.exports = function(grunt) {
     function taskInfo() {
 
         /**
-            * List files returned by the given listing function on screen.
-            */
+         * List files returned by the given listing function on screen.
+         */
         function dumpFiles(title, fn) {
             var matches = fn();
             if (matches.length) {
@@ -388,7 +388,7 @@ module.exports = function(grunt) {
         }
     }
 
-    function taskTest(testType) {
+    function taskTest(which) {
 
         /**
             * Check the selected libraries for testing system.
@@ -513,7 +513,7 @@ module.exports = function(grunt) {
             dist: {
                 src: ff.flatten(ff.srcDocFiles()),
                 options: {
-                    destination: 'doc',
+                    destination: 'doc'
                 }
             }
         };

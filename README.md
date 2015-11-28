@@ -228,7 +228,8 @@ Licensed under the GPL-2.0 license.
 ### Not Yet Done
 
 * Support for doc-file like README.md and include them for TODO-checking.
-* Support for angular-jsdoc.
+* Ability to run just a single test at time.
+* Test for `docs` task.
 
 ## Future Ideas
 
@@ -238,8 +239,7 @@ Licensed under the GPL-2.0 license.
     - Make it part of `release` using 'die'-argument just like in `todo`.
 * Test for `dist` task.
 * Test for `libs` task.
-* Test for `docs` task.
 * Check for tabs in `verify`.
 * Show "Not Yet Done" section from this file with `todo`.
 * Alternative handling for external, where ['jquery', 'bootstrap', 'jasmine'] will automatically added to correct categories.
-* Pre-defined libraries could have 'requires' attributes, which inserts listed libs before itself to the resolved file list.
+* Pre-defined libraries could have 'requires' attributes, which inserts listed libs before itself to the resolved file list (coa requires angular).
