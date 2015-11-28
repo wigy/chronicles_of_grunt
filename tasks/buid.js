@@ -251,7 +251,7 @@ module.exports = function(grunt) {
             log.info("");
             var banner = '';
             banner += '/* ' + pckg.name + ' v' + pckg.version + '\n';
-            banner += ' * Copyright (c) ' + grunt.template.today("yyyy") + ' ' + pckg.author.name + '\n';
+            banner += ' * Copyright (c) ' + grunt.template.today("yyyy") + (pckg.author ? ' ' + pckg.author.name : '') + '\n';
             banner += ' */\n';
 
             settings = {options: {banner: banner}, dist: {}};

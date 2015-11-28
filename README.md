@@ -235,6 +235,7 @@ Licensed under the GPL-2.0 license.
 
 * Support for doc-file like README.md and include them for TODO-checking.
 * Test for `docs` task.
+* Test for `dist` task.
 
 ## Future Ideas
 
@@ -242,7 +243,6 @@ Licensed under the GPL-2.0 license.
     - Add cofiguration variable `ignore` to silence complaining.
     - Also check if there are rules not matching anything in the configuration.
     - Make it part of `release` using 'die'-argument just like in `todo`.
-* Test for `dist` task.
 * Test for `libs` task.
 * Check for tabs in `verify`.
 * Show "Not Yet Done" section from this file with `todo`.
