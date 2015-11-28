@@ -46,6 +46,7 @@ module.exports = function(grunt) {
     grunt.loadTasks(modules + 'grunt-contrib-nodeunit/tasks/');
     grunt.loadTasks(modules + 'grunt-jsdoc/tasks/');
     grunt.loadTasks(modules + 'grunt-contrib-clean/tasks/');
+    grunt.loadTasks(modules + 'grunt-contrib-watch/tasks/');
 
     /**
      * Refresh HTML-file to use the given Javascript and CSS files.
@@ -285,7 +286,7 @@ module.exports = function(grunt) {
         log.info("");
         if (!what || what === "js") {
             settings = {
-                all: ff.flatten(ff.srcFiles().concat(ff.otherFiles())),
+                all: ff.flatten(ff.srcDocFiles()),
                 options: {
                     curly: true,
                     eqeqeq: true,
@@ -510,7 +511,7 @@ module.exports = function(grunt) {
 
         var settings = {
             dist: {
-                src: ff.flatten(ff.srcFiles().concat(ff.otherFiles())),
+                src: ff.flatten(ff.srcDocFiles()),
                 options: {
                     destination: 'doc',
                 }
@@ -531,6 +532,44 @@ module.exports = function(grunt) {
         grunt.task.run('clean');
     }
 
+    function taskAuto(what) {
+
+        if (!what) {
+            what = 'docs';
+        }
+
+        var options = {spwan: false, interrupt: true};
+
+        var settings = {
+            docs: {
+                files: ff.flatten(ff.srcDocFiles()),
+                tasks: ['docs'],
+                options: options
+            },
+            test: {
+                files: ff.flatten(ff.srcFiles().concat(ff.unitTestFiles())),
+                tasks: ['test'],
+                options: options
+            },
+            css: {
+                files: ff.flatten(ff.cssFiles()),
+                tasks: ['verify:css'],
+                options: options
+            },
+            js: {
+                files: ff.flatten(ff.srcDocFiles()),
+                tasks: ['verify:js'],
+                options: options
+            }
+        };
+
+        if (!(what in settings)) {
+            grunt.fail.fatal("Invalid argument for auto-task. Only supported are " + Object.keys(settings) + ".");
+        }
+        grunt.config.set('watch', settings);
+        grunt.task.run('watch:' + what);
+    }
+
     grunt.registerTask('info', 'Display summary of the configured files and locations.', taskInfo);
     grunt.registerTask('libs', 'Update fresh copies of libraries from installed node-modules.', taskLibs);
     grunt.registerTask('index', 'Scan all configured javascript and css files and update html-files using them.', taskIndex);
@@ -544,10 +583,12 @@ module.exports = function(grunt) {
     grunt.registerTask('release', 'Make all sanity checks and if passed, create next release version.', taskRelease);
     grunt.registerTask('docs', 'Build all documentation.', taskDocs);
     grunt.registerTask('cleanup', 'Remove unnecessary files.', taskCleanup);
+    grunt.registerTask('auto', 'Automatically run tasks when files have changed.', taskAuto);
 
     grunt.registerTask('usage', 'Display summary of available tasks.', function() {
         var excludes = ['default', 'usage', 'availabletasks', 'jshint', 'uglify', 'cssmin', 'concat', 'jasmine',
-                        'csslint', 'nodeunit', 'shell', 'prerelease', 'postrelease', 'jsdoc', 'clean', 'cleanup'];
+                        'csslint', 'nodeunit', 'shell', 'prerelease', 'postrelease', 'jsdoc', 'clean', 'cleanup',
+                        'watch'];
         grunt.initConfig({availabletasks: {tasks: {options: {filter: 'exclude', tasks: excludes}}}});
         grunt.task.run(['availabletasks']);
     });

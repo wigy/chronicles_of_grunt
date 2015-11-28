@@ -160,6 +160,11 @@ Run all checks for code and then update README.md file and the version.
 
 Build API-documentation to `doc`-directory using *JSDoc*.
 
+### Task: `auto`
+
+Listen for file changes and automatically run `docs`, `test`, `verify:css` or `verify:js`
+based on the argument (use `css` or `js` for `verify`). Default is `docs`.
+
 ## License
 
 Copyright (c) 2015 Tommi Ronkainen
@@ -218,10 +223,10 @@ Licensed under the GPL-2.0 license.
 
 * Do not include libraries to the compressed distribution version.
 * Remove uncompressed Javascript-file from the dist-folder after compiling.
+* Task `auto` to use grunt-watch to build docs or running tests or syntax checking.
 
 ### Not Yet Done
 
-* Task `auto` to use grunt-watch to build docs for example (argument could specify).
 * Support for doc-file like README.md and include them for TODO-checking.
 * Support for angular-jsdoc.
 

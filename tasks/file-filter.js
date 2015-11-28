@@ -323,6 +323,13 @@ module.exports = function(grunt) {
      }
 
     /**
+     * Find all source code files needed for API-doc generation.
+     */
+     function srcDocFiles() {
+         return srcFiles().concat(otherFiles());
+     }
+
+    /**
      * Find all CSS files.
      */
     function cssFiles() {
@@ -435,6 +442,7 @@ module.exports = function(grunt) {
         dataFiles: dataFiles,
         codeFiles: codeFiles,
         srcFiles: srcFiles,
+        srcDocFiles: srcDocFiles,
         otherFiles: otherFiles,
         cssFiles: cssFiles,
         picFiles: picFiles,
