@@ -426,12 +426,65 @@ module.exports = function(grunt) {
         return workTextFiles().concat(picFiles()).concat(soundFiles());
     }
 
+    /**
+     * Refresh HTML-file to use the given Javascript and CSS files.
+     *
+     * @param dst {string} Target path to the HTML-file.
+     * @param jsFiles {Array} New list of Javascript-files to include.
+     * @param cssFiles {Array} New list of CSS-files to include.
+     */
+    function writeIndex(dst, jsFiles, cssFiles) {
+
+        var i;
+
+        // Construct javascript includes.
+        var js = "";
+        for (i=0; i < jsFiles.length; i++) {
+            js += '    <script src="' + jsFiles[i] + '"></script>\n';
+        }
+
+        // Construct CSS includes.
+        var css = "";
+        for (i=0; i < cssFiles.length; i++) {
+            css += '    <link rel="stylesheet" href="' + cssFiles[i] + '">\n';
+        }
+
+        // Insert inclusions to the index filr.
+        var content = "";
+        var file = grunt.file.read(dst).trim();
+        var lines = file.split("\n");
+        var added = false;
+        for (j=0; j < lines.length; j++) {
+            if (/^\s*<script src=".*"><\/script>$/.test(lines[j])) {
+                // Drop javascript source file.
+                continue;
+            } else if (/^\s*<link rel="stylesheet" href=".*">$/.test(lines[j])) {
+                // Drop CSS file.
+                continue;
+            } else if (/^\s*<\/head>\s*$/.test(lines[j])) {
+                // Add the latest file lists.
+                added = true;
+                content += js;
+                content += css;
+                content += "  </head>\n";
+                continue;
+            } else {
+                content += lines[j] + "\n";
+            }
+        }
+        if (!added) {
+            grunt.fail.fatal("Cannot find </head> from index file: " + dst);
+        }
+        grunt.file.write(dst, content);
+    }
+
     return {
         flatten: flatten,
         getConfig: getConfig,
         prefix: prefix,
         files: files,
         removeDuplicates: removeDuplicates,
+        writeIndex: writeIndex,
 
         extLibFiles: extLibFiles,
         extLibMapFiles: extLibMapFiles,

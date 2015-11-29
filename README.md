@@ -232,11 +232,10 @@ Licensed under the GPL-2.0 license.
 * Ability to run just a single test at time.
 * Test for `libs` task.
 * Test for `dist` task.
+* Show *Not Yet Done* section from `README.md` with `todo`.
 
 ### Not Yet Done
 
-* Test for `docs` task.
-* Show "Not Yet Done" section from this file with `todo`.
 
 ## Future Ideas
 
@@ -245,5 +244,6 @@ Licensed under the GPL-2.0 license.
     - Also check if there are rules not matching anything in the configuration.
     - Make it part of `release` using 'die'-argument just like in `todo`.
 * Check for tabs in `verify`.
+* Test for `docs` task.
 * Alternative handling for external, where ['jquery', 'bootstrap', 'jasmine'] will automatically added to correct categories.
 * Pre-defined libraries could have 'requires' attributes, which inserts listed libs before itself to the resolved file list (coa requires angular).

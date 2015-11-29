@@ -1,5 +1,6 @@
 /*
  * Chronicles of Grunt
+ *
  * (C) 2015 Tommi Ronkainen
  *
  * This program is free software; you can redistribute it and/or modify
@@ -47,58 +48,6 @@ module.exports = function(grunt) {
     grunt.loadTasks(modules + 'grunt-jsdoc/tasks/');
     grunt.loadTasks(modules + 'grunt-contrib-clean/tasks/');
     grunt.loadTasks(modules + 'grunt-contrib-watch/tasks/');
-
-    /**
-     * Refresh HTML-file to use the given Javascript and CSS files.
-     *
-     * @param dst {string} Target path to the HTML-file.
-     * @param jsFiles {Array} New list of Javascript-files to include.
-     * @param cssFiles {Array} New list of CSS-files to include.
-     */
-    function writeIndex(dst, jsFiles, cssFiles) {
-
-        var i;
-
-        // Construct javascript includes.
-        var js = "";
-        for (i=0; i < jsFiles.length; i++) {
-            js += '    <script src="' + jsFiles[i] + '"></script>\n';
-        }
-
-        // Construct CSS includes.
-        var css = "";
-        for (i=0; i < cssFiles.length; i++) {
-            css += '    <link rel="stylesheet" href="' + cssFiles[i] + '">\n';
-        }
-
-        // Insert inclusions to the index filr.
-        var content = "";
-        var file = grunt.file.read(dst).trim();
-        var lines = file.split("\n");
-        var added = false;
-        for (j=0; j < lines.length; j++) {
-            if (/^\s*<script src=".*"><\/script>$/.test(lines[j])) {
-                // Drop javascript source file.
-                continue;
-            } else if (/^\s*<link rel="stylesheet" href=".*">$/.test(lines[j])) {
-                // Drop CSS file.
-                continue;
-            } else if (/^\s*<\/head>\s*$/.test(lines[j])) {
-                // Add the latest file lists.
-                added = true;
-                content += js;
-                content += css;
-                content += "  </head>\n";
-                continue;
-            } else {
-                content += lines[j] + "\n";
-            }
-        }
-        if (!added) {
-            grunt.fail.fatal("Cannot find </head> from index file: " + dst);
-        }
-        grunt.file.write(dst, content);
-    }
 
     function taskInfo() {
 
@@ -167,7 +116,7 @@ module.exports = function(grunt) {
 
             for (i=0; i < indices.length; i++) {
                 log.info('Updating ' + indices[i]);
-                writeIndex(indices[i], jsFiles, cssFiles);
+                ff.writeIndex(indices[i], jsFiles, cssFiles);
             }
         }
 
@@ -181,7 +130,7 @@ module.exports = function(grunt) {
 
             for (i=0; i < indices.length; i++) {
                 log.info('Updating ' + indices[i]);
-                writeIndex(indices[i], jsFiles, cssFiles);
+                ff.writeIndex(indices[i], jsFiles, cssFiles);
             }
         }
     }
@@ -273,7 +222,7 @@ module.exports = function(grunt) {
                 dst = 'dist/' + indices[i];
                 log.info(indices[i] + ' -> ' + dst);
                 grunt.file.copy(indices[i], dst);
-                writeIndex(dst, compressedJsFiles, compressedCssFiles);
+                ff.writeIndex(dst, compressedJsFiles, compressedCssFiles);
             }
         }
     }
@@ -359,23 +308,36 @@ module.exports = function(grunt) {
 
     function taskTodo(die) {
 
+        var i,j;
         var count = 0;
         var files = ff.flatten(ff.workTextFiles());
         var TODO = "TODO" + ":";
-        for (var i=0; i<files.length; i++) {
+
+        for (i=0; i<files.length; i++) {
             var seen = false;
             var lines = grunt.file.read(files[i]).split("\n");
-            for (var j=0; j<lines.length; j++) {
+            for (j=0; j<lines.length; j++) {
                 if( lines[j].indexOf(TODO) >= 0) {
                     count++;
                     if (!seen) {
                         seen = true;
                         log.info("");
-                        log.info(("   " + files[i])["blue"]);
+                        log.info(files[i]["blue"]);
                         log.info("");
                     }
-                    log.info(("Line " + (j+1) + "")["green"], lines[j].trim());
+                    log.info(("  Line " + (j+1) + "")["green"], lines[j].trim());
                 }
+            }
+        }
+
+        var parsed = readme.parse();
+        if (parsed.next_version.not_yet_done.length) {
+            log.info("");
+            log.info(("README.md")["blue"]);
+            log.info("");
+            for (i=0; i<parsed.next_version.not_yet_done.length; i++) {
+                log.info("  Not Yet Done "["green"], parsed.next_version.not_yet_done[i]);
+                count++;
             }
         }
 
@@ -384,7 +346,7 @@ module.exports = function(grunt) {
         log.info("");
         if (count && die === 'die') {
             grunt.fail.fatal("There are unfinished TODO-entries that needs to be resolved.\n" +
-                                "Please cancel or implement them or gather them to the version plan.");
+                                "Please cancel or implement them or gather them to the future version plan.");
         }
     }
 
@@ -595,8 +557,8 @@ module.exports = function(grunt) {
     grunt.registerTask('index', 'Scan all configured javascript and css files and update html-files using them.', taskIndex);
     grunt.registerTask('verify', 'Run all verifications required for valid build.', taskVerify);
     grunt.registerTask('dist', 'Collect and minify all application files into the dist-directory.', taskDist);
-    grunt.registerTask('version', 'Query and mark the version to the source files.', taskVersion);
-    grunt.registerTask('todo', 'Scan for TODO-entries from the source code and display them.', taskTodo);
+    grunt.registerTask('version', 'Query or mark the version to the source files.', taskVersion);
+    grunt.registerTask('todo', 'Scan for remaining TODO-entries from the source code and display them.', taskTodo);
     grunt.registerTask('test', 'Run all tests.', taskTest);
     grunt.registerTask('prerelease', 'Pre checks for the relase.', taskPreRelease);
     grunt.registerTask('postrelease', 'File updating tasks relase.', taskPostRelease);
