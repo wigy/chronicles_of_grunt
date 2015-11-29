@@ -230,12 +230,13 @@ Licensed under the GPL-2.0 license.
 * Remove uncompressed Javascript-file from the dist-folder after compiling.
 * Task `auto` to use grunt-watch to build docs or running tests or syntax checking.
 * Ability to run just a single test at time.
+* Test for `libs` task.
+* Test for `dist` task.
 
 ### Not Yet Done
 
-* Support for doc-file like README.md and include them for TODO-checking.
 * Test for `docs` task.
-* Test for `dist` task.
+* Show "Not Yet Done" section from this file with `todo`.
 
 ## Future Ideas
 
@@ -243,8 +244,6 @@ Licensed under the GPL-2.0 license.
     - Add cofiguration variable `ignore` to silence complaining.
     - Also check if there are rules not matching anything in the configuration.
     - Make it part of `release` using 'die'-argument just like in `todo`.
-* Test for `libs` task.
 * Check for tabs in `verify`.
-* Show "Not Yet Done" section from this file with `todo`.
 * Alternative handling for external, where ['jquery', 'bootstrap', 'jasmine'] will automatically added to correct categories.
 * Pre-defined libraries could have 'requires' attributes, which inserts listed libs before itself to the resolved file list (coa requires angular).

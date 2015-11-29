@@ -6,8 +6,8 @@ module.exports = function(grunt) {
         options: {
             name: 'cog_unittest',
             external: {
-                lib: [],
-                css: [],
+                lib: ['angular'],
+                css: ['bootstrap'],
                 unittestlib: ['jasmine'],
                 unittestcss: ['jasmine'],
             },

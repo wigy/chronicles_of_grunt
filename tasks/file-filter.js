@@ -52,7 +52,7 @@ module.exports = function(grunt) {
         } else if (grunt.file.expand('node_modules/chronicles_of_grunt/node_modules/' + pattern).length) {
             ret = 'node_modules/chronicles_of_grunt/node_modules/';
         } else {
-            grunt.fail.fatal("Cannot find module path.");
+            grunt.fail.fatal("Cannot find module path for " + pattern);
         }
         return ret;
     }

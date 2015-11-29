@@ -533,7 +533,7 @@ module.exports = function(grunt) {
             dist: {
                 src: ff.flatten(ff.srcDocFiles()),
                 options: {
-                    destination: 'doc'
+                    destination: 'doc',
                 }
             }
         };
