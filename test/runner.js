@@ -1,6 +1,7 @@
 
 var child_process = require('child_process');
 var fs = require('fs');
+var glob = require('glob');
 
 // Storage for the output lines of the latest run.
 var output = [];
@@ -43,6 +44,27 @@ module.exports = {
         saved[filename] = module.exports.read(filename);
     },
 
+    /**
+     * Remove all files and the directory recursively.
+     */
+    clean: function(dir) {
+        if (!fs.existsSync(dir)) {
+            return;
+        }
+        var files = glob.sync(dir + '/*');
+        var drop = [];
+        for (var i = 0; i < files.length; i++) {
+            if (fs.lstatSync(files[i]).isDirectory()) {
+                module.exports.clean(files[i]);
+            } else {
+                drop.push(files[i]);
+            }
+        }
+        for (var j = 0; j < drop.length; j++) {
+            fs.unlinkSync(drop[j]);
+        }
+        fs.rmdirSync(dir);
+    },
 
     /**
      * Restore the content of the given file from the temporary storage and delete the copy.
