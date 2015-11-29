@@ -286,7 +286,7 @@ module.exports = function(grunt) {
         log.info("");
         if (!what || what === "js") {
             settings = {
-                all: ff.flatten(ff.srcDocFiles()),
+                all: ff.flatten(ff.allSrcFiles()),
                 options: {
                     curly: true,
                     eqeqeq: true,
@@ -531,7 +531,7 @@ module.exports = function(grunt) {
 
         var settings = {
             dist: {
-                src: ff.flatten(ff.srcDocFiles()),
+                src: ff.flatten(ff.allSrcFiles()),
                 options: {
                     destination: 'doc',
                 }
@@ -562,7 +562,7 @@ module.exports = function(grunt) {
 
         var settings = {
             docs: {
-                files: ff.flatten(ff.srcDocFiles()),
+                files: ff.flatten(ff.allSrcFiles()),
                 tasks: ['docs'],
                 options: options
             },
@@ -577,7 +577,7 @@ module.exports = function(grunt) {
                 options: options
             },
             js: {
-                files: ff.flatten(ff.srcDocFiles()),
+                files: ff.flatten(ff.allSrcFiles()),
                 tasks: ['verify:js'],
                 options: options
             }

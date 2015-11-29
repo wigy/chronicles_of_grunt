@@ -313,14 +313,14 @@ module.exports = function(grunt) {
     }
 
     /**
-     * Find all source code files.
+     * Find all source code files for the actual application.
      */
      function srcFiles() {
          return removeDuplicates(configFiles().concat(modelFiles()).concat(dataFiles()).concat(codeFiles()));
      }
 
      /**
-      * Find other work files.
+      * Find other work files that are Javascript.
       */
      function otherFiles() {
          return files(getConfig('src.other'), 'other');
@@ -329,7 +329,7 @@ module.exports = function(grunt) {
     /**
      * Find all source code files needed for API-doc generation.
      */
-     function srcDocFiles() {
+     function allSrcFiles() {
          return srcFiles().concat(otherFiles());
      }
 
@@ -446,7 +446,7 @@ module.exports = function(grunt) {
         dataFiles: dataFiles,
         codeFiles: codeFiles,
         srcFiles: srcFiles,
-        srcDocFiles: srcDocFiles,
+        allSrcFiles: allSrcFiles,
         otherFiles: otherFiles,
         cssFiles: cssFiles,
         picFiles: picFiles,
