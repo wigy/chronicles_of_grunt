@@ -233,6 +233,7 @@ Licensed under the GPL-2.0 license.
 * Test for `libs` task.
 * Test for `dist` task.
 * Show *Not Yet Done* section from `README.md` with `todo`.
+* Pre-defined libraries can now have 'needs' attributes, which inserts listed libs before itself to the resolved file list.
 
 ### Not Yet Done
 
@@ -246,4 +247,3 @@ Licensed under the GPL-2.0 license.
 * Check for tabs in `verify`.
 * Test for `docs` task.
 * Alternative handling for external, where ['jquery', 'bootstrap', 'jasmine'] will automatically added to correct categories.
-* Pre-defined libraries could have 'requires' attributes, which inserts listed libs before itself to the resolved file list (coa requires angular).

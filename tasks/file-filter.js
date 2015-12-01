@@ -11,7 +11,7 @@ module.exports = function(grunt) {
     // Known library file specifications.
     var known = {
         lib: {
-            coa: {src: 'node_modules/chronicles_of_angular/dist/coa.min.js', dst: 'lib', drop: 'node_modules/chronicles_of_angular/dist'},
+            coa: {src: 'node_modules/chronicles_of_angular/dist/coa.min.js', dst: 'lib', drop: 'node_modules/chronicles_of_angular/dist', needs: 'angular'},
             jquery: {src: 'node_modules/jquery/dist/jquery.min.*', dst: 'lib', drop: 'node_modules/jquery/dist'},
             bootstrap: {src: 'node_modules/bootstrap/dist/js/bootstrap.min.js', dst: 'lib', drop: 'node_modules/bootstrap/dist/js'},
             angular: {src: 'node_modules/angular/angular.min.{js,js.map}', dst: 'lib', drop: 'node_modules/angular/'},
@@ -80,7 +80,7 @@ module.exports = function(grunt) {
     }
 
     /**
-     * Collect list of source file patterns and expand them to single files.
+     * Collect list of source file specifications and expand them to single files.
      */
     function files(specs, category) {
         var ret = [];
@@ -109,6 +109,11 @@ module.exports = function(grunt) {
                     ret = ret.concat(files(specs[i], category));
                 }
             } else if (typeof(specs) === 'object') {
+
+                // Collect dependencies.
+                if (specs.needs) {
+                    ret = files(specs.needs, category);
+                }
 
                 // Calculate path prefix for file sources.
                 var srcPrefix = '';
