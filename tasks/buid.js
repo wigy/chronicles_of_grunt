@@ -431,12 +431,8 @@ module.exports = function(grunt) {
         if (/^[.0-9]+$/.test(pckg.version)) {
             grunt.fail.fatal("Cannot make release from this version.\nMust have a non-release version like 1.1.0-beta as the current version.");
         }
-        // Check that all has been done.
+        // Check that something has been done.
         var parsed = readme.parse();
-        if (parsed.next_version.not_yet_done.length > 0) {
-            grunt.fail.fatal("There are things 'Not Yet Done' section of 'Next Version':\n * " + parsed.next_version.not_yet_done.join("\n * "));
-        }
-        // Check that somthing has been done.
         if (parsed.next_version.done.length === 0) {
             grunt.fail.fatal("There are not any entries in 'Done' section of 'Next Version'.");
         }
@@ -453,6 +449,9 @@ module.exports = function(grunt) {
         }
         if (args.indexOf('todo') < 0) {
             tasks.push('todo:die');
+        }
+        if (args.indexOf('files') < 0) {
+            tasks.push('files:die');
         }
         if (args.indexOf('test') < 0) {
             tasks.push('test');
@@ -548,7 +547,7 @@ module.exports = function(grunt) {
         grunt.task.run(what ? 'watch:' + what : 'watch');
     }
 
-    function taskFiles() {
+    function taskFiles(die) {
         var files = ff.filesInRepository();
         var map  = ff.fileCategoryMap();
 
@@ -564,6 +563,11 @@ module.exports = function(grunt) {
         if (count) {
             log.info("");
             log.info(count + " file(s) unknown.");
+            if (die === 'die') {
+                grunt.fail.fatal("There are files in the repository that are not known.\n" +
+                                 "Please add them to the appropriate categories in Gruntfile.js.\n" +
+                                 "If there are no category for them, then just add them to the 'ignore' category.");
+            }
         } else {
             log.info("All files known!");
         }

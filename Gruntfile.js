@@ -7,7 +7,7 @@ module.exports = function(grunt) {
             name: 'cog',
             cog_development: true,
             src: {
-                other: ['Gruntfile.js', 'tasks/*.js', 'test/runner.js']
+                other: ['tasks/*.js', 'test/runner.js']
             },
             test: {
                 unit: 'test/*_test.js'
@@ -15,6 +15,7 @@ module.exports = function(grunt) {
             external: {
                  unittestlib: ['nodeunit']
             },
+            ignore: ['test/workdir/**']
         }
     },
   });

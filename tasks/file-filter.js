@@ -31,6 +31,17 @@ module.exports = function(grunt) {
         fonts: {
             bootstrap: {src: 'node_modules/bootstrap/dist/fonts/*', dst: 'fonts', drop: 'node_modules/bootstrap/dist/fonts/'},
         },
+        common: {
+            js: [
+                {src: 'Gruntfile.js', dst: null},
+            ],
+            other: [
+                {src: 'LICENSE', dst: null},
+                {src: 'README.md', dst: null},
+                {src: 'bin/grunt', dst: null},
+                {src: 'package.json', dst: null},
+            ],
+        }
     };
 
     // List of categories each library contributes.
@@ -124,7 +135,7 @@ module.exports = function(grunt) {
                     spec.required = true;
                    ret = ret.concat(files(spec, category));
                 // All strings containing non-alpha characters are direct file patterns.
-                } else if (/[^a-zA-Z]/.test(specs)) {
+                } else if (/[^a-zA-Z]/.test(specs) || fs.existsSync(specs)) {
                     src = grunt.file.expand(specs);
                     for (i=0; i < src.length; i++) {
                         ret.push({src: src[i], dst: src[i], drop: ''});
@@ -196,6 +207,7 @@ module.exports = function(grunt) {
                 }
             }
         }
+
         return ret;
     }
 
@@ -289,6 +301,58 @@ module.exports = function(grunt) {
             }
         }
         return ret;
+    }
+
+    /**
+     * Refresh HTML-file to use the given Javascript and CSS files.
+     *
+     * @param dst {string} Target path to the HTML-file.
+     * @param jsFiles {Array} New list of Javascript-files to include.
+     * @param cssFiles {Array} New list of CSS-files to include.
+     */
+    function writeIndex(dst, jsFiles, cssFiles) {
+
+        var i;
+
+        // Construct javascript includes.
+        var js = "";
+        for (i=0; i < jsFiles.length; i++) {
+            js += '    <script src="' + jsFiles[i] + '"></script>\n';
+        }
+
+        // Construct CSS includes.
+        var css = "";
+        for (i=0; i < cssFiles.length; i++) {
+            css += '    <link rel="stylesheet" href="' + cssFiles[i] + '">\n';
+        }
+
+        // Insert inclusions to the index filr.
+        var content = "";
+        var file = grunt.file.read(dst).trim();
+        var lines = file.split("\n");
+        var added = false;
+        for (j=0; j < lines.length; j++) {
+            if (/^\s*<script src=".*"><\/script>$/.test(lines[j])) {
+                // Drop javascript source file.
+                continue;
+            } else if (/^\s*<link rel="stylesheet" href=".*">$/.test(lines[j])) {
+                // Drop CSS file.
+                continue;
+            } else if (/^\s*<\/head>\s*$/.test(lines[j])) {
+                // Add the latest file lists.
+                added = true;
+                content += js;
+                content += css;
+                content += "  </head>\n";
+                continue;
+            } else {
+                content += lines[j] + "\n";
+            }
+        }
+        if (!added) {
+            grunt.fail.fatal("Cannot find </head> from index file: " + dst);
+        }
+        grunt.file.write(dst, content);
     }
 
     /**
@@ -390,10 +454,10 @@ module.exports = function(grunt) {
      }
 
     /**
-     * Find all source code files needed for API-doc generation.
+     * Find all source code files needed for API-doc generation or syntax checking.
      */
      function allSrcFiles() {
-         return srcFiles().concat(otherFiles());
+         return srcFiles().concat(otherFiles()).concat(commonJsFiles());
      }
 
     /**
@@ -485,60 +549,35 @@ module.exports = function(grunt) {
      * Find all work files.
      */
     function workFiles() {
-
         return workTextFiles().concat(picFiles()).concat(soundFiles());
     }
 
     /**
-     * Refresh HTML-file to use the given Javascript and CSS files.
-     *
-     * @param dst {string} Target path to the HTML-file.
-     * @param jsFiles {Array} New list of Javascript-files to include.
-     * @param cssFiles {Array} New list of CSS-files to include.
+     * List of common Javascript-files.
      */
-    function writeIndex(dst, jsFiles, cssFiles) {
+    function commonJsFiles() {
+        return files('js', 'common');
+    }
 
-        var i;
+    /**
+     * List of other common files.
+     */
+    function commonOtherFiles() {
+        return files('other', 'common');
+    }
 
-        // Construct javascript includes.
-        var js = "";
-        for (i=0; i < jsFiles.length; i++) {
-            js += '    <script src="' + jsFiles[i] + '"></script>\n';
-        }
+    /**
+     * List of all common files.
+     */
+    function commonFiles() {
+        return commonJsFiles().concat(commonOtherFiles());
+    }
 
-        // Construct CSS includes.
-        var css = "";
-        for (i=0; i < cssFiles.length; i++) {
-            css += '    <link rel="stylesheet" href="' + cssFiles[i] + '">\n';
-        }
-
-        // Insert inclusions to the index filr.
-        var content = "";
-        var file = grunt.file.read(dst).trim();
-        var lines = file.split("\n");
-        var added = false;
-        for (j=0; j < lines.length; j++) {
-            if (/^\s*<script src=".*"><\/script>$/.test(lines[j])) {
-                // Drop javascript source file.
-                continue;
-            } else if (/^\s*<link rel="stylesheet" href=".*">$/.test(lines[j])) {
-                // Drop CSS file.
-                continue;
-            } else if (/^\s*<\/head>\s*$/.test(lines[j])) {
-                // Add the latest file lists.
-                added = true;
-                content += js;
-                content += css;
-                content += "  </head>\n";
-                continue;
-            } else {
-                content += lines[j] + "\n";
-            }
-        }
-        if (!added) {
-            grunt.fail.fatal("Cannot find </head> from index file: " + dst);
-        }
-        grunt.file.write(dst, content);
+    /**
+     * List of files to be ignored.
+     */
+    function ignoredFiles() {
+        return files(getConfig('ignore'), 'common');
     }
 
     /**
@@ -553,7 +592,9 @@ module.exports = function(grunt) {
         // This list of categories must contain all non-overlapping file categories.
         var categories = ['extLibFiles', 'extLibMapFiles', 'extCssFiles', 'extFontFiles',
             'appIndexFiles', 'testIndexFiles', 'configFiles', 'modelFiles', 'dataFiles',
-            'codeFiles', 'otherFiles', 'cssFiles', 'picFiles', 'soundFiles', 'unitTestFiles']
+            'codeFiles', 'otherFiles', 'cssFiles', 'picFiles', 'soundFiles', 'unitTestFiles',
+            'commonJsFiles', 'commonOtherFiles', 'ignoredFiles'];
+
         // Construct the map by calling each function defined above.
         var map = {};
         for (var i = 0; i < categories.length; i++) {
@@ -609,6 +650,10 @@ module.exports = function(grunt) {
         includeUnitTestCssFiles: includeUnitTestCssFiles,
         testFiles: testFiles,
         workTextFiles: workTextFiles,
-        workFiles: workFiles
+        workFiles: workFiles,
+        commonJsFiles: commonJsFiles,
+        commonOtherFiles: commonOtherFiles,
+        commonFiles: commonFiles,
+        ignoredFiles: ignoredFiles,
     };
 };

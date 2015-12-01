@@ -166,7 +166,9 @@ and if given, only files containing arguments as substrings are selected for run
 
 ### Task: `release`
 
-Run all checks for code and then update README.md file and the version.
+Run all checks for code and then update README.md file and the version. You can disable
+some checks by adding them as separate arguments each: `verify`, `todo`, `files`, `test`.
+It is also possible to disable two other standard steps `dist` and `docs`.
 
 ### Task: `docs`
 
@@ -176,6 +178,12 @@ Build API-documentation to `doc`-directory using *JSDoc*.
 
 Listen for file changes and automatically run `docs`, `test`, `verify:css` or `verify:js`
 based on the argument (use `css` or `js` for `verify`). Default is `docs`.
+
+### Task: `files`
+
+Run complete scan of files in the repository and compare files found to the configuration.
+Report all files that does not belong to the configuration or are not commonly known files.
+Running `files:die` causes the script end with an error, if any unknown files are found.
 
 ## License
 
@@ -242,15 +250,17 @@ Licensed under the GPL-2.0 license.
 * Show *Not Yet Done* section from `README.md` with `todo`.
 * Pre-defined libraries can now have 'needs' attributes, which inserts listed libs before itself to the resolved file list.
 * Simplified handling for external, where list like ['jquery', 'bootstrap', 'jasmine'] will automatically added to correct categories.
+* A task to find every file that does not belong to any recognized category in the repository.
 
 ### Not Yet Done
 
-* A task to find every file that does not belong to any recognized category in the repository.
-    - Add cofiguration variable `ignore` to silence complaining.
-    - Make it part of `release` using 'die'-argument just like in `todo`.
+* New dist-file resolver to build file specs with correct source and destination (use with files- and dist-task).
 
 ## Future Ideas
 
+* Reorganize testing code so that we use new strucutre for testing: {unit: {data: 'test/data/**', lib: 'jasmine', css: 'jasmine'}}.
+    - Add new file category for test data.
+    - Update library parsing to use this structure.
 * Check for tabs in `verify`.
 * Documentation support for Angular.
 * Test for `docs` task.
