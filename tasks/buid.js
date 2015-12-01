@@ -516,10 +516,6 @@ module.exports = function(grunt) {
 
     function taskAuto(what) {
 
-        if (!what) {
-            what = 'docs';
-        }
-
         var options = {spwan: false, interrupt: true};
 
         var settings = {
@@ -529,7 +525,7 @@ module.exports = function(grunt) {
                 options: options
             },
             test: {
-                files: ff.flatten(ff.srcFiles().concat(ff.unitTestFiles())),
+                files: ff.flatten(ff.allSrcFiles().concat(ff.unitTestFiles())),
                 tasks: ['test'],
                 options: options
             },
@@ -545,11 +541,11 @@ module.exports = function(grunt) {
             }
         };
 
-        if (!(what in settings)) {
+        if (what && !(what in settings)) {
             grunt.fail.fatal("Invalid argument for auto-task. Only supported are " + Object.keys(settings) + ".");
         }
         grunt.config.set('watch', settings);
-        grunt.task.run('watch:' + what);
+        grunt.task.run(what ? 'watch:' + what : 'watch');
     }
 
     grunt.registerTask('info', 'Display summary of the configured files and locations.', taskInfo);

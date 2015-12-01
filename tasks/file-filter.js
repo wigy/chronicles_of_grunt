@@ -83,7 +83,7 @@ module.exports = function(grunt) {
                 var external = config.options.external;
                 config.options.external = {lib: [], css: [], fonts: [], unittestlib: [], unittestcss: []};
                 for (i=0; i < external.length; i++) {
-                    for(var j = 0; j < categories[external[i]].length; j++) {
+                    for(j = 0; j < categories[external[i]].length; j++) {
                         config.options.external[categories[external[i]][j]].push(external[i]);
                     }
                 }
