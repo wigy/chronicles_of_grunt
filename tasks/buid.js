@@ -142,30 +142,28 @@ module.exports = function(grunt) {
         log.info("Build: dist");
         log.info("");
 
-        var matches = ff.distFilesUncompressed();
+        var matches = ff.distUncompressedFiles();
         if (matches.length) {
             log.info("");
             log.info("Copying media files...");
             log.info("");
             for (i = 0; i < matches.length; i++) {
-                dst = path.join('dist', matches[i].dst);
-                log.info(matches[i].dst + ' -> ' + dst);
-                grunt.file.copy(matches[i].dst, dst);
+                log.info(matches[i].src + ' -> ' + matches[i].dst);
+                grunt.file.copy(matches[i].dst, matches[i].dst);
             }
         }
 
         // Copy libraries.
         var compressedJsFiles = [];
-        var libs = ff.extLibFiles();
+        var libs = ff.distLibFiles();
         if (libs.length) {
             log.info("");
             log.info("Copying libraries...");
             log.info("");
             for (i = 0; i < libs.length; i++) {
-                dst = 'dist/' + libs[i].dst;
-                log.info(libs[i].dst + ' -> ' + dst);
-                grunt.file.copy(libs[i].dst, dst);
-                compressedJsFiles.push(libs[i].dst);
+                log.info(libs[i].src + ' -> ' + libs[i].dst);
+                grunt.file.copy(libs[i].src, libs[i].dst);
+                compressedJsFiles.push(libs[i].dst.replace(/dist\//, ''));
             }
         }
 
@@ -177,6 +175,7 @@ module.exports = function(grunt) {
             log.info("Compressing CSS...");
             log.info("");
             settings = {all: {files: {}}};
+            // TODO: Get from distCSSFiles()
             compressedCssFiles.push('dist/' + ff.getConfig('name') + '.min.css');
             settings.all.files[compressedCssFiles[0]] = ff.flatten(cssFiles);
             grunt.config.set('cssmin', settings);
@@ -205,6 +204,7 @@ module.exports = function(grunt) {
 
             settings = {options: {banner: banner}, dist: {}};
             compressedJsFiles.push(ff.getConfig('name') + '.min.js');
+            // TODO: Get from distJsFiles()
             settings.dist.src = 'dist/' + ff.getConfig('name') + '.js';
             settings.dist.dest = 'dist/' + ff.getConfig('name') + '.min.js';
             grunt.config.set('uglify', settings);
@@ -213,16 +213,15 @@ module.exports = function(grunt) {
         }
 
         // Build index file(s).
-        var indices = ff.flatten(ff.appIndexFiles());
+        var indices = ff.distIndexFiles();
         if (indices.length) {
             log.info("");
             log.info("Building index...");
             log.info("");
             for (i = 0; i < indices.length; i++) {
-                dst = 'dist/' + indices[i];
-                log.info(indices[i] + ' -> ' + dst);
-                grunt.file.copy(indices[i], dst);
-                ff.writeIndex(dst, compressedJsFiles, compressedCssFiles);
+                log.info(indices[i].src + ' -> ' + indices[i].dst);
+                grunt.file.copy(indices[i].src, indices[i].dst);
+                ff.writeIndex(indices[i].dst, compressedJsFiles, compressedCssFiles);
             }
         }
     }

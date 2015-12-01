@@ -249,6 +249,16 @@ module.exports = function(grunt) {
     }
 
     /**
+     * Add a directory prefix to all destinations in the file list.
+     */
+    function prefixDest(prefix, files) {
+        for (var i = 0; i < files.length; i++) {
+            files[i].dst = prefix + files[i].dst;
+        }
+        return files;
+    }
+
+    /**
      * Perform recursive lookup for files in the repository.
      *
      * @return {Array} A list of files in the repository ignoring files of not interest.
@@ -498,8 +508,22 @@ module.exports = function(grunt) {
     /**
      * List of files that goes to the actual distribution unmodified.
      */
-    function distFilesUncompressed() {
-        return extFontFiles().concat(picFiles()).concat(soundFiles());
+    function distUncompressedFiles() {
+        return prefixDest('dist/', extFontFiles().concat(picFiles()).concat(soundFiles()));
+    }
+
+    /**
+     * List of files that goes to the actual distribution as compressed library files.
+     */
+    function distLibFiles() {
+        return prefixDest('dist/', extLibFiles());
+    }
+
+    /**
+     * Get the entry point file for the application in the distribution.
+     */
+    function distIndexFiles() {
+        return prefixDest('dist/', appIndexFiles());
     }
 
     /**
@@ -593,19 +617,18 @@ module.exports = function(grunt) {
         var categories = ['extLibFiles', 'extLibMapFiles', 'extCssFiles', 'extFontFiles',
             'appIndexFiles', 'testIndexFiles', 'configFiles', 'modelFiles', 'dataFiles',
             'codeFiles', 'otherFiles', 'cssFiles', 'picFiles', 'soundFiles', 'unitTestFiles',
-            'commonJsFiles', 'commonOtherFiles', 'ignoredFiles'];
+            'commonJsFiles', 'commonOtherFiles', 'ignoredFiles', 'distUncompressedFiles',
+            'distLibFiles', 'distIndexFiles'];
 
         // Construct the map by calling each function defined above.
         var map = {};
         for (var i = 0; i < categories.length; i++) {
-            if (categories[i].substr(-5) === 'Files') {
-                var files = flatten(exports[categories[i]]());
-                for (var j = 0; j < files.length; j++) {
-                    if (map[files[j]]) {
-                        grunt.fail.warn("A file '" + files[j] + "' maps to category '" + categories[i] + "' in addition to '" + map[files[j]] + "' category.");
-                    } else {
-                        map[files[j]] = categories[i];
-                    }
+            var files = flatten(exports[categories[i]]());
+            for (var j = 0; j < files.length; j++) {
+                if (map[files[j]]) {
+                    grunt.fail.warn("A file '" + files[j] + "' maps to category '" + categories[i] + "' in addition to '" + map[files[j]] + "' category.");
+                } else {
+                    map[files[j]] = categories[i];
                 }
             }
         }
@@ -643,7 +666,9 @@ module.exports = function(grunt) {
         soundFiles: soundFiles,
         includeJsFiles: includeJsFiles,
         includeCssFiles: includeCssFiles,
-        distFilesUncompressed: distFilesUncompressed,
+        distUncompressedFiles: distUncompressedFiles,
+        distLibFiles: distLibFiles,
+        distIndexFiles: distIndexFiles,
         unitTestFiles: unitTestFiles,
         unitTestLibraryFiles: unitTestLibraryFiles,
         includeUnitTestJsFiles: includeUnitTestJsFiles,

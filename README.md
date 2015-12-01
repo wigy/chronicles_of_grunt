@@ -254,7 +254,8 @@ Licensed under the GPL-2.0 license.
 
 ### Not Yet Done
 
-* New dist-file resolver to build file specs with correct source and destination (use with files- and dist-task).
+* New dist-file resolver to build file specs with correct source and destination.
+* Test for `files` task.
 
 ## Future Ideas
 
