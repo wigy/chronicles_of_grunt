@@ -548,6 +548,27 @@ module.exports = function(grunt) {
         grunt.task.run(what ? 'watch:' + what : 'watch');
     }
 
+    function taskFiles() {
+        var files = ff.filesInRepository();
+        var map  = ff.fileCategoryMap();
+
+        log.info("Build: files");
+        log.info("");
+        var count = 0;
+        for (var i = 0; i < files.length; i++) {
+            if (!map[files[i]]) {
+                log.info(files[i]);
+                count++;
+            }
+        }
+        if (count) {
+            log.info("");
+            log.info(count + " file(s) unknown.");
+        } else {
+            log.info("All files known!");
+        }
+    }
+
     grunt.registerTask('info', 'Display summary of the configured files and locations.', taskInfo);
     grunt.registerTask('libs', 'Update fresh copies of libraries from installed node-modules.', taskLibs);
     grunt.registerTask('index', 'Scan all configured javascript and css files and update html-files using them.', taskIndex);
@@ -562,6 +583,7 @@ module.exports = function(grunt) {
     grunt.registerTask('docs', 'Build all documentation.', taskDocs);
     grunt.registerTask('cleanup', 'Remove unnecessary files.', taskCleanup);
     grunt.registerTask('auto', 'Automatically run tasks when files have changed.', taskAuto);
+    grunt.registerTask('files', 'Analyse and list all unkonwn files in the repository.', taskFiles);
 
     grunt.registerTask('usage', 'Display summary of available tasks.', function() {
         var excludes = ['default', 'usage', 'availabletasks', 'jshint', 'uglify', 'cssmin', 'concat', 'jasmine',

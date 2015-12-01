@@ -245,13 +245,12 @@ Licensed under the GPL-2.0 license.
 
 ### Not Yet Done
 
+* A task to find every file that does not belong to any recognized category in the repository.
+    - Add cofiguration variable `ignore` to silence complaining.
+    - Make it part of `release` using 'die'-argument just like in `todo`.
 
 ## Future Ideas
 
-* A task to find every file that does not belong to any recognized category in the repository.
-    - Add cofiguration variable `ignore` to silence complaining.
-    - Also check if there are rules not matching anything in the configuration.
-    - Make it part of `release` using 'die'-argument just like in `todo`.
 * Check for tabs in `verify`.
-* Test for `docs` task.
 * Documentation support for Angular.
+* Test for `docs` task.

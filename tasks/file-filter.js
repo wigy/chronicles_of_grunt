@@ -7,6 +7,7 @@ module.exports = function(grunt) {
     // Load Node-modules.
     var path = require('path');
     var fs = require('fs');
+    var glob = require('glob');
 
     // Known library file specifications.
     var known = {
@@ -231,6 +232,35 @@ module.exports = function(grunt) {
         var ret = [];
         for (var i=0; i < files.length; i++) {
             ret.push(files[i].dst);
+        }
+        return ret;
+    }
+
+    /**
+     * Perform recursive lookup for files in the repository.
+     *
+     * @return {Array} A list of files in the repository ignoring files of not interest.
+     *
+     * Currently <tt>node_modules</tt> and <tt>doc</tt> directories are ignored on the top level.
+     * Additionally any file ending with <tt>~</tt> is ignored.
+     */
+    function filesInRepository(dir) {
+        var ignoreDirs = ['node_modules', 'doc'];
+        var ignoreFiles = /~$/;
+        var files = glob.sync(dir ? dir + '/*' : '*');
+        var ret = [];
+        for (var i = 0; i < files.length; i++) {
+            if (fs.lstatSync(files[i]).isDirectory()) {
+                // Ignore standard directories of uninterest.
+                if (!dir && ignoreDirs.indexOf(files[i]) >= 0) {
+                    continue;
+                }
+                ret = filesInRepository(files[i]).concat(ret);
+            } else {
+                if (!ignoreFiles.test(files[i])) {
+                    ret.push(files[i]);
+                }
+            }
         }
         return ret;
     }
@@ -511,14 +541,47 @@ module.exports = function(grunt) {
         grunt.file.write(dst, content);
     }
 
+    /**
+     * Build complete map of known files.
+     *
+     * Note that when adding new file categories, this function must be updated and all
+     * new non-overlapping (i.e. atomic) categories needs to be added here.
+     */
+    function fileCategoryMap() {
+        // Go over every file lookup function we export.
+        var exports = module.exports(grunt);
+        // This list of categories must contain all non-overlapping file categories.
+        var categories = ['extLibFiles', 'extLibMapFiles', 'extCssFiles', 'extFontFiles',
+            'appIndexFiles', 'testIndexFiles', 'configFiles', 'modelFiles', 'dataFiles',
+            'codeFiles', 'otherFiles', 'cssFiles', 'picFiles', 'soundFiles', 'unitTestFiles']
+        // Construct the map by calling each function defined above.
+        var map = {};
+        for (var i = 0; i < categories.length; i++) {
+            if (categories[i].substr(-5) === 'Files') {
+                var files = flatten(exports[categories[i]]());
+                for (var j = 0; j < files.length; j++) {
+                    if (map[files[j]]) {
+                        grunt.fail.warn("A file '" + files[j] + "' maps to category '" + categories[i] + "' in addition to '" + map[files[j]] + "' category.");
+                    } else {
+                        map[files[j]] = categories[i];
+                    }
+                }
+            }
+        }
+        return map;
+    }
+
     return {
+        // Utility functions.
         flatten: flatten,
         getConfig: getConfig,
         prefix: prefix,
         files: files,
         removeDuplicates: removeDuplicates,
         writeIndex: writeIndex,
-
+        filesInRepository: filesInRepository,
+        fileCategoryMap: fileCategoryMap,
+        // All file listing funcitons.
         extLibFiles: extLibFiles,
         extLibMapFiles: extLibMapFiles,
         extCssFiles: extCssFiles,
