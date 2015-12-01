@@ -40,7 +40,7 @@ grunt.initConfig({
     options: {
     name: "time2exercise",
     external: {
-        lib: ['angular', 'jquery', 'bootstrap', 'coa'],
+        lib: ['coa', 'jquery', 'bootstrap'],
         css: ['bootstrap'],
         fonts: ['bootstrap'],
         unittestlib: ['jasmine'],
@@ -73,10 +73,17 @@ This is a code name of the project consisting of alphanumeric characters.
 These defines external libraries to use. First one is for (minimized) code files,
 the second (minimized) CSS-files and the third one is for fonts. The following
 predefined constants are supported:
-* `angular` --- AngularJS
-* `jquery` --- jQuery
-* `bootstrap` --- Bootstrap
-* `coa` --- Wigy's Chronicles of Angular
+* `angular` --- AngularJS.
+* `jquery` --- jQuery.
+* `bootstrap` --- Bootstrap.
+* `coa` --- Wigy's Chronicles of Angular (implies `angular`).
+* `jasmine` --- Unit-testing library Jasmine.
+* `angular-mock` --- Testing library for AngularJS.
+
+Instead of defining categories separately, you can also define simple list:
+```js
+    external: ['coa', 'jquery', 'bootstrap'],
+```
 
 ### `external.unittestlib`, `external.unittestcss`
 These are external libraries for HTML-based unit test runner. Supported predefined
@@ -234,6 +241,7 @@ Licensed under the GPL-2.0 license.
 * Test for `dist` task.
 * Show *Not Yet Done* section from `README.md` with `todo`.
 * Pre-defined libraries can now have 'needs' attributes, which inserts listed libs before itself to the resolved file list.
+* Simplified handling for external, where list like ['jquery', 'bootstrap', 'jasmine'] will automatically added to correct categories.
 
 ### Not Yet Done
 
@@ -246,4 +254,3 @@ Licensed under the GPL-2.0 license.
     - Make it part of `release` using 'die'-argument just like in `todo`.
 * Check for tabs in `verify`.
 * Test for `docs` task.
-* Alternative handling for external, where ['jquery', 'bootstrap', 'jasmine'] will automatically added to correct categories.

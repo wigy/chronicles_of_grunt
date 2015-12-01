@@ -21,20 +21,29 @@ module.exports = function(grunt) {
                 {src: 'node_modules/grunt-contrib-jasmine/node_modules/jasmine-core/lib/jasmine-core/boot.js', dst: null, drop: ''},
             ],
             nodeunit: [],
-            'angular-mock': [
-                {src: 'node_modules/angular-mocks/angular-mocks.js', dst: null, drop: ''},
-            ],
+            'angular-mock': {src: 'node_modules/angular-mocks/angular-mocks.js', dst: null, drop: ''},
         },
         css: {
             bootstrap: {src: 'node_modules/bootstrap/dist/css/bootstrap.min.css', dst: 'css', drop: 'node_modules/bootstrap/dist/css/'},
-            jasmine: [
-                {src: 'node_modules/grunt-contrib-jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.css', dst: null},
-            ],
+            jasmine: {src: 'node_modules/grunt-contrib-jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.css', dst: null},
         },
         fonts: {
             bootstrap: {src: 'node_modules/bootstrap/dist/fonts/*', dst: 'fonts', drop: 'node_modules/bootstrap/dist/fonts/'},
         },
     };
+
+    // List of categories each library contributes.
+    var categories = {
+        coa: ['lib'],
+        angular: ['lib'],
+        jquery: ['lib'],
+        bootstrap: ['lib', 'css', 'fonts'],
+        jasmine: ['unittestlib', 'unittestcss'],
+        'angular-mock': ['unittestlib'],
+    };
+
+    // Currently loaded configuration.
+    var config;
 
     /**
      * Find the path prefix to the node_modules containing needed utilities.
@@ -62,14 +71,33 @@ module.exports = function(grunt) {
 	 */
 	function getConfig(name, def) {
 
-        var config = grunt.config.get('build') || {options: {}};
+        var i, j;
+
+        // Load initital config.
+        if (!config) {
+
+            config = grunt.config.get('build') || {options: {}};
+
+            // Expand general external definitions to category specific definitions.
+            if (config.options.external instanceof Array) {
+                var external = config.options.external;
+                config.options.external = {lib: [], css: [], fonts: [], unittestlib: [], unittestcss: []};
+                for (i=0; i < external.length; i++) {
+                    for(var j = 0; j < categories[external[i]].length; j++) {
+                        config.options.external[categories[external[i]][j]].push(external[i]);
+                    }
+                }
+            }
+        }
+
         var ret = config.options;
 
         if (!name) {
             return ret;
         }
+
         var parts = name.split('.');
-        for (var i=0; i < parts.length; i++) {
+        for (i=0; i < parts.length; i++) {
             if (!ret) {
                 return def;
             }
