@@ -227,7 +227,7 @@ Licensed under the GPL-2.0 license.
 * v0.1.1
     - Make `versioning` option `file` optional.
 * v0.1.0
-    - Bring `versioning` tool from time2exercise.
+    - Bring in `versioning` tool from *time2exercise*.
 
 ## Next Version
 
@@ -254,3 +254,4 @@ Licensed under the GPL-2.0 license.
     - Make it part of `release` using 'die'-argument just like in `todo`.
 * Check for tabs in `verify`.
 * Test for `docs` task.
+* Documentation support for Angular.
