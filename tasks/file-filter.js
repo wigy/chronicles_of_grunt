@@ -579,7 +579,7 @@ module.exports = function(grunt) {
      * Find all text based work files.
      */
     function workTextFiles() {
-        return indexFiles().concat(srcFiles()).concat(testFiles()).concat(otherFiles()).concat(cssFiles()).concat(toolsShellFiles());
+        return indexFiles().concat(srcFiles()).concat(testFiles()).concat(otherFiles()).concat(cssFiles()).concat(toolsShellFiles()).concat(commonJsFiles());
     }
 
     /**
