@@ -196,6 +196,18 @@ Licensed under the GPL-2.0 license.
 
 ## Release History
 
+* v1.7.0
+    - Do not include libraries to the compressed distribution version.
+    - Remove uncompressed Javascript-file from the dist-folder after compiling.
+    - Task `auto` to use grunt-watch to build docs or running tests or syntax checking.
+    - Ability to run just a single test at time.
+    - Test for `libs` task.
+    - Test for `dist` task.
+    - Show *Not Yet Done* section from `README.md` with `todo`.
+    - Pre-defined libraries can now have 'needs' attributes, which inserts listed libs before itself to the resolved file list.
+    - Simplified handling for external, where list like ['jquery', 'bootstrap', 'jasmine'] will automatically added to correct categories.
+    - A task `files` to find every file that does not belong to any recognized category in the repository.
+    - File category `src.shell`.
 * v1.6.0
     - Fix file lookup failing to find files.
     - Do not create empty dist-files if there are no source files.
@@ -245,20 +257,7 @@ Licensed under the GPL-2.0 license.
 
 ### Done
 
-* Do not include libraries to the compressed distribution version.
-* Remove uncompressed Javascript-file from the dist-folder after compiling.
-* Task `auto` to use grunt-watch to build docs or running tests or syntax checking.
-* Ability to run just a single test at time.
-* Test for `libs` task.
-* Test for `dist` task.
-* Show *Not Yet Done* section from `README.md` with `todo`.
-* Pre-defined libraries can now have 'needs' attributes, which inserts listed libs before itself to the resolved file list.
-* Simplified handling for external, where list like ['jquery', 'bootstrap', 'jasmine'] will automatically added to correct categories.
-* A task `files` to find every file that does not belong to any recognized category in the repository.
-* File category `src.shell`.
-
 ### Not Yet Done
-
 
 ## Future Ideas
 
