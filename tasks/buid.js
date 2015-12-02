@@ -138,7 +138,7 @@ module.exports = function(grunt) {
 
     function taskDist() {
 
-        var i, dst, settings;
+        var i, dst, dist, settings;
 
         log.info("Build: dist");
         log.info("");
@@ -176,7 +176,7 @@ module.exports = function(grunt) {
             log.info("Compressing CSS...");
             log.info("");
             settings = {all: {files: {}}};
-            var dist = ff.distCssFiles()[0];
+            dist = ff.distCssFiles()[0];
             compressedCssFiles.push(dist.dst);
             settings.all.files[compressedCssFiles[0]] = ff.flatten(cssFiles);
             grunt.config.set('cssmin', settings);
@@ -190,7 +190,7 @@ module.exports = function(grunt) {
             log.info("Collecting Javascript...");
             log.info("");
 
-            var dist = ff.distJsFiles()[0];
+            dist = ff.distJsFiles()[0];
 
             settings = {all: {}};
             settings.all.src = ff.flatten(jsFiles);
