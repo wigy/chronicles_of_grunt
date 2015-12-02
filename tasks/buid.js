@@ -149,7 +149,7 @@ module.exports = function(grunt) {
             log.info("");
             for (i = 0; i < matches.length; i++) {
                 log.info(matches[i].src + ' -> ' + matches[i].dst);
-                grunt.file.copy(matches[i].dst, matches[i].dst);
+                grunt.file.copy(matches[i].src, matches[i].dst);
             }
         }
 
@@ -175,8 +175,8 @@ module.exports = function(grunt) {
             log.info("Compressing CSS...");
             log.info("");
             settings = {all: {files: {}}};
-            // TODO: Get from distCSSFiles()
-            compressedCssFiles.push('dist/' + ff.getConfig('name') + '.min.css');
+            var dist = ff.distCssFiles()[0];
+            compressedCssFiles.push(dist.dst);
             settings.all.files[compressedCssFiles[0]] = ff.flatten(cssFiles);
             grunt.config.set('cssmin', settings);
             grunt.task.run('cssmin');
@@ -188,9 +188,12 @@ module.exports = function(grunt) {
             log.info("");
             log.info("Collecting Javascript...");
             log.info("");
+
+            var dist = ff.distJsFiles()[0];
+
             settings = {all: {}};
             settings.all.src = ff.flatten(jsFiles);
-            settings.all.dest = 'dist/' + ff.getConfig('name') + '.js';
+            settings.all.dest = dist.src;
             grunt.config.set('concat', settings);
             grunt.task.run('concat');
 
@@ -203,10 +206,9 @@ module.exports = function(grunt) {
             banner += ' */\n';
 
             settings = {options: {banner: banner}, dist: {}};
-            compressedJsFiles.push(ff.getConfig('name') + '.min.js');
-            // TODO: Get from distJsFiles()
-            settings.dist.src = 'dist/' + ff.getConfig('name') + '.js';
-            settings.dist.dest = 'dist/' + ff.getConfig('name') + '.min.js';
+            compressedJsFiles.push(dist.dst);
+            settings.dist.src = dist.src;
+            settings.dist.dest = dist.dst;
             grunt.config.set('uglify', settings);
             grunt.task.run('uglify');
             grunt.task.run('cleanup');

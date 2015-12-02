@@ -527,6 +527,20 @@ module.exports = function(grunt) {
     }
 
     /**
+     * Get the name(s) of CSS-files in the distribution.
+     */
+    function distCssFiles() {
+        return [{src: 'dist/' + getConfig('name') + '.css', dst: 'dist/' + getConfig('name') + '.min.css'}];
+    }
+
+    /**
+     * Get the name(s) of actual compressed application source code files in the distribution.
+     */
+    function distJsFiles() {
+        return [{src: 'dist/' + getConfig('name') + '.js', dst: 'dist/' + getConfig('name') + '.min.js'}];
+    }
+
+    /**
      * Find all unit-test spec-files.
      */
     function unitTestFiles() {
@@ -618,7 +632,7 @@ module.exports = function(grunt) {
             'appIndexFiles', 'testIndexFiles', 'configFiles', 'modelFiles', 'dataFiles',
             'codeFiles', 'otherFiles', 'cssFiles', 'picFiles', 'soundFiles', 'unitTestFiles',
             'commonJsFiles', 'commonOtherFiles', 'ignoredFiles', 'distUncompressedFiles',
-            'distLibFiles', 'distIndexFiles'];
+            'distLibFiles', 'distIndexFiles', 'distJsFiles', 'distCssFiles'];
 
         // Construct the map by calling each function defined above.
         var map = {};
@@ -669,6 +683,8 @@ module.exports = function(grunt) {
         distUncompressedFiles: distUncompressedFiles,
         distLibFiles: distLibFiles,
         distIndexFiles: distIndexFiles,
+        distCssFiles: distCssFiles,
+        distJsFiles: distJsFiles,
         unitTestFiles: unitTestFiles,
         unitTestLibraryFiles: unitTestLibraryFiles,
         includeUnitTestJsFiles: includeUnitTestJsFiles,

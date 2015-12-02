@@ -250,11 +250,10 @@ Licensed under the GPL-2.0 license.
 * Show *Not Yet Done* section from `README.md` with `todo`.
 * Pre-defined libraries can now have 'needs' attributes, which inserts listed libs before itself to the resolved file list.
 * Simplified handling for external, where list like ['jquery', 'bootstrap', 'jasmine'] will automatically added to correct categories.
-* A task to find every file that does not belong to any recognized category in the repository.
+* A task `files` to find every file that does not belong to any recognized category in the repository.
 
 ### Not Yet Done
 
-* New dist-file resolver to build file specs with correct source and destination.
 * Test for `files` task.
 
 ## Future Ideas
