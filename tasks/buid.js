@@ -87,6 +87,7 @@ module.exports = function(grunt) {
         dumpFiles('Unit test libraries', ff.unitTestLibraryFiles);
         dumpFiles('Unit test CSS-files', ff.includeUnitTestCssFiles);
         dumpFiles('Unit tests', ff.unitTestFiles);
+        dumpFiles('Tools (shell script)', ff.toolsShellFiles);
     }
 
     function taskLibs() {

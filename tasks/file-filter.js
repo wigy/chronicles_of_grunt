@@ -579,8 +579,7 @@ module.exports = function(grunt) {
      * Find all text based work files.
      */
     function workTextFiles() {
-
-        return indexFiles().concat(srcFiles()).concat(testFiles()).concat(otherFiles()).concat(cssFiles());
+        return indexFiles().concat(srcFiles()).concat(testFiles()).concat(otherFiles()).concat(cssFiles()).concat(toolsShellFiles());
     }
 
     /**
@@ -619,6 +618,13 @@ module.exports = function(grunt) {
     }
 
     /**
+     * List of tools written as shell scripts.
+     */
+    function toolsShellFiles() {
+        return files(getConfig('src.shell'));
+    }
+
+    /**
      * Build complete map of known files.
      *
      * Note that when adding new file categories, this function must be updated and all
@@ -632,7 +638,8 @@ module.exports = function(grunt) {
             'appIndexFiles', 'testIndexFiles', 'configFiles', 'modelFiles', 'dataFiles',
             'codeFiles', 'otherFiles', 'cssFiles', 'picFiles', 'soundFiles', 'unitTestFiles',
             'commonJsFiles', 'commonOtherFiles', 'ignoredFiles', 'distUncompressedFiles',
-            'distLibFiles', 'distIndexFiles', 'distJsFiles', 'distCssFiles'];
+            'distLibFiles', 'distIndexFiles', 'distJsFiles', 'distCssFiles',
+            'toolsShellFiles'];
 
         // Construct the map by calling each function defined above.
         var map = {};
@@ -696,5 +703,6 @@ module.exports = function(grunt) {
         commonOtherFiles: commonOtherFiles,
         commonFiles: commonFiles,
         ignoredFiles: ignoredFiles,
+        toolsShellFiles: toolsShellFiles,
     };
 };

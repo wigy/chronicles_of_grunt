@@ -48,12 +48,13 @@ grunt.initConfig({
     },
     src: {
         config: ['src/settings.js', 'src/utils.js'],
-        models: ['src/models/**/*.js'],
-        data: ['data/**/*.js'],
-        code: ['src/**/*.js'],
-        pics: ['pics/**/*png'],
-        sounds: ['sounds/**/*.mp3'],
-        css: ['css/*.css'],
+        models: 'src/models/**/*.js',
+        data: 'data/**/*.js',
+        code: 'src/**/*.js',
+        pics: 'pics/**/*png',
+        sounds: 'sounds/**/*.mp3',
+        css: 'css/*.css',
+        shell: 'tools/*'
     },
     test: {
         unit: 'test/*_spec.js'
@@ -107,6 +108,9 @@ CSS files of the application.
 
 ### `src.pics`, `src.sounds`
 Media files needed by the application.
+
+### `src.shell`
+Tools written as shell scripts.
 
 ### `src.other`
 Other Javascript-files that are not part of the actual distribution.
@@ -251,16 +255,18 @@ Licensed under the GPL-2.0 license.
 * Pre-defined libraries can now have 'needs' attributes, which inserts listed libs before itself to the resolved file list.
 * Simplified handling for external, where list like ['jquery', 'bootstrap', 'jasmine'] will automatically added to correct categories.
 * A task `files` to find every file that does not belong to any recognized category in the repository.
+* File category `src.shell`.
 
 ### Not Yet Done
 
-* Test for `files` task.
 
 ## Future Ideas
 
+* Test for `files` task (include one or two missing).
 * Reorganize testing code so that we use new strucutre for testing: {unit: {data: 'test/data/**', lib: 'jasmine', css: 'jasmine'}}.
     - Add new file category for test data.
     - Update library parsing to use this structure.
+* Reorganize media files to structure {media: {pics: '*.png', sounds: '*.pm3'}} and leave current for real source data for media.
 * Check for tabs in `verify`.
 * Documentation support for Angular.
 * Test for `docs` task.
