@@ -455,6 +455,13 @@ module.exports = function(grunt) {
      }
 
      /**
+      * Find Javascript-files defining additional tasks for Grunt.
+      */
+     function taskFiles() {
+         return files(getConfig('src.task'), 'other');
+     }
+
+     /**
       * Find other work files that are Javascript.
       */
      function otherFiles() {
@@ -465,7 +472,7 @@ module.exports = function(grunt) {
      * Find all source code files needed for API-doc generation or syntax checking.
      */
      function allSrcFiles() {
-         return srcFiles().concat(otherFiles()).concat(commonJsFiles());
+         return srcFiles().concat(otherFiles()).concat(commonJsFiles()).concat(taskFiles());
      }
 
     /**
@@ -605,7 +612,7 @@ module.exports = function(grunt) {
      * Find all text based work files.
      */
     function workTextFiles() {
-        return indexFiles().concat(srcFiles()).concat(testFiles()).concat(otherFiles()).concat(cssFiles()).concat(toolsShellFiles()).concat(commonJsFiles());
+        return indexFiles().concat(srcFiles()).concat(testFiles()).concat(otherFiles()).concat(taskFiles()).concat(cssFiles()).concat(toolsShellFiles()).concat(commonJsFiles());
     }
 
     /**
@@ -655,7 +662,7 @@ module.exports = function(grunt) {
         // This list of categories must contain all non-overlapping file categories.
         var categories = ['extLibFiles', 'extLibMapFiles', 'extCssFiles', 'extFontFiles',
             'appIndexFiles', 'testIndexFiles', 'configFiles', 'modelFiles', 'dataFiles',
-            'codeFiles', 'otherFiles', 'cssFiles', 'picFiles', 'soundFiles', 'unitTestFiles',
+            'codeFiles', 'otherFiles', 'taskFiles', 'cssFiles', 'picFiles', 'soundFiles', 'unitTestFiles',
             'commonJsFiles', 'commonOtherFiles', 'ignoredFiles', 'distUncompressedFiles',
             'distLibFiles', 'distIndexFiles', 'distJsFiles', 'distCssFiles',
             'toolsShellFiles', 'unitTestDataFiles', 'picSrcFiles', 'soundSrcFiles'];
@@ -700,6 +707,7 @@ module.exports = function(grunt) {
         codeFiles: codeFiles,
         srcFiles: srcFiles,
         allSrcFiles: allSrcFiles,
+        taskFiles: taskFiles,
         otherFiles: otherFiles,
         cssFiles: cssFiles,
         picFiles: picFiles,

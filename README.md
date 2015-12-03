@@ -261,12 +261,12 @@ Licensed under the GPL-2.0 license.
 
 * Reorganize testing code so that we use new strucutre for testing: {unit: {data: 'test/data/**', lib: 'jasmine', css: 'jasmine'}}.
 * Reorganize media files to structure {media: {pics: '*.png', sounds: '*.pm3'}, and add source file concept for media.
+* Add category for Grunt-task files.
 
 ### Not Yet Done
 
 * Support for media building from source files by configured commands.
 * Make cleaner documentation in this file. Start with simple hello world and combine different configuration variable explanations together.
-* Add category for Grunt-task files.
 
 ## Future Ideas
 
