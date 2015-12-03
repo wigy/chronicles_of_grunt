@@ -358,11 +358,11 @@ module.exports = function(grunt) {
           * Check the selected libraries for testing system.
           */
         function configuredUnitTesting() {
-            var lib = ff.getConfig('external.unittestlib');
-            if (lib.indexOf('jasmine') >= 0) {
+            var lib = ff.getConfig('test.unit.lib');
+            if (lib === 'jasmine' || lib.indexOf('jasmine') >= 0) {
                 return 'jasmine';
             }
-            if (lib.indexOf('nodeunit') >= 0) {
+            if (lib === 'nodeunit' || lib.indexOf('nodeunit') >= 0) {
                 return 'nodeunit';
             }
             return null;
@@ -373,7 +373,7 @@ module.exports = function(grunt) {
         // Select test runner.
         var type = configuredUnitTesting();
         if (!type) {
-            grunt.fail.fatal("Testing system is not configured. Please set external.unittestlib to the 'jasmine' or 'nodeunit'.");
+            grunt.fail.fatal("Testing system is not configured. Please set test.unit.lib to the 'jasmine' or 'nodeunit'.");
         }
 
         // Collect files for test.

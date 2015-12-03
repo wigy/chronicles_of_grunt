@@ -50,8 +50,6 @@ module.exports = function(grunt) {
         angular: ['lib'],
         jquery: ['lib'],
         bootstrap: ['lib', 'css', 'fonts'],
-        jasmine: ['unittestlib', 'unittestcss'],
-        'angular-mock': ['unittestlib'],
     };
 
     // Currently loaded configuration.
@@ -93,7 +91,7 @@ module.exports = function(grunt) {
             // Expand general external definitions to category specific definitions.
             if (config.options.external instanceof Array) {
                 var external = config.options.external;
-                config.options.external = {lib: [], css: [], fonts: [], unittestlib: [], unittestcss: []};
+                config.options.external = {lib: [], css: [], fonts: []};
                 for (i=0; i < external.length; i++) {
                     for(j = 0; j < categories[external[i]].length; j++) {
                         config.options.external[categories[external[i]][j]].push(external[i]);
@@ -544,14 +542,21 @@ module.exports = function(grunt) {
      * Find all unit-test spec-files.
      */
     function unitTestFiles() {
-        return files(getConfig('test.unit'), 'test');
+        return files(getConfig('test.unit.tests'), 'test');
     }
 
     /**
      * Find all unit-test library files.
      */
     function unitTestLibraryFiles() {
-        return files(getConfig('external.unittestlib'), 'lib');
+        return files(getConfig('test.unit.lib'), 'lib');
+    }
+
+    /**
+     * Find all unit-test data files.
+     */
+    function unitTestDataFiles() {
+        return files(getConfig('test.unit.data'), 'test');
     }
 
     /**
@@ -565,7 +570,7 @@ module.exports = function(grunt) {
      * Find all CSS files needed to include in HTML index for unit test.
      */
     function includeUnitTestCssFiles() {
-        return files(getConfig('external.unittestcss'), 'css');
+        return files(getConfig('test.unit.css'), 'css');
     }
 
     /**
@@ -639,7 +644,7 @@ module.exports = function(grunt) {
             'codeFiles', 'otherFiles', 'cssFiles', 'picFiles', 'soundFiles', 'unitTestFiles',
             'commonJsFiles', 'commonOtherFiles', 'ignoredFiles', 'distUncompressedFiles',
             'distLibFiles', 'distIndexFiles', 'distJsFiles', 'distCssFiles',
-            'toolsShellFiles'];
+            'toolsShellFiles', 'unitTestDataFiles'];
 
         // Construct the map by calling each function defined above.
         var map = {};
@@ -694,6 +699,7 @@ module.exports = function(grunt) {
         distJsFiles: distJsFiles,
         unitTestFiles: unitTestFiles,
         unitTestLibraryFiles: unitTestLibraryFiles,
+        unitTestDataFiles: unitTestDataFiles,
         includeUnitTestJsFiles: includeUnitTestJsFiles,
         includeUnitTestCssFiles: includeUnitTestCssFiles,
         testFiles: testFiles,

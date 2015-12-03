@@ -10,12 +10,12 @@ module.exports = function(grunt) {
                 other: ['tasks/*.js', 'test/runner.js']
             },
             test: {
-                unit: 'test/*_test.js'
-            },
-            external: {
-                 unittestlib: ['nodeunit']
-            },
-            ignore: ['test/workdir/**']
+                unit: {
+                    tests: 'test/*_test.js',
+                    lib: 'nodeunit',
+                    data: 'test/workdir/**'
+                }
+            }
         }
     },
   });

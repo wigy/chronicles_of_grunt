@@ -259,16 +259,16 @@ Licensed under the GPL-2.0 license.
 
 ### Done
 
+* Reorganize testing code so that we use new strucutre for testing: {unit: {data: 'test/data/**', lib: 'jasmine', css: 'jasmine'}}.
+
 ### Not Yet Done
 
 ## Future Ideas
 
-* Reorganize testing code so that we use new strucutre for testing: {unit: {data: 'test/data/**', lib: 'jasmine', css: 'jasmine'}}.
-    - Add new file category for test data.
-    - Update library parsing to use this structure.
 * Reorganize media files to structure {media: {pics: '*.png', sounds: '*.pm3'}} and leave current for real source data for media.
 * Media source categories with transformation rules and transformation support task (build:media and in future build:templates, build:data).
 * Check for tabs in `verify`.
 * Documentation support for Angular.
 * Test for `docs` task.
 * Make cleaner documentation in this file. Start with simple hello world and combine different configuration variable explanations together.
+* Add category for Grunt-task files.
