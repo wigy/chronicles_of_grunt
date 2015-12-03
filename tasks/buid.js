@@ -48,6 +48,7 @@ module.exports = function(grunt) {
     grunt.loadTasks(modules + 'grunt-jsdoc/tasks/');
     grunt.loadTasks(modules + 'grunt-contrib-clean/tasks/');
     grunt.loadTasks(modules + 'grunt-contrib-watch/tasks/');
+    grunt.loadTasks(modules + 'grunt-shell/tasks/');
 
     function taskInfo() {
 
@@ -573,6 +574,86 @@ module.exports = function(grunt) {
         }
     }
 
+    function taskBuild(what) {
+
+        var args = Array.prototype.slice.call(arguments);
+        if (args.length === 0) {
+            args = ['pics'];
+        }
+
+        var files = [];
+        var dst = null;
+        var convert = [];
+
+        // Support function to substitute path variables.
+        function subst(str, file, dst) {
+            if (dst !== undefined) {
+                str = str.replace(/\{\{DST\}\}/g, dst);
+            }
+            var dir = path.dirname(file);
+            str = str.replace(/\{\{SRC\}\}/g, file);
+            var name = path.basename(file);
+            str = str.replace(/\{\{NAME\}\}/g, name);
+            name = name.replace(/\.\w+$/, '');
+            str = str.replace(/\{\{BASENAME\}\}/g, name);
+            str = str.replace(/\{\{DIR\}\}/g, dir);
+            var parts = dir.split(path.sep);
+            parts.splice(0, 1);
+            str = str.replace(/\{\{SUBDIR\}\}/g, path.join.apply(null, parts));
+            parts.splice(0, 1);
+            str = str.replace(/\{\{SUBSUBDIR\}\}/g, path.join.apply(null, parts));
+            return str;
+        }
+
+        var settings = {all: {command: []}};
+
+        for (var i = 0; i < args.length; i++) {
+
+            // Show progress.
+            log.info("");
+            log.info(("Building " + args[i])['green']);
+            log.info("");
+
+            // Resolve parameters.
+            if (args[i] === 'pics') {
+                files = ff.picSrcFiles();
+                dst = ff.getConfig('media.src.pics.dst');
+                convert = ff.getConfig('media.src.pics.convert');
+            } else {
+                grunt.fail.fatal("Don't know how to build " + args[i] + ".");
+            }
+
+            // Collect conversion commands.
+            files = ff.flatten(files);
+            for (var j = 0; j < files.length; j++) {
+
+                // Find the destination file and create directory.
+                var dst = subst(dst, files[j]);
+                grunt.file.mkdir(path.dirname(dst));
+
+                // Resolve and add conversion commands to queue.
+                if (typeof(convert) === 'string') {
+                    convert = [convert];
+                }
+                for (var k = 0; k < convert.length; k++) {
+                    var cmd = subst(convert[k], files[j], dst);
+                    log.info("");
+                    log.info("  " + files[j] + ' -> ' + dst);
+                    log.info("  " + cmd["cyan"]);
+                    settings.all.command.push(cmd);
+                }
+                // TODO: Compare dates.
+                // TODO: Fix incorrect dst calculation.
+            }
+        }
+
+        // Execute all.
+        settings.all.command = settings.all.command.join(' && ');
+        console.log(settings.all.command)
+        grunt.config.set('shell', settings);
+        grunt.task.run('shell');
+    }
+
     grunt.registerTask('info', 'Display summary of the configured files and locations.', taskInfo);
     grunt.registerTask('libs', 'Update fresh copies of libraries from installed node-modules.', taskLibs);
     grunt.registerTask('index', 'Scan all configured javascript and css files and update html-files using them.', taskIndex);
@@ -588,11 +669,12 @@ module.exports = function(grunt) {
     grunt.registerTask('cleanup', 'Remove unnecessary files.', taskCleanup);
     grunt.registerTask('auto', 'Automatically run tasks when files have changed.', taskAuto);
     grunt.registerTask('files', 'Analyse and list all unknown files in the repository.', taskFiles);
+    grunt.registerTask('build', 'Compile files that are created from source files.', taskBuild);
 
     grunt.registerTask('usage', 'Display summary of available tasks.', function() {
         var excludes = ['default', 'usage', 'availabletasks', 'jshint', 'uglify', 'cssmin', 'concat', 'jasmine',
                         'csslint', 'nodeunit', 'shell', 'prerelease', 'postrelease', 'jsdoc', 'clean', 'cleanup',
-                        'watch'];
+                        'watch', 'shell'];
         grunt.initConfig({availabletasks: {tasks: {options: {filter: 'exclude', tasks: excludes}}}});
         grunt.task.run(['availabletasks']);
     });

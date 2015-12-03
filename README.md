@@ -129,10 +129,10 @@ here we create **png** files from **dia** diagrams using simple shell commands.
         sounds: ['sounds/**/*.mp3'],  // All sounds for the application.
         src: {
             pics: {
-                files: 'dia/**/*.dia', // Source data files for the pictures.
+                files: 'dia/**/*.dia',                  // Source data files for the pictures.
+                dst: 'pics/{{SUBDIR}}/{{BASENAME}}.png' // Destination file.
                 convert: [
-                    'mkdir -p "pics/{{SUBDIR}}/"',
-                    'dia -n -e "pics/{{SUBDIR}}/{{BASENAME}}.png" -t cairo-alpha-png "{{SRC}}"'
+                    'dia -n -e "{{DST}}" -t cairo-alpha-png "{{SRC}}"'
                 ]
             }
         }
@@ -140,6 +140,7 @@ here we create **png** files from **dia** diagrams using simple shell commands.
 
 The supported variables in double curly braces are:
 * `SRC` --- Complete path to the source file.
+* `DST` --- Complete path to the destination file.
 * `NAME` --- Name of the source file.
 * `BASENAME` --- Name of the source file without postfix after dot.
 * `DIR` --- Full path of the source file.
