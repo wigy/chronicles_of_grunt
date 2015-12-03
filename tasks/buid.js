@@ -558,8 +558,10 @@ module.exports = function(grunt) {
         var count = 0;
         for (var i = 0; i < files.length; i++) {
             if (!map[files[i]]) {
-                log.info(files[i]);
+                log.info('? ' + files[i]);
                 count++;
+            } else if (die == 'show') {
+                log.info(map[files[i]] + ' ' + files[i]);
             }
         }
         if (count) {
@@ -589,7 +591,7 @@ module.exports = function(grunt) {
     grunt.registerTask('docs', 'Build all documentation.', taskDocs);
     grunt.registerTask('cleanup', 'Remove unnecessary files.', taskCleanup);
     grunt.registerTask('auto', 'Automatically run tasks when files have changed.', taskAuto);
-    grunt.registerTask('files', 'Analyse and list all unkonwn files in the repository.', taskFiles);
+    grunt.registerTask('files', 'Analyse and list all unknown files in the repository.', taskFiles);
 
     grunt.registerTask('usage', 'Display summary of available tasks.', function() {
         var excludes = ['default', 'usage', 'availabletasks', 'jshint', 'uglify', 'cssmin', 'concat', 'jasmine',

@@ -188,6 +188,7 @@ based on the argument (use `css` or `js` for `verify`). Default is `docs`.
 Run complete scan of files in the repository and compare files found to the configuration.
 Report all files that does not belong to the configuration or are not commonly known files.
 Running `files:die` causes the script end with an error, if any unknown files are found.
+With `files:show` we can list all files and see categories how they are seen by the system.
 
 ## License
 
@@ -207,6 +208,7 @@ Licensed under the GPL-2.0 license.
     - Pre-defined libraries can now have 'needs' attributes, which inserts listed libs before itself to the resolved file list.
     - Simplified handling for external, where list like ['jquery', 'bootstrap', 'jasmine'] will automatically added to correct categories.
     - A task `files` to find every file that does not belong to any recognized category in the repository.
+    - Test for `files` task.
     - File category `src.shell`.
 * v1.6.0
     - Fix file lookup failing to find files.
@@ -261,11 +263,12 @@ Licensed under the GPL-2.0 license.
 
 ## Future Ideas
 
-* Test for `files` task (include one or two missing).
 * Reorganize testing code so that we use new strucutre for testing: {unit: {data: 'test/data/**', lib: 'jasmine', css: 'jasmine'}}.
     - Add new file category for test data.
     - Update library parsing to use this structure.
 * Reorganize media files to structure {media: {pics: '*.png', sounds: '*.pm3'}} and leave current for real source data for media.
+* Media source categories with transformation rules and transformation support task (build:media and in future build:templates, build:data).
 * Check for tabs in `verify`.
 * Documentation support for Angular.
 * Test for `docs` task.
+* Make cleaner documentation in this file. Start with simple hello world and combine different configuration variable explanations together.
