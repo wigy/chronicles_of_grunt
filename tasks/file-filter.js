@@ -86,7 +86,7 @@ module.exports = function(grunt) {
         // Load initital config.
         if (!config) {
 
-            config = grunt.config.get('build') || {options: {}};
+            config = grunt.config.get('cog') || {options: {}};
 
             // Expand general external definitions to category specific definitions.
             if (config.options.external instanceof Array) {

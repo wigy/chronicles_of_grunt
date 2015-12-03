@@ -69,7 +69,6 @@ module.exports = function(grunt) {
             }
         }
 
-        log.info("Build: info");
         log.info("");
         log.info("Project: " + ff.getConfig('name'));
         log.info("Version: " + pckg.version);
@@ -93,7 +92,6 @@ module.exports = function(grunt) {
     }
 
     function taskLibs() {
-        log.info("Build: libs");
         log.info("");
         var matches = ff.extFiles();
         for (var i = 0; i < matches.length; i++) {
@@ -106,7 +104,6 @@ module.exports = function(grunt) {
 
         var i, indices, jsFiles, cssFiles;
 
-        log.info("Build: index");
         log.info("");
 
         indices = ff.flatten(ff.appIndexFiles());
@@ -142,7 +139,6 @@ module.exports = function(grunt) {
 
         var i, dst, dist, settings;
 
-        log.info("Build: dist");
         log.info("");
 
         var matches = ff.distUncompressedFiles();
@@ -235,7 +231,6 @@ module.exports = function(grunt) {
 
         var settings;
 
-        log.info("Build: verify");
         log.info("");
         if (!what || what === "js") {
             settings = {
@@ -555,7 +550,6 @@ module.exports = function(grunt) {
         var files = ff.filesInRepository();
         var map  = ff.fileCategoryMap();
 
-        log.info("Build: files");
         log.info("");
         var count = 0;
         for (var i = 0; i < files.length; i++) {

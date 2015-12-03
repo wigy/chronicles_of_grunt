@@ -2,7 +2,7 @@ module.exports = function(grunt) {
 
   // Project configuration.
   grunt.initConfig({
-    build: {
+    cog: {
         options: {
             name: 'cog',
             cog_development: true,

@@ -27,42 +27,27 @@ grunt.registerTask('default', ['usage']);
 ```
 
 The configuration has few settings and definitions for every source file. Each
-source file specification can be:
+source file specification can be either a file glob pattern as a string or an
+array of those.
 
-* A file glob pattern as a string.
-* Predefined label for known library as a string.
-* An array of either kind of previous specifications.
-
-For example, here is a full configuration:
+For example, here is a simple configuration:
 ```js
 grunt.initConfig({
-  build: {
+  cog: {
     options: {
-    name: "time2exercise",
-    external: {
-        lib: ['coa', 'jquery', 'bootstrap'],
-        css: ['bootstrap'],
-        fonts: ['bootstrap'],
-        unittestlib: ['jasmine'],
-        unittestcss: ['jasmine'],
-    },
-    src: {
-        config: ['src/settings.js', 'src/utils.js'],
-        models: 'src/models/**/*.js',
-        data: 'data/**/*.js',
-        code: 'src/**/*.js',
-        pics: 'pics/**/*png',
-        sounds: 'sounds/**/*.mp3',
-        css: 'css/*.css',
-        shell: 'tools/*'
-    },
-    test: {
-        unit: 'test/*_spec.js'
-    },
-    index: {
-        app: 'index.html',
-        test: 'test.html',
-    },
+        name: "my_project",
+        external: ['jquery']
+        src: {
+            code: 'src/**/*.js',
+            css: 'css/*.css'
+        },
+        media: {
+            pics: ['pics/*.png' , 'pics/*.jpg']
+        },
+        index: {
+            app: 'index.html'
+        }
+    }
   }
 });
 ```
