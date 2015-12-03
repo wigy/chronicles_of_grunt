@@ -52,59 +52,100 @@ grunt.initConfig({
 });
 ```
 
-### `name`
-This is a code name of the project consisting of alphanumeric characters.
+### General information
 
-### `external.lib`, `external.css`, `external.fonts`
-These defines external libraries to use. First one is for (minimized) code files,
-the second (minimized) CSS-files and the third one is for fonts. The following
+The code `name` of the project is required and consisting of alphanumeric characters.
+Dependencies to other libraries are listed as an array in `external`. The following
 predefined constants are supported:
+
 * `angular` --- AngularJS.
 * `jquery` --- jQuery.
 * `bootstrap` --- Bootstrap.
 * `coa` --- Wigy's Chronicles of Angular (implies `angular`).
+
+### Source code
+
+Source code files have various categories. The complete structure is here:
+
+```js
+    src: {
+        config: ['src/settings.js'],    // Configuration and other source code files that has to be included first.
+        models: ['src/models/**/*.js'], // Data model source code files that are included second.
+        data: ['data/**/*.js'],         // Data files to be included after models.
+        code: ['src/**/*.js'],          // The rest of the source code files.
+        css: ['css/*.css'],             // CSS files of the application.
+        shell: ['tools/*'],             // Tools written as shell scripts.
+        task: ['tasks/*.js'],           // Grunt-task definitions and their support files.
+        other: ['misc/*.js'],           // Any other Javascript-files that are not part of the distribution.
+    },
+    index: {
+        app: 'index.html'               // The initial file launcing the application.
+    }
+```
+
+### Testing
+
+Unit-testing environment and files are specified as follows:
+
+```js
+    test: {
+        unit: {
+            tests: 'test/**/*_spec.js', // Actual tests.
+            lib: ['jasmine'],           // Testing framework.
+            css: ['jasmine']            // Additional CSS files for visual testing.
+        }
+    }
+    index: {
+        test: 'test.html'               // Visual presentation of the testing.
+    }
+```
+
+The unit-testing system supports the following libraries:
+
 * `jasmine` --- Unit-testing library Jasmine.
 * `angular-mock` --- Testing library for AngularJS.
 
-Instead of defining categories separately, you can also define simple list:
+For the *Jasmine* testing, the simple visual file can be made by creating a file
+```html
+<!doctype html>
+  <head>
+    <title>Unit Tests</title>
+    <meta charset="UTF-8">
+  </head>
+  <body>
+  </body>
+</html>
+```
+and then generating necessary CSS- and Javascript-inclusions by running `grunt index`.
+
+### Media files
+
+Binary files that are part of the application are defined under `media`. In addition, optionally
+their source files can be defined as well, if they are generated from some other data. For example,
+here we create **png** files from **dia** diagrams using simple shell commands.
 ```js
-    external: ['coa', 'jquery', 'bootstrap'],
+    media: {
+        pics: ['pics/**/*png'],       // All images for the application.
+        sounds: ['sounds/**/*.mp3'],  // All sounds for the application.
+        src: {
+            pics: {
+                files: 'dia/**/*.dia', // Source data files for the pictures.
+                convert: [
+                    'mkdir -p "pics/{{SUBDIR}}/"',
+                    'dia -n -e "pics/{{SUBDIR}}/{{BASENAME}}.png" -t cairo-alpha-png "{{SRC}}"'
+                ]
+            }
+        }
 ```
 
-### `external.unittestlib`, `external.unittestcss`
-These are external libraries for HTML-based unit test runner. Supported predefined
-constants are:
-* `jasmine` --- Jasmine unit testing.
+The supported variables in double curly braces are:
+* `SRC` --- Complete path to the source file.
+* `NAME` --- Name of the source file.
+* `BASENAME` --- Name of the source file without postfix after dot.
+* `DIR` --- Full path of the source file.
+* `SUBDIR` --- Path of the source file after removing the first directory.
+* `SUBSUBDIR` --- Path of the source file after removing two first directories.
 
-### `src.config`
-Configuration and other source code files that has to be included first.
-
-### `src.models`
-Data model source code files that are included second.
-
-### `src.data`
-Data files to be included after models.
-
-### `src.code`
-The rest of the source code files.
-
-### `src.css`
-CSS files of the application.
-
-### `src.pics`, `src.sounds`
-Media files needed by the application.
-
-### `src.shell`
-Tools written as shell scripts.
-
-### `src.other`
-Other Javascript-files that are not part of the actual distribution.
-
-### `index.app`, `index.test`
-Starting files for the application and for testing.
-
-### `log_file`
-If set, the output of tasks are written to that file.
 
 ## Tasks
 
@@ -251,7 +292,6 @@ Licensed under the GPL-2.0 license.
 ### Not Yet Done
 
 * Support for media building from source files by configured commands.
-* Make cleaner documentation in this file. Start with simple hello world and combine different configuration variable explanations together.
 
 ## Future Ideas
 
