@@ -479,14 +479,35 @@ module.exports = function(grunt) {
      * Find all graphics files.
      */
     function picFiles() {
-        return files(getConfig('src.pics'), 'pics');
+        return files(getConfig('media.pics'), 'pics');
+    }
+
+    /**
+     * Find all graphics soruce files to be converted to actual pictures.
+     */
+    function picSrcFiles() {
+        return files(getConfig('media.src.pics.files'), 'pics');
     }
 
     /**
      * Find all audio files.
      */
     function soundFiles() {
-        return files(getConfig('src.sounds'), 'sounds');
+        return files(getConfig('media.sounds'), 'sounds');
+    }
+
+    /**
+     * Find all audio source files to be converted to actual sounds.
+     */
+    function soundSrcFiles() {
+        return files(getConfig('media.src.sounds.files'), 'sounds');
+    }
+
+    /**
+     * Find all application media files.
+     */
+    function mediaFiles() {
+        return picFiles().concat(soundFiles());
     }
 
     /**
@@ -507,7 +528,7 @@ module.exports = function(grunt) {
      * List of files that goes to the actual distribution unmodified.
      */
     function distUncompressedFiles() {
-        return prefixDest('dist/', extFontFiles().concat(picFiles()).concat(soundFiles()));
+        return prefixDest('dist/', extFontFiles().concat(mediaFiles()));
     }
 
     /**
@@ -588,13 +609,6 @@ module.exports = function(grunt) {
     }
 
     /**
-     * Find all work files.
-     */
-    function workFiles() {
-        return workTextFiles().concat(picFiles()).concat(soundFiles());
-    }
-
-    /**
      * List of common Javascript-files.
      */
     function commonJsFiles() {
@@ -644,7 +658,7 @@ module.exports = function(grunt) {
             'codeFiles', 'otherFiles', 'cssFiles', 'picFiles', 'soundFiles', 'unitTestFiles',
             'commonJsFiles', 'commonOtherFiles', 'ignoredFiles', 'distUncompressedFiles',
             'distLibFiles', 'distIndexFiles', 'distJsFiles', 'distCssFiles',
-            'toolsShellFiles', 'unitTestDataFiles'];
+            'toolsShellFiles', 'unitTestDataFiles', 'picSrcFiles', 'soundSrcFiles'];
 
         // Construct the map by calling each function defined above.
         var map = {};
@@ -689,7 +703,9 @@ module.exports = function(grunt) {
         otherFiles: otherFiles,
         cssFiles: cssFiles,
         picFiles: picFiles,
+        picSrcFiles: picSrcFiles,
         soundFiles: soundFiles,
+        soundSrcFiles: soundSrcFiles,
         includeJsFiles: includeJsFiles,
         includeCssFiles: includeCssFiles,
         distUncompressedFiles: distUncompressedFiles,
@@ -704,7 +720,6 @@ module.exports = function(grunt) {
         includeUnitTestCssFiles: includeUnitTestCssFiles,
         testFiles: testFiles,
         workTextFiles: workTextFiles,
-        workFiles: workFiles,
         commonJsFiles: commonJsFiles,
         commonOtherFiles: commonOtherFiles,
         commonFiles: commonFiles,
