@@ -582,7 +582,7 @@ module.exports = function(grunt) {
         }
 
         var files = [];
-        var dst = null;
+        var target = null;
         var convert = [];
 
         // Support function to substitute path variables.
@@ -617,7 +617,7 @@ module.exports = function(grunt) {
             // Resolve parameters.
             if (args[i] === 'pics') {
                 files = ff.picSrcFiles();
-                dst = ff.getConfig('media.src.pics.dst');
+                target = ff.getConfig('media.src.pics.dst');
                 convert = ff.getConfig('media.src.pics.convert');
             } else {
                 grunt.fail.fatal("Don't know how to build " + args[i] + ".");
@@ -628,7 +628,7 @@ module.exports = function(grunt) {
             for (var j = 0; j < files.length; j++) {
 
                 // Find the destination file and create directory.
-                var dst = subst(dst, files[j]);
+                var dst = subst(target, files[j]);
                 grunt.file.mkdir(path.dirname(dst));
 
                 // Resolve and add conversion commands to queue.
@@ -639,11 +639,10 @@ module.exports = function(grunt) {
                     var cmd = subst(convert[k], files[j], dst);
                     log.info("");
                     log.info("  " + files[j] + ' -> ' + dst);
+                    // TODO: Compare dates here before converting.
                     log.info("  " + cmd["cyan"]);
                     settings.all.command.push(cmd);
                 }
-                // TODO: Compare dates.
-                // TODO: Fix incorrect dst calculation.
             }
         }
 
