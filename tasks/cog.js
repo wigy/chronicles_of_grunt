@@ -630,6 +630,10 @@ module.exports = function(grunt) {
                 files = ff.picSrcFiles();
                 target = ff.getConfig('media.src.pics.dst');
                 convert = ff.getConfig('media.src.pics.convert');
+            } else if (args[i] === 'sounds'){
+                files = ff.soundSrcFiles();
+                target = ff.getConfig('media.src.sounds.dst');
+                convert = ff.getConfig('media.src.sounds.convert');
             } else {
                 grunt.fail.fatal("Don't know how to build " + args[i] + ".");
             }
@@ -649,6 +653,14 @@ module.exports = function(grunt) {
                 // Find the destination file and create directory.
                 var dst = subst(target, files[j]);
                 grunt.file.mkdir(path.dirname(dst));
+                log.info("");
+                log.info("  " + files[j] + ' -> ' + dst);
+
+                // Check if build is needed.
+                if (fs.existsSync(dst) && fs.lstatSync(dst).mtime.getTime() > fs.lstatSync(files[j]).mtime.getTime()) {
+                    log.info("  up to date"["green"]);
+                    continue;
+                }
 
                 // Resolve and add conversion commands to queue.
                 if (typeof(convert) === 'string') {
@@ -656,14 +668,8 @@ module.exports = function(grunt) {
                 }
                 for (var k = 0; k < convert.length; k++) {
                     var cmd = subst(convert[k], files[j], dst);
-                    log.info("");
-                    log.info("  " + files[j] + ' -> ' + dst);
-                    if (!fs.existsSync(dst) || fs.lstatSync(dst).mtime.getTime() < fs.lstatSync(files[j]).mtime.getTime()) {
-                        log.info("  " + cmd["cyan"]);
-                        settings.all.command.push(cmd);
-                    } else {
-                        log.info("  up to date"["green"]);
-                    }
+                    log.info("  " + cmd["cyan"]);
+                    settings.all.command.push(cmd);
                 }
             }
         }
