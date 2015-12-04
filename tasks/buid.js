@@ -623,6 +623,14 @@ module.exports = function(grunt) {
                 grunt.fail.fatal("Don't know how to build " + args[i] + ".");
             }
 
+            // Validate parameters.
+            if (!target) {
+                grunt.fail.fatal("Target file media.src.pics.dst is not defined for building " + args[i] + ".");
+            }
+            if (!convert) {
+                grunt.fail.fatal("Conversion commands media.src.pics.convert is not defined for building " + args[i] + ".");
+            }
+
             // Collect conversion commands.
             files = ff.flatten(files);
             for (var j = 0; j < files.length; j++) {
@@ -639,16 +647,18 @@ module.exports = function(grunt) {
                     var cmd = subst(convert[k], files[j], dst);
                     log.info("");
                     log.info("  " + files[j] + ' -> ' + dst);
-                    // TODO: Compare dates here before converting.
-                    log.info("  " + cmd["cyan"]);
-                    settings.all.command.push(cmd);
+                    if (!fs.existsSync(dst) || fs.lstatSync(dst).mtime.getTime() < fs.lstatSync(files[j]).mtime.getTime()) {
+                        log.info("  " + cmd["cyan"]);
+                        settings.all.command.push(cmd);
+                    } else {
+                        log.info("  up to date"["green"]);
+                    }
                 }
             }
         }
 
         // Execute all.
         settings.all.command = settings.all.command.join(' && ');
-        console.log(settings.all.command)
         grunt.config.set('shell', settings);
         grunt.task.run('shell');
     }
