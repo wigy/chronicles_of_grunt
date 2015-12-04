@@ -77,9 +77,9 @@ module.exports = function(grunt) {
     }
 
     /**
-	 * Safe fetch of configuration variable.
-	 */
-	function getConfig(name, def) {
+    * Safe fetch of configuration variable.
+     */
+    function getConfig(name, def) {
 
         var i, j;
 

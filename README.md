@@ -289,13 +289,13 @@ Licensed under the GPL-2.0 license.
 * Reorganize testing code so that we use new strucutre for testing: {unit: {data: 'test/data/**', lib: 'jasmine', css: 'jasmine'}}.
 * Reorganize media files to structure {media: {pics: '*.png', sounds: '*.pm3'}, and add source file concept for media.
 * Add category for Grunt-task files.
+* Support for media building from source files by configured commands.
 
 ### Not Yet Done
 
-* Support for media building from source files by configured commands.
+* Check for tabs in `verify`.
 
 ## Future Ideas
 
-* Check for tabs in `verify`.
 * Documentation support for Angular.
 * Test for `docs` task.

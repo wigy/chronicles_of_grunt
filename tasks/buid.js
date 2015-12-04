@@ -254,6 +254,17 @@ module.exports = function(grunt) {
                     }
                 },
             };
+            // Check for tabs first.
+            var fails = [];
+            for (var i = 0; i < settings.all.length; i++) {
+                if (grunt.file.read(settings.all[i]).indexOf('\t') >= 0) {
+                    fails.push(settings.all[i]);
+                }
+            }
+            if (fails.length) {
+                grunt.fail.fatal("The following files have tabs:\n" + fails.join("\n"));
+            }
+            // Then use JSHint.
             grunt.config.set('jshint', settings);
             grunt.task.run('jshint');
         }
@@ -557,7 +568,7 @@ module.exports = function(grunt) {
             if (!map[files[i]]) {
                 log.info('? ' + files[i]);
                 count++;
-            } else if (die == 'show') {
+            } else if (die === 'show') {
                 log.info(map[files[i]] + ' ' + files[i]);
             }
         }
