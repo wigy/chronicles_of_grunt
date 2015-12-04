@@ -467,6 +467,9 @@ module.exports = function(grunt) {
         if (args.indexOf('test') < 0) {
             tasks.push('test');
         }
+        if (args.indexOf('build') < 0) {
+            tasks.push('build');
+        }
         if (args.indexOf('dist') < 0) {
             tasks.push('dist');
         }
