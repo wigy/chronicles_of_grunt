@@ -502,7 +502,7 @@ module.exports = function(grunt) {
     function taskDocs(what) {
 
         var settings = {
-            dist: {
+            docs: {
                 src: ff.flatten(ff.allSrcFiles()),
                 options: {
                     destination: 'doc',

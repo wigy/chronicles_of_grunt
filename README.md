@@ -296,5 +296,6 @@ Licensed under the GPL-2.0 license.
 
 ## Future Ideas
 
-* Documentation support for Angular.
+* Configuration option `cog.options.docs` to defined documentation system.
+* Documentation support for Angular with *dgeni* or similar.
 * Test for `docs` task.
