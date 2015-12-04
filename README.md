@@ -224,6 +224,12 @@ Licensed under the GPL-2.0 license.
 
 ## Release History
 
+* v1.8.0
+    - Reorganize testing code so that we use new strucutre for testing: {unit: {data: 'test/data/**', lib: 'jasmine', css: 'jasmine'}}.
+    - Reorganize media files to structure {media: {pics: '*.png', sounds: '*.pm3'}, and add source file concept for media.
+    - Add category for Grunt-task files.
+    - Support for media building from source files by configured commands.
+    - Check for tabs in `verify`.
 * v1.7.0
     - Do not include libraries to the compressed distribution version.
     - Remove uncompressed Javascript-file from the dist-folder after compiling.
@@ -286,14 +292,7 @@ Licensed under the GPL-2.0 license.
 
 ### Done
 
-* Reorganize testing code so that we use new strucutre for testing: {unit: {data: 'test/data/**', lib: 'jasmine', css: 'jasmine'}}.
-* Reorganize media files to structure {media: {pics: '*.png', sounds: '*.pm3'}, and add source file concept for media.
-* Add category for Grunt-task files.
-* Support for media building from source files by configured commands.
-
 ### Not Yet Done
-
-* Check for tabs in `verify`.
 
 ## Future Ideas
 
