@@ -5,11 +5,15 @@ module.exports = function(grunt) {
       cog: {
           options: {
               name: 'cog_unittest',
+              title: "CoG Unit-testing",
               external: {
                   lib: ['angular'],
                   css: ['bootstrap'],
                   unittestlib: ['jasmine'],
                   unittestcss: ['jasmine'],
+              },
+              docs: {
+                engine: 'ngdocs'
               },
               src: {
                 config: 'src/config.js',

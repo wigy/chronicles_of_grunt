@@ -288,9 +288,8 @@ Licensed under the GPL-2.0 license.
 ### Done
 
 * Configurable documentation system and support now both *jsdoc* or *ngdocs*.
+* Test for `docs` task.
 
 ### Not Yet Done
-
-* Test for `docs` task.
 
 ## Future Ideas
