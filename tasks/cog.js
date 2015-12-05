@@ -49,6 +49,7 @@ module.exports = function(grunt) {
     grunt.loadTasks(modules + 'grunt-contrib-clean/tasks/');
     grunt.loadTasks(modules + 'grunt-contrib-watch/tasks/');
     grunt.loadTasks(modules + 'grunt-shell/tasks/');
+    grunt.loadTasks(modules + 'grunt-ngdocs/tasks/');
 
     function taskInfo() {
 
@@ -502,19 +503,45 @@ module.exports = function(grunt) {
         grunt.task.run('version:' + version);
     }
 
-    function taskDocs(what) {
+    function taskDocs() {
 
-        var settings = {
-            docs: {
-                src: ff.flatten(ff.allSrcFiles()),
-                options: {
-                    destination: 'doc',
+        var src = ff.flatten(ff.allSrcFiles());
+        var engine = ff.getConfig('docs.engine') || 'jsdoc';
+        var dst = 'docs';
+        var settings;
+
+        if (engine === 'ngdocs') {
+
+            settings = {
+                ngdocs: {
+                    src: src,
+                    title: 'Documentation',
+                    api: true,
+                    options: {
+                        dest: dst,
+                        sourceLink: true,
+                        title: ff.getConfig('title') || ff.getConfig('name')
+                    }
                 }
-            }
-        };
+            };
 
-        grunt.config.set('jsdoc', settings);
-        grunt.task.run('jsdoc');
+        } else if (engine === 'jsdoc') {
+
+            settings = {
+                docs: {
+                    src: src,
+                    options: {
+                        destination: dst,
+                    }
+                }
+            };
+
+        } else {
+            grunt.fail.fatal("Cannot recognize configured documentation engine docs.engine: '" + engine +"'.");
+        }
+
+        grunt.config.set(engine, settings);
+        grunt.task.run(engine);
     }
 
     function taskCleanup() {

@@ -5,10 +5,14 @@ module.exports = function(grunt) {
     cog: {
         options: {
             name: 'cog',
+            title: 'Chronicles of Grunt',
             cog_development: true,
             src: {
                 task: 'tasks/*.js',
                 other: 'test/runner.js'
+            },
+            docs: {
+                engine: 'jsdoc'
             },
             test: {
                 unit: {

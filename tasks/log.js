@@ -6,6 +6,17 @@ module.exports = function(grunt) {
 
     var fs = require('fs');
 
+        /**
+         * @ngdoc service
+         * @name coa.input.kissa
+         * @description
+         * Write one or more messages either to the grunt log or to the file.
+         * If the configuration variable <code>build.options.log_file</code>
+         * defines a path, then that file is used. Otherwise the messages are
+         * written to the <i>Grunt</i>-log.
+         * @example
+         * &lt;a href="kljlj">
+         */
     function write(msg) {
 
         var log = grunt.config.get('build.options.log_file');

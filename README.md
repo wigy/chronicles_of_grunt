@@ -36,6 +36,7 @@ grunt.initConfig({
   cog: {
     options: {
         name: "my_project",
+        title: "My Project",
         external: ['jquery']
         src: {
             code: 'src/**/*.js',
@@ -55,6 +56,7 @@ grunt.initConfig({
 ### General information
 
 The code `name` of the project is required and consisting of alphanumeric characters.
+Additionally a human readable `title` can be defined.
 Dependencies to other libraries are listed as an array in `external`. The following
 predefined constants are supported:
 
@@ -80,6 +82,16 @@ Source code files have various categories. The complete structure is here:
     },
     index: {
         app: 'index.html'               // The initial file launcing the application.
+    }
+```
+
+### Documentation
+
+To generate API documentation with `docs` task, one can select either [ngdocs](https://github.com/angular/angular.js/wiki/Writing-AngularJS-Documentation)
+or [jsdoc](http://usejsdoc.org/), which is default.
+```js
+    docs: {
+        engine: 'ngdocs'
     }
 ```
 
@@ -203,7 +215,7 @@ It is also possible to disable two other standard steps `dist` and `docs`.
 
 ### Task: `docs`
 
-Build API-documentation to `doc`-directory using *JSDoc*.
+Build API-documentation to `docs`-directory using *JSDoc*.
 
 ### Task: `auto`
 
@@ -275,10 +287,10 @@ Licensed under the GPL-2.0 license.
 
 ### Done
 
+* Configurable documentation system and support now both *jsdoc* or *ngdocs*.
+
 ### Not Yet Done
 
-## Future Ideas
-
-* Configuration option `cog.options.docs` to defined documentation system.
-* Documentation support for Angular with *dgeni* or similar.
 * Test for `docs` task.
+
+## Future Ideas
