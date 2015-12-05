@@ -261,32 +261,15 @@ Licensed under the GPL-2.0 license.
     - Unit-test for `index` task.
     - Unit-test for `todo` task.
     - Unit-test for `verify` task.
-* v1.3.1
     - Add CSS checking to `verify` task.
 * v1.3.0
     - Support for `test` task in order to run unit-tests.
-* v1.2.0
     - Support new `other`-category for work files.
-* v1.1.1
     - Scan more files when checking for TODO-notes.
-* v1.1.0
     - New task `todo` to display TODO-notes from source code.
 * v1.0.0
-    - Documentation and clean up.
-* v0.6.0
-    - Rename tasks to be used without prefix and move all tasks to the same file.
-* v0.5.0
-    - Add `build:dist` task.
-* v0.4.0
-    - Add `build:index` task.
-* v0.3.0
-    - Add `build:info` and `build:verify` tasks.
-* v0.2.0
-    - Add new `usage` task.
-* v0.1.1
-    - Make `versioning` option `file` optional.
-* v0.1.0
-    - Bring in `versioning` tool from *time2exercise*.
+    - Basic tasks `info`, `dist`, `index`, `verify`, `usage` and `version`.
+
 
 ## Next Version
 
