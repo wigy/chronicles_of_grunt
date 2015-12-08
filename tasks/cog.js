@@ -178,7 +178,7 @@ module.exports = function(grunt) {
             settings = {all: {files: {}}};
             dist = ff.distCssFiles()[0];
             compressedCssFiles.push(dist.dst.replace(/dist\//, ''));
-            settings.all.files[compressedCssFiles[0]] = ff.flatten(cssFiles);
+            settings.all.files[dist.dst] = ff.flatten(cssFiles);
             grunt.config.set('cssmin', settings);
             grunt.task.run('cssmin');
         }
