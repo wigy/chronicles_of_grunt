@@ -177,7 +177,7 @@ module.exports = function(grunt) {
             log.info("");
             settings = {all: {files: {}}};
             dist = ff.distCssFiles()[0];
-            compressedCssFiles.push(dist.dst);
+            compressedCssFiles.push(dist.dst.replace(/dist\//, ''));
             settings.all.files[compressedCssFiles[0]] = ff.flatten(cssFiles);
             grunt.config.set('cssmin', settings);
             grunt.task.run('cssmin');
@@ -207,7 +207,7 @@ module.exports = function(grunt) {
             banner += ' */\n';
 
             settings = {options: {banner: banner}, dist: {}};
-            compressedJsFiles.push(dist.dst);
+            compressedJsFiles.push(dist.dst.replace(/dist\//, ''));
             settings.dist.src = dist.src;
             settings.dist.dest = dist.dst;
             grunt.config.set('uglify', settings);
@@ -518,6 +518,7 @@ module.exports = function(grunt) {
                     title: 'Documentation',
                     api: true,
                     options: {
+                        startPage: '/ngdocs',
                         dest: dst,
                         sourceLink: true,
                         title: ff.getConfig('title') || ff.getConfig('name')

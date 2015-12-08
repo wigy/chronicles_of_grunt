@@ -289,6 +289,7 @@ Licensed under the GPL-2.0 license.
 
 * Configurable documentation system and support now both *jsdoc* or *ngdocs*.
 * Test for `docs` task.
+* Fix `dist` task to produce correct Javascript- and CSS-paths to index file.
 
 ### Not Yet Done
 
