@@ -236,7 +236,7 @@ module.exports = function(grunt) {
         log.info("");
         if (!what || what === "js") {
             settings = {
-                all: ff.flatten(ff.allSrcFiles()),
+                all: ff.flatten(ff.allSrcFiles().concat(ff.unitTestFiles())),
                 options: {
                     curly: true,
                     eqeqeq: true,
