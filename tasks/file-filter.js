@@ -17,16 +17,16 @@ module.exports = function(grunt) {
             bootstrap: {src: 'node_modules/bootstrap/dist/js/bootstrap.min.js', dst: 'lib', drop: 'node_modules/bootstrap/dist/js'},
             angular: {src: 'node_modules/angular/angular.min.{js,js.map}', dst: 'lib', drop: 'node_modules/angular/'},
             jasmine: [
-                {src: 'node_modules/grunt-contrib-jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.js', dst: null, drop: ''},
-                {src: 'node_modules/grunt-contrib-jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine-html.js', dst: null, drop: ''},
-                {src: 'node_modules/grunt-contrib-jasmine/node_modules/jasmine-core/lib/jasmine-core/boot.js', dst: null, drop: ''},
+                {src: 'node_modules/jasmine-core/lib/jasmine-core/jasmine.js', dst: null, drop: ''},
+                {src: 'node_modules/jasmine-core/lib/jasmine-core/jasmine-html.js', dst: null, drop: ''},
+                {src: 'node_modules/jasmine-core/lib/jasmine-core/boot.js', dst: null, drop: ''},
             ],
             nodeunit: [],
             'angular-mock': {src: 'node_modules/angular-mocks/angular-mocks.js', dst: null, drop: ''},
         },
         css: {
             bootstrap: {src: 'node_modules/bootstrap/dist/css/bootstrap.min.css', dst: 'css', drop: 'node_modules/bootstrap/dist/css/'},
-            jasmine: {src: 'node_modules/grunt-contrib-jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.css', dst: null},
+            jasmine: {src: 'node_modules/jasmine-core/lib/jasmine-core/jasmine.css', dst: null},
         },
         fonts: {
             bootstrap: {src: 'node_modules/bootstrap/dist/fonts/*', dst: 'fonts', drop: 'node_modules/bootstrap/dist/fonts/'},
