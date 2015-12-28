@@ -291,6 +291,7 @@ Licensed under the GPL-2.0 license.
 * Test for `docs` task.
 * Fix `dist` task to produce correct Javascript- and CSS-paths to index file.
 * Include unit-test files to the `verify` checking.
+* Show title in the `info` task.
 
 ### Not Yet Done
 
