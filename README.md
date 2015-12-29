@@ -236,6 +236,12 @@ Licensed under the GPL-2.0 license.
 
 ## Release History
 
+* v1.9.0
+    - Configurable documentation system and support now both *jsdoc* or *ngdocs*.
+    - Test for `docs` task.
+    - Fix `dist` task to produce correct Javascript- and CSS-paths to index file.
+    - Include unit-test files to the `verify` checking.
+    - Show title in the `info` task.
 * v1.8.0
     - Reorganize testing code so that we use new strucutre for testing: {unit: {data: 'test/data/**', lib: 'jasmine', css: 'jasmine'}}.
     - Reorganize media files to structure {media: {pics: '*.png', sounds: '*.pm3'}, and add source file concept for media.
@@ -282,16 +288,9 @@ Licensed under the GPL-2.0 license.
 * v1.0.0
     - Basic tasks `info`, `dist`, `index`, `verify`, `usage` and `version`.
 
-
 ## Next Version
 
 ### Done
-
-* Configurable documentation system and support now both *jsdoc* or *ngdocs*.
-* Test for `docs` task.
-* Fix `dist` task to produce correct Javascript- and CSS-paths to index file.
-* Include unit-test files to the `verify` checking.
-* Show title in the `info` task.
 
 ### Not Yet Done
 
