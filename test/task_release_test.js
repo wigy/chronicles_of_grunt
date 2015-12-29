@@ -6,7 +6,7 @@ module.exports = {
         test.expect(1);
         runner.save('README.md');
         runner.save('package.json');
-        runner.run('release:todo:test:docs:verify:dist:files');
+        runner.run('release:todo:test:docs:verify:dist:files:build');
         var content = runner.read('README.md');
         runner.restore('README.md');
         runner.restore('package.json');
