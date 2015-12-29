@@ -620,8 +620,16 @@ module.exports = function(grunt) {
     function taskBuild(what) {
 
         var args = Array.prototype.slice.call(arguments);
+
         if (args.length === 0) {
-            args = ['pics'];
+            // Resolve from the config, what is buildable.
+            args = [];
+            if (ff.getConfig('media.src.pics.dst')) {
+                args.push('pics');
+            }
+            if (ff.getConfig('media.src.sounds.dst')) {
+                args.push('sounds');
+            }
         }
 
         var files = [];
@@ -640,7 +648,7 @@ module.exports = function(grunt) {
             name = name.replace(/\.\w+$/, '');
             str = str.replace(/\{\{BASENAME\}\}/g, name);
             str = str.replace(/\{\{DIR\}\}/g, dir);
-            var parts = dir.split(path.sep);
+            var parts =     dir.split(path.sep);
             parts.splice(0, 1);
             str = str.replace(/\{\{SUBDIR\}\}/g, path.join.apply(null, parts));
             parts.splice(0, 1);
@@ -707,9 +715,15 @@ module.exports = function(grunt) {
         }
 
         // Execute all.
-        settings.all.command = settings.all.command.join(' && ');
-        grunt.config.set('shell', settings);
-        grunt.task.run('shell');
+        if (settings.all.command.length) {
+            settings.all.command = settings.all.command.join(' && ');
+            grunt.config.set('shell', settings);
+            grunt.task.run('shell');
+        } else {
+            log.info("");
+            log.info("Nothing to build"["green"]);
+            log.info("");
+        }
     }
 
     grunt.registerTask('info', 'Display summary of the configured files and locations.', taskInfo);

@@ -10,9 +10,9 @@ module.exports = {
 
         runner.run('build:pics');
         var ascii1 = runner.read('pics/sub/1.ascii');
-        test.ok(ascii1 == 'Hello\n', "builds pics/sub/1.ascii incorrectly");
+        test.ok(ascii1 === 'Hello\n', "builds pics/sub/1.ascii incorrectly");
         var ascii11 = runner.read('pics/sub/sub/1.1.ascii');
-        test.ok(ascii11 == 'Double Dot\n', "builds pics/sub/sub/1.1.ascii incorrectly");
+        test.ok(ascii11 === 'Double Dot\n', "builds pics/sub/sub/1.1.ascii incorrectly");
 
         runner.clean('test/workdir/pics');
 
