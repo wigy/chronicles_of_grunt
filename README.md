@@ -156,6 +156,7 @@ The supported variables in double curly braces are:
 * `SUBDIR` --- Path of the source file after removing the first directory.
 * `SUBSUBDIR` --- Path of the source file after removing two first directories.
 
+In order to compile them, one can run `build`-task.
 
 ## Tasks
 
@@ -225,6 +226,13 @@ Run complete scan of files in the repository and compare files found to the conf
 Report all files that does not belong to the configuration or are not commonly known files.
 Running `files:die` causes the script end with an error, if any unknown files are found.
 With `files:show` we can list all files and see categories how they are seen by the system.
+
+### Task: `build`
+
+Generate files that are created from the source files. Parameter can be either `pics` or
+`sounds`, when the corresponding media files are generated. By default, everything that can
+be found from the configuration, are generated.
+
 
 ## License
 
