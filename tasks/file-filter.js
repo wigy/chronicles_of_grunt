@@ -80,7 +80,10 @@ module.exports = function(grunt) {
      * Find the path to the root of the CoG.
      */
     function root() {
-        return prefix().replace('node_modules/', '');
+        if (getConfig('cog_development')) {
+            return prefix().replace('node_modules/', '');
+        }
+        return prefix() + 'chronicles_of_grunt/';
     }
 
     /**

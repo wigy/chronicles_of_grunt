@@ -6,6 +6,7 @@ module.exports = function(grunt) {
           options: {
               name: 'cog_unittest',
               title: "CoG Unit-testing",
+              cog_development: true,
               external: {
                   lib: ['angular'],
                   css: ['bootstrap'],
