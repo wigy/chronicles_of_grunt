@@ -299,4 +299,9 @@ Licensed under the GPL-2.0 license.
 
 ### Not Yet Done
 
+* After generating docs the `files:die` task fails to recognize generated files. Ignore docs.
+* Combine test.unit.css and test.unit.lib parts to test.unit.external.
+* Template builder.
+* Auto-task for template building.
+
 ## Future Ideas

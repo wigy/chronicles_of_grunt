@@ -20,6 +20,7 @@ module.exports = function(grunt) {
                 models: 'src/models.js',
                 data: 'src/data/**/*.js',
                 css: ['src/*.css'],
+                templates: 'src/templates/*',
               },
               index: {
                 app: 'index.html'

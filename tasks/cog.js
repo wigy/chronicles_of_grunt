@@ -29,6 +29,7 @@ module.exports = function(grunt) {
     var ff = require('./file-filter.js')(grunt);
     var log = require('./log.js')(grunt);
     var readme = require('./readme.js')(grunt);
+    var templates = require('./templates.js')(grunt);
 
     // Load tasks needed.
     var modules = ff.prefix();
@@ -621,6 +622,7 @@ module.exports = function(grunt) {
 
         var args = Array.prototype.slice.call(arguments);
 
+        // By default, build all.
         if (args.length === 0) {
             // Resolve from the config, what is buildable.
             args = [];
@@ -629,6 +631,9 @@ module.exports = function(grunt) {
             }
             if (ff.getConfig('media.src.sounds.dst')) {
                 args.push('sounds');
+            }
+            if (ff.generatedFiles().length) {
+                args.push('templates');
             }
         }
 
@@ -660,52 +665,86 @@ module.exports = function(grunt) {
 
         for (var i = 0; i < args.length; i++) {
 
+            var options;
+
             // Show progress.
             log.info("");
             log.info(("Building " + args[i])['green']);
-            log.info("");
+
+            files = [];
+            target = null;
+            convert = null;
 
             // Resolve parameters.
             if (args[i] === 'pics') {
-                files = ff.picSrcFiles();
+                files = ff.flatten(ff.picSrcFiles());
                 target = ff.getConfig('media.src.pics.dst');
                 convert = ff.getConfig('media.src.pics.convert');
             } else if (args[i] === 'sounds'){
-                files = ff.soundSrcFiles();
+                files = ff.flatten(ff.soundSrcFiles());
                 target = ff.getConfig('media.src.sounds.dst');
                 convert = ff.getConfig('media.src.sounds.convert');
+            } else if (args[i] === 'templates'){
+                files = [ff.flatten(ff.htmlTemplateFiles())];
+                if (!files[0].length) {
+                    grunt.fail.fatal("No template files defined.");
+                }
+                target = ff.generatedFiles('templates')[0].dst;
+                convert = templates.generate;
+                if (ff.getConfig('external.lib').indexOf('angular') >= 0 || ff.getConfig('external.lib').indexOf('coa') >= 0) {
+                    options = {template: ff.root() + 'templates/angular.js'};
+                } else {
+                    grunt.fail.fatal("Cannot determine template system based on external libraries.");
+                }
             } else {
                 grunt.fail.fatal("Don't know how to build " + args[i] + ".");
             }
 
             // Validate parameters.
             if (!target) {
-                grunt.fail.fatal("Target file media.src.pics.dst is not defined for building " + args[i] + ".");
+                grunt.fail.fatal("Target is not defined for building " + args[i] + ".");
             }
             if (!convert) {
-                grunt.fail.fatal("Conversion commands media.src.pics.convert is not defined for building " + args[i] + ".");
+                grunt.fail.fatal("Conversion commands is not defined for building " + args[i] + ".");
             }
 
             // Collect conversion commands.
-            files = ff.flatten(files);
             for (var j = 0; j < files.length; j++) {
 
                 // Find the destination file and create directory.
                 var dst = subst(target, files[j]);
+
                 grunt.file.mkdir(path.dirname(dst));
                 log.info("");
-                log.info("  " + files[j] + ' -> ' + dst);
+                if (files[j] instanceof Array) {
+                    for (var n = 0; n < files[j].length; n++) {
+                        log.info("  " + files[j][n] + (n === files[j].length - 1 ?  ' -> ' + dst : ''));
+                    }
+                } else {
+                    log.info("  " + files[j] + ' -> ' + dst);
+                }
 
                 // Check if build is needed.
-                if (fs.existsSync(dst) && fs.lstatSync(dst).mtime.getTime() > fs.lstatSync(files[j]).mtime.getTime()) {
-                    log.info("  up to date"["green"]);
+                if (fs.existsSync(dst)) {
+                    if (fs.lstatSync(dst).mtime.getTime() > fs.lstatSync(files[j]).mtime.getTime()) {
+                        log.info("  up to date"["yellow"]);
+                        continue;
+                    } else {
+                        fs.unlink(dst);
+                    }
+                }
+
+                // Resolve conversion.
+                if (typeof(convert) === 'string') {
+                    convert = [convert];
+                } else if (typeof(convert) === 'function') {
+                    // Execute functions directly.
+                    log.info("  <internal function>"["cyan"]);
+                    convert(options.template, files, dst);
                     continue;
                 }
 
-                // Resolve and add conversion commands to queue.
-                if (typeof(convert) === 'string') {
-                    convert = [convert];
-                }
+                // Add conversion commands to the queue.
                 for (var k = 0; k < convert.length; k++) {
                     var cmd = subst(convert[k], files[j], dst);
                     log.info("  " + cmd["cyan"]);
@@ -714,15 +753,11 @@ module.exports = function(grunt) {
             }
         }
 
-        // Execute all.
+        // Execute all shell commands.
         if (settings.all.command.length) {
             settings.all.command = settings.all.command.join(' && ');
             grunt.config.set('shell', settings);
             grunt.task.run('shell');
-        } else {
-            log.info("");
-            log.info("Nothing to build"["green"]);
-            log.info("");
         }
     }
 

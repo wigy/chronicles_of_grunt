@@ -77,7 +77,14 @@ module.exports = function(grunt) {
     }
 
     /**
-    * Safe fetch of configuration variable.
+     * Find the path to the root of the CoG.
+     */
+    function root() {
+        return prefix().replace('node_modules/', '');
+    }
+
+    /**
+     * Safe fetch of configuration variable.
      */
     function getConfig(name, def) {
 
@@ -612,7 +619,8 @@ module.exports = function(grunt) {
      * Find all text based work files.
      */
     function workTextFiles() {
-        return indexFiles().concat(srcFiles()).concat(testFiles()).concat(otherFiles()).concat(taskFiles()).concat(cssFiles()).concat(toolsShellFiles()).concat(commonJsFiles());
+        return indexFiles().concat(srcFiles()).concat(testFiles()).concat(otherFiles()).concat(taskFiles()).concat(cssFiles())
+            .concat(toolsShellFiles()).concat(commonJsFiles()).concat(htmlTemplateFiles());
     }
 
     /**
@@ -651,6 +659,25 @@ module.exports = function(grunt) {
     }
 
     /**
+     * List of HTML-template files.
+     */
+    function htmlTemplateFiles() {
+        return files(getConfig('src.templates'));
+    }
+
+    /**
+     * List of files that are generated, but are not other media files.
+     */
+    function generatedFiles(what) {
+        var ret = [];
+        // TODO: Configurable paths for resuls. Could also use for 'dist' and 'docs'.
+        if ((!what || what === 'templates') && htmlTemplateFiles().length) {
+            ret.push({src: null, dst: 'generated-templates.js'});
+        }
+        return ret;
+    }
+
+    /**
      * Build complete map of known files.
      *
      * Note that when adding new file categories, this function must be updated and all
@@ -665,7 +692,8 @@ module.exports = function(grunt) {
             'codeFiles', 'otherFiles', 'taskFiles', 'cssFiles', 'picFiles', 'soundFiles', 'unitTestFiles',
             'commonJsFiles', 'commonOtherFiles', 'ignoredFiles', 'distUncompressedFiles',
             'distLibFiles', 'distIndexFiles', 'distJsFiles', 'distCssFiles',
-            'toolsShellFiles', 'unitTestDataFiles', 'picSrcFiles', 'soundSrcFiles'];
+            'toolsShellFiles', 'unitTestDataFiles', 'picSrcFiles', 'soundSrcFiles',
+            'htmlTemplateFiles', 'generatedFiles'];
 
         // Construct the map by calling each function defined above.
         var map = {};
@@ -687,6 +715,7 @@ module.exports = function(grunt) {
         flatten: flatten,
         getConfig: getConfig,
         prefix: prefix,
+        root: root,
         files: files,
         removeDuplicates: removeDuplicates,
         writeIndex: writeIndex,
@@ -733,5 +762,7 @@ module.exports = function(grunt) {
         commonFiles: commonFiles,
         ignoredFiles: ignoredFiles,
         toolsShellFiles: toolsShellFiles,
+        htmlTemplateFiles: htmlTemplateFiles,
+        generatedFiles: generatedFiles,
     };
 };
