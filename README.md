@@ -14,44 +14,41 @@ You may install this plugin with this command:
 npm install wigy/chronicles_of_grunt --save-dev
 ```
 
-Once installed, it may be enabled in your Gruntfile with:
-```js
-grunt.loadTasks('node_modules/chronicles_of_grunt/tasks/');
-```
-
 ## Configuration
 
-The recommended default task displays available commands:
-```js
-grunt.registerTask('default', ['usage']);
-```
+The configuration has few settings defining project information and how to find
+various files. Each source file specification can be either a file glob pattern as a string
+or an array of those.
 
-The configuration has few settings and definitions for every source file. Each
-source file specification can be either a file glob pattern as a string or an
-array of those.
-
-For example, here is a simple configuration:
+For example, here is a simple complete `Gruntfile.js`:
 ```js
-grunt.initConfig({
-  cog: {
-    options: {
-        name: "my_project",
-        title: "My Project",
-        external: ['jquery']
-        src: {
-            code: 'src/**/*.js',
-            css: 'css/*.css'
-        },
-        media: {
-            pics: ['pics/*.png' , 'pics/*.jpg']
-        },
-        index: {
-            app: 'index.html'
-        }
+module.exports = function(grunt) {
+
+  grunt.initConfig({
+    cog: {
+      options: {
+          name: "my_project",
+          title: "My Project",
+          external: ['jquery']
+          src: {
+              code: 'src/**/*.js',
+              css: 'css/*.css'
+          },
+          media: {
+              pics: ['pics/*.png' , 'pics/*.jpg']
+          },
+          index: {
+              app: 'index.html'
+          }
+      }
     }
-  }
-});
+  });
+
+  grunt.loadTasks('node_modules/chronicles_of_grunt/tasks/');
+  grunt.registerTask('default', ['usage']);
+};
 ```
+In the end we load tasks from CoG-module and register `usage`-task as a default.
 
 ### General information
 
