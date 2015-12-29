@@ -528,7 +528,7 @@ module.exports = function(grunt) {
      * Find all code files needed to include in HTML index.
      */
     function includeJsFiles() {
-        return extLibFiles().concat(srcFiles());
+        return extLibFiles().concat(srcFiles()).concat(generatedJsFiles());
     }
 
     /**
@@ -598,7 +598,7 @@ module.exports = function(grunt) {
      * Find all code files needed to include in HTML index for unit test.
      */
     function includeUnitTestJsFiles() {
-        return extLibFiles().concat(unitTestLibraryFiles()).concat(srcFiles()).concat(unitTestFiles());
+        return extLibFiles().concat(unitTestLibraryFiles()).concat(srcFiles()).concat(generatedJsFiles()).concat(unitTestFiles());
     }
 
     /**
@@ -668,9 +668,9 @@ module.exports = function(grunt) {
     /**
      * List of files that are generated, but are not other media files.
      */
-    function generatedFiles(what) {
+    function generatedJsFiles(what) {
         var ret = [];
-        // TODO: Configurable paths for resuls. Could also use for 'dist' and 'docs'.
+        // TODO: Configurable paths for resuls. Could also use for 'dist' and 'docs' paths.
         if ((!what || what === 'templates') && htmlTemplateFiles().length) {
             ret.push({src: null, dst: 'generated-templates.js'});
         }
@@ -693,7 +693,7 @@ module.exports = function(grunt) {
             'commonJsFiles', 'commonOtherFiles', 'ignoredFiles', 'distUncompressedFiles',
             'distLibFiles', 'distIndexFiles', 'distJsFiles', 'distCssFiles',
             'toolsShellFiles', 'unitTestDataFiles', 'picSrcFiles', 'soundSrcFiles',
-            'htmlTemplateFiles', 'generatedFiles'];
+            'htmlTemplateFiles', 'generatedJsFiles'];
 
         // Construct the map by calling each function defined above.
         var map = {};
@@ -763,6 +763,6 @@ module.exports = function(grunt) {
         ignoredFiles: ignoredFiles,
         toolsShellFiles: toolsShellFiles,
         htmlTemplateFiles: htmlTemplateFiles,
-        generatedFiles: generatedFiles,
+        generatedJsFiles: generatedJsFiles,
     };
 };

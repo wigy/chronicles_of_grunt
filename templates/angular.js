@@ -3,9 +3,8 @@
  */
 (function() {
 
-    var module = angular.module('coa.templates'); // TODO: How to decide module name, if not using 'coa'?
+    angular.module('templates', []).run(['$templateCache', function($templateCache) {
 
-    module.run(['$templateCache', function($templateCache) {
-        {{OUTPUT}}
-    }]);
+{{OUTPUT}}
+}]);
 })();

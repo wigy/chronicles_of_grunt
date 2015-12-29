@@ -45,6 +45,15 @@ module.exports = {
     },
 
     /**
+     * Delete a file from the workdir.
+     */
+    delete: function(filename) {
+        if (fs.existsSync('test/workdir/' + filename)) {
+            fs.unlinkSync('test/workdir/' + filename);
+        }
+    },
+
+    /**
      * Remove all files and the directory recursively.
      */
     clean: function(dir) {

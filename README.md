@@ -156,7 +156,23 @@ The supported variables in double curly braces are:
 * `SUBDIR` --- Path of the source file after removing the first directory.
 * `SUBSUBDIR` --- Path of the source file after removing two first directories.
 
-In order to compile them, one can run `build`-task.
+In order to compile them, one can run `build:pics` or `build:sounds` task.
+
+### Templates
+
+If the Javascript-framework listed in uase can handle HTML-templates, they can be compiled together into a single file.
+The method of compiling depends on the system in use. The system is looked from the option `external` and if found, then
+the templates can be used. Currently supported systems for templates are
+
+* `angular` --- AngularJS templates are directly inserted into the template cache when module `templates` is added as dependecy.
+
+```js
+    src: {
+        templates: 'src/**/*.html',    // A list of HTML-file templates.
+    }
+```
+
+In order to compile templates, run `build:templates` task.
 
 ## Tasks
 
@@ -229,9 +245,12 @@ With `files:show` we can list all files and see categories how they are seen by 
 
 ### Task: `build`
 
-Generate files that are created from the source files. Parameter can be either `pics` or
-`sounds`, when the corresponding media files are generated. By default, everything that can
+Generate files that are created from the source files. By default, everything that can
 be found from the configuration, are generated.
+
+If parameter is `pics` or `sounds`, then the corresponding media files are generated.
+
+If parameter is `templates`, then the collection of templates is compiled.
 
 
 ## License
@@ -297,11 +316,15 @@ Licensed under the GPL-2.0 license.
 
 ### Done
 
+* Template builder.
+
 ### Not Yet Done
 
 * After generating docs the `files:die` task fails to recognize generated files. Ignore docs.
 * Combine test.unit.css and test.unit.lib parts to test.unit.external.
-* Template builder.
 * Auto-task for template building.
 
 ## Future Ideas
+
+* Move non-task files from tasks-directory to lib-directory.
+* Split actual tasks to separate files.

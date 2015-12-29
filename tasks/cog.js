@@ -632,7 +632,7 @@ module.exports = function(grunt) {
             if (ff.getConfig('media.src.sounds.dst')) {
                 args.push('sounds');
             }
-            if (ff.generatedFiles().length) {
+            if (ff.generatedJsFiles().length) {
                 args.push('templates');
             }
         }
@@ -665,8 +665,6 @@ module.exports = function(grunt) {
 
         for (var i = 0; i < args.length; i++) {
 
-            var options;
-
             // Show progress.
             log.info("");
             log.info(("Building " + args[i])['green']);
@@ -689,10 +687,11 @@ module.exports = function(grunt) {
                 if (!files[0].length) {
                     grunt.fail.fatal("No template files defined.");
                 }
-                target = ff.generatedFiles('templates')[0].dst;
-                convert = templates.generate;
+                target = ff.generatedJsFiles('templates')[0].dst;
                 if (ff.getConfig('external.lib').indexOf('angular') >= 0 || ff.getConfig('external.lib').indexOf('coa') >= 0) {
-                    options = {template: ff.root() + 'templates/angular.js'};
+                    convert = function(files) {
+                        return templates.generate(ff.root() + 'templates/angular.js', files);
+                    };
                 } else {
                     grunt.fail.fatal("Cannot determine template system based on external libraries.");
                 }
@@ -711,22 +710,38 @@ module.exports = function(grunt) {
             // Collect conversion commands.
             for (var j = 0; j < files.length; j++) {
 
+                var n;
+
                 // Find the destination file and create directory.
                 var dst = subst(target, files[j]);
 
                 grunt.file.mkdir(path.dirname(dst));
                 log.info("");
                 if (files[j] instanceof Array) {
-                    for (var n = 0; n < files[j].length; n++) {
+                    for (n = 0; n < files[j].length; n++) {
                         log.info("  " + files[j][n] + (n === files[j].length - 1 ?  ' -> ' + dst : ''));
                     }
                 } else {
                     log.info("  " + files[j] + ' -> ' + dst);
                 }
 
-                // Check if build is needed.
+                // Check if build is needed comparing source file dates versus destination file dates.
                 if (fs.existsSync(dst)) {
-                    if (fs.lstatSync(dst).mtime.getTime() > fs.lstatSync(files[j]).mtime.getTime()) {
+
+                    var changed = false;
+
+                    if (files[j] instanceof Array) {
+                        for (n = 0; n < files[j].length; n++) {
+                            if (fs.lstatSync(dst).mtime.getTime() < fs.lstatSync(files[j][n]).mtime.getTime()) {
+                                changed = true;
+                                break;
+                            }
+                        }
+                    } else {
+                        changed = fs.lstatSync(dst).mtime.getTime() < fs.lstatSync(files[j]).mtime.getTime();
+                    }
+
+                    if (!changed) {
                         log.info("  up to date"["yellow"]);
                         continue;
                     } else {
@@ -740,7 +755,7 @@ module.exports = function(grunt) {
                 } else if (typeof(convert) === 'function') {
                     // Execute functions directly.
                     log.info("  <internal function>"["cyan"]);
-                    convert(options.template, files, dst);
+                    grunt.file.write(target, convert(files));
                     continue;
                 }
 

@@ -2,7 +2,7 @@ var runner = require('./runner.js');
 
 module.exports = {
 
-    'Task `build`': function(test) {
+    'Task `build:pics`': function(test) {
 
         test.expect(2);
 
