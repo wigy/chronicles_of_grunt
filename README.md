@@ -160,7 +160,7 @@ In order to compile them, one can run `build:pics` or `build:sounds` task.
 
 ### Templates
 
-If the Javascript-framework listed in uase can handle HTML-templates, they can be compiled together into a single file.
+If the Javascript-framework listed in use can handle HTML-templates, they can be compiled together into a single file.
 The method of compiling depends on the system in use. The system is looked from the option `external` and if found, then
 the templates can be used. Currently supported systems for templates are
 
