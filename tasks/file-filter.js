@@ -673,7 +673,7 @@ module.exports = function(grunt) {
      */
     function generatedJsFiles(what) {
         var ret = [];
-        // TODO: Configurable paths for resuls. Could also use for 'dist' and 'docs' paths.
+        // TODO: Configurable paths for results. Could also use for 'dist' and 'docs' paths.
         if ((!what || what === 'templates') && htmlTemplateFiles().length) {
             ret.push({src: null, dst: 'generated-templates.js'});
         }

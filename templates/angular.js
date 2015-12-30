@@ -3,8 +3,11 @@
  */
 (function() {
 
-    angular.module('templates', []).run(['$templateCache', function($templateCache) {
+    angular.module("templates", []).run(["$templateCache", function($templateCache) {
 
-{{OUTPUT}}
-}]);
+        <% for (var i in FILES) { %>
+            $templateCache.put("<%= i %>", <%= FILES[i] %> );
+        <% } %>
+
+    }]);
 })();

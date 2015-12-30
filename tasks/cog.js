@@ -683,14 +683,14 @@ module.exports = function(grunt) {
                 target = ff.getConfig('media.src.sounds.dst');
                 convert = ff.getConfig('media.src.sounds.convert');
             } else if (args[i] === 'templates'){
-                files = [ff.flatten(ff.htmlTemplateFiles())];
+                files = [ff.flatten(ff.htmlTemplateFiles())]; // Single target, multiple source files.
                 if (!files[0].length) {
                     grunt.fail.fatal("No template files defined.");
                 }
                 target = ff.generatedJsFiles('templates')[0].dst;
                 if (ff.getConfig('external.lib').indexOf('angular') >= 0 || ff.getConfig('external.lib').indexOf('coa') >= 0) {
                     convert = function(files) {
-                        return templates.generate(ff.root() + 'templates/angular.js', files);
+                        return templates.generate(ff.root() + 'templates/angular.js', files[0]);
                     };
                 } else {
                     grunt.fail.fatal("Cannot determine template system based on external libraries.");
