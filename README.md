@@ -11,7 +11,7 @@ helps you to perform necessary steps in the development process.
 
 You may install this plugin with this command:
 ```shell
-npm install wigy/chronicles_of_grunt --save-dev
+npm install chronicles_of_grunt --save-dev
 ```
 
 ## Configuration
