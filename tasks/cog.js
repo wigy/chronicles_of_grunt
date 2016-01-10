@@ -593,10 +593,16 @@ module.exports = function(grunt) {
 
         log.info("");
         var count = 0;
+        var docs = ff.pathDocs();
         for (var i = 0; i < files.length; i++) {
             if (!map[files[i]]) {
-                log.info('? ' + files[i]);
-                count++;
+                // Check common output files.
+                if (files[i].substr(0, docs.length) === docs) {
+                    continue;
+                } else {
+                    log.info('? ' + files[i]);
+                    count++;
+                }
             } else if (die === 'show') {
                 log.info(map[files[i]] + ' ' + files[i]);
             }
