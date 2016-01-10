@@ -15,8 +15,6 @@ module.exports = function(grunt) {
               external: {
                   lib: ['angular'],
                   css: ['bootstrap'],
-                  unittestlib: ['jasmine'],
-                  unittestcss: ['jasmine'],
               },
               docs: {
                 engine: 'ngdocs'

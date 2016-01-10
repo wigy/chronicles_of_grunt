@@ -50,6 +50,9 @@ module.exports = function(grunt) {
         angular: ['lib'],
         jquery: ['lib'],
         bootstrap: ['lib', 'css', 'fonts'],
+        nodeunit: ['lib'],
+        'angular-mock': ['lib'],
+        jasmine: ['lib', 'css'],
     };
 
     // Currently loaded configuration.
@@ -96,15 +99,29 @@ module.exports = function(grunt) {
         // Load initital config.
         if (!config) {
 
+            var external;
+
             config = grunt.config.get('cog') || {options: {}};
 
             // Expand general external definitions to category specific definitions.
             if (config.options.external instanceof Array) {
-                var external = config.options.external;
+                external = config.options.external;
                 config.options.external = {lib: [], css: [], fonts: []};
                 for (i=0; i < external.length; i++) {
                     for(j = 0; j < categories[external[i]].length; j++) {
                         config.options.external[categories[external[i]][j]].push(external[i]);
+                    }
+                }
+            }
+
+            // Expand also for unit tests.
+            if (config.options.test.unit.external instanceof Array) {
+                external = config.options.test.unit.external;
+                config.options.test.unit.lib = [];
+                config.options.test.unit.css = [];
+                for (i=0; i < external.length; i++) {
+                    for(j = 0; j < categories[external[i]].length; j++) {
+                        config.options.test.unit[categories[external[i]][j]].push(external[i]);
                     }
                 }
             }

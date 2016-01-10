@@ -17,7 +17,7 @@ module.exports = function(grunt) {
             test: {
                 unit: {
                     tests: 'test/*_test.js',
-                    lib: 'nodeunit',
+                    external: ['nodeunit'],
                     data: 'test/workdir/**'
                 }
             }

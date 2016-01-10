@@ -109,8 +109,7 @@ Unit-testing environment and files are specified as follows:
     test: {
         unit: {
             tests: 'test/**/*_spec.js', // Actual tests.
-            lib: ['jasmine'],           // Testing framework.
-            css: ['jasmine']            // Additional CSS files for visual testing.
+            external: ['jasmine'],           // Testing frameworks and libs.
         }
     }
     index: {
@@ -328,10 +327,10 @@ Licensed under the GPL-2.0 license.
 * Template builder.
 * Configurable path for distribution, templates and API-docs.
 * After generating docs the `files` task automatically recognizes them.
+* Combine test.unit.css and test.unit.lib parts to test.unit.external.
 
 ### Not Yet Done
 
-* Combine test.unit.css and test.unit.lib parts to test.unit.external.
 * Auto-task for template building.
 
 ## Future Ideas

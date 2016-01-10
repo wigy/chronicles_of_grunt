@@ -381,7 +381,7 @@ module.exports = function(grunt) {
         // Select test runner.
         var type = configuredUnitTesting();
         if (!type) {
-            grunt.fail.fatal("Testing system is not configured. Please set test.unit.lib to the 'jasmine' or 'nodeunit'.");
+            grunt.fail.fatal("Testing system is not configured. Please set test.unit.external to the ['jasmine'] or ['nodeunit'].");
         }
 
         // Collect files for test.
