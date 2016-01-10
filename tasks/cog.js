@@ -166,7 +166,7 @@ module.exports = function(grunt) {
             for (i = 0; i < libs.length; i++) {
                 log.info(libs[i].src + ' -> ' + libs[i].dst);
                 grunt.file.copy(libs[i].src, libs[i].dst);
-                compressedJsFiles.push(libs[i].dst.replace(/dist\//, ''));
+                compressedJsFiles.push(libs[i].dst.replace(ff.pathDist(), ''));
             }
         }
 
@@ -179,7 +179,7 @@ module.exports = function(grunt) {
             log.info("");
             settings = {all: {files: {}}};
             dist = ff.distCssFiles()[0];
-            compressedCssFiles.push(dist.dst.replace(/dist\//, ''));
+            compressedCssFiles.push(dist.dst.replace(ff.pathDist(), ''));
             settings.all.files[dist.dst] = ff.flatten(cssFiles);
             grunt.config.set('cssmin', settings);
             grunt.task.run('cssmin');
@@ -209,7 +209,7 @@ module.exports = function(grunt) {
             banner += ' */\n';
 
             settings = {options: {banner: banner}, dist: {}};
-            compressedJsFiles.push(dist.dst.replace(/dist\//, ''));
+            compressedJsFiles.push(dist.dst.replace(ff.pathDist(), ''));
             settings.dist.src = dist.src;
             settings.dist.dest = dist.dst;
             grunt.config.set('uglify', settings);
@@ -550,7 +550,7 @@ module.exports = function(grunt) {
     function taskCleanup() {
 
         var settings = {
-            all: ['dist/' + ff.getConfig('name') + '.js']
+            all: [ff.pathDist() + ff.getConfig('name') + '.js']
         };
 
         grunt.config.set('clean', settings);

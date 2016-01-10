@@ -317,6 +317,7 @@ Licensed under the GPL-2.0 license.
 ### Done
 
 * Template builder.
+* Configurable path for distribution.
 
 ### Not Yet Done
 

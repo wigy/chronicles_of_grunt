@@ -7,6 +7,9 @@ module.exports = function(grunt) {
               name: 'cog_unittest',
               title: "CoG Unit-testing",
               cog_development: true,
+              paths: {
+                  dist: 'output/distro'
+              },
               external: {
                   lib: ['angular'],
                   css: ['bootstrap'],

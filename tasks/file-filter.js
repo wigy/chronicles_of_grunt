@@ -545,35 +545,35 @@ module.exports = function(grunt) {
      * List of files that goes to the actual distribution unmodified.
      */
     function distUncompressedFiles() {
-        return prefixDest('dist/', extFontFiles().concat(mediaFiles()));
+        return prefixDest(pathDist(), extFontFiles().concat(mediaFiles()));
     }
 
     /**
      * List of files that goes to the actual distribution as compressed library files.
      */
     function distLibFiles() {
-        return prefixDest('dist/', extLibFiles());
+        return prefixDest(pathDist(), extLibFiles());
     }
 
     /**
      * Get the entry point file for the application in the distribution.
      */
     function distIndexFiles() {
-        return prefixDest('dist/', appIndexFiles());
+        return prefixDest(pathDist(), appIndexFiles());
     }
 
     /**
      * Get the name(s) of CSS-files in the distribution.
      */
     function distCssFiles() {
-        return [{src: 'dist/' + getConfig('name') + '.css', dst: 'dist/' + getConfig('name') + '.min.css'}];
+        return [{src: pathDist() + getConfig('name') + '.css', dst: pathDist() + getConfig('name') + '.min.css'}];
     }
 
     /**
      * Get the name(s) of actual compressed application source code files in the distribution.
      */
     function distJsFiles() {
-        return [{src: 'dist/' + getConfig('name') + '.js', dst: 'dist/' + getConfig('name') + '.min.js'}];
+        return [{src: pathDist() + getConfig('name') + '.js', dst: pathDist() + getConfig('name') + '.min.js'}];
     }
 
     /**
@@ -713,6 +713,17 @@ module.exports = function(grunt) {
         return map;
     }
 
+    /**
+     * Get target path for building distribution.
+     */
+    function pathDist() {
+        var ret = getConfig('paths.dist', 'dist/');
+        if (! /\/$/.test(ret)) {
+            ret += '/';
+        }
+        return ret;
+    }
+
     return {
         // Utility functions.
         flatten: flatten,
@@ -767,5 +778,6 @@ module.exports = function(grunt) {
         toolsShellFiles: toolsShellFiles,
         htmlTemplateFiles: htmlTemplateFiles,
         generatedJsFiles: generatedJsFiles,
+        pathDist: pathDist,
     };
 };
