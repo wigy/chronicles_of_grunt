@@ -62,6 +62,15 @@ predefined constants are supported:
 * `bootstrap` --- Bootstrap.
 * `coa` --- Wigy's Chronicles of Angular (implies `angular`).
 
+In addition, default locations of various paths can be changed:
+```js
+    paths: {
+        dist: 'dist/',                     // Build directory where compressed application is stored.
+        docs: 'docs/',                     // Build directory for API docs.
+        template: 'generated-template.js', // Name of the while, where pre-compiled templates are stored.
+    }
+```
+
 ### Source code
 
 Source code files have various categories. The complete structure is here:
