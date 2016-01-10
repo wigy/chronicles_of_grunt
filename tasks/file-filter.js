@@ -724,6 +724,17 @@ module.exports = function(grunt) {
         return ret;
     }
 
+    /**
+     * Get target path for building API docs.
+     */
+    function pathDocs() {
+        var ret = getConfig('paths.docs', 'docs/');
+        if (! /\/$/.test(ret)) {
+            ret += '/';
+        }
+        return ret;
+    }
+
     return {
         // Utility functions.
         flatten: flatten,
@@ -779,5 +790,6 @@ module.exports = function(grunt) {
         htmlTemplateFiles: htmlTemplateFiles,
         generatedJsFiles: generatedJsFiles,
         pathDist: pathDist,
+        pathDocs: pathDocs,
     };
 };

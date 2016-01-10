@@ -34,10 +34,6 @@ module.exports = function(grunt) {
     // Load tasks needed.
     var modules = ff.prefix();
 
-    if (ff.getConfig('cog_development')) {
-        grunt.loadNpmTasks('grunt-shell');
-    }
-
     grunt.loadTasks(modules + 'grunt-contrib-jshint/tasks/');
     grunt.loadTasks(modules + 'grunt-contrib-cssmin/tasks/');
     grunt.loadTasks(modules + 'grunt-contrib-uglify/tasks/');
@@ -509,7 +505,7 @@ module.exports = function(grunt) {
 
         var src = ff.flatten(ff.allSrcFiles());
         var engine = ff.getConfig('docs.engine') || 'jsdoc';
-        var dst = 'docs';
+        var dst = ff.pathDocs();
         var settings;
 
         if (engine === 'ngdocs') {

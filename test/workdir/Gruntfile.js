@@ -8,7 +8,8 @@ module.exports = function(grunt) {
               title: "CoG Unit-testing",
               cog_development: true,
               paths: {
-                  dist: 'output/distro'
+                  dist: 'output/distro',
+                  docs: 'output/api'
               },
               external: {
                   lib: ['angular'],
