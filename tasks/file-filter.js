@@ -673,9 +673,8 @@ module.exports = function(grunt) {
      */
     function generatedJsFiles(what) {
         var ret = [];
-        // TODO: Configurable paths for results. Could also use for 'dist' and 'docs' paths.
         if ((!what || what === 'templates') && htmlTemplateFiles().length) {
-            ret.push({src: null, dst: 'generated-templates.js'});
+            ret.push({src: null, dst: pathTemplate()});
         }
         return ret;
     }
@@ -735,6 +734,13 @@ module.exports = function(grunt) {
         return ret;
     }
 
+    /**
+     * Get target path for generated template.
+     */
+    function pathTemplate() {
+        return getConfig('paths.template', 'generated-template.js');
+    }
+
     return {
         // Utility functions.
         flatten: flatten,
@@ -791,5 +797,6 @@ module.exports = function(grunt) {
         generatedJsFiles: generatedJsFiles,
         pathDist: pathDist,
         pathDocs: pathDocs,
+        pathTemplate: pathTemplate,
     };
 };

@@ -317,13 +317,14 @@ Licensed under the GPL-2.0 license.
 ### Done
 
 * Template builder.
-* Configurable path for distribution and API-docs.
+* Configurable path for distribution, templates and API-docs.
 
 ### Not Yet Done
 
 * After generating docs the `files:die` task fails to recognize generated files. Ignore docs.
 * Combine test.unit.css and test.unit.lib parts to test.unit.external.
 * Auto-task for template building.
+* Docs for configurable paths.
 
 ## Future Ideas
 

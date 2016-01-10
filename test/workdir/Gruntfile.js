@@ -9,7 +9,8 @@ module.exports = function(grunt) {
               cog_development: true,
               paths: {
                   dist: 'output/distro',
-                  docs: 'output/api'
+                  docs: 'output/api',
+                  template: 'output/template.js'
               },
               external: {
                   lib: ['angular'],
