@@ -19,6 +19,10 @@ module.exports = {
         output = [];
         parsed = {};
         var out = child_process.spawnSync('../../node_modules/grunt-cli/bin/grunt', [task], {cwd: 'test/workdir', stderr: true, failOnError: true});
+        if (out.error) {
+            console.log("\nTEST RUNNER FAILED: " + out.error.code + ": " + out.error.path + " " + out.error.spawnargs);
+            return '';
+        }
         if (out) {
             output = out.stdout.toString().split("\n");
             for (var i = 0; i < output.length; i++) {
