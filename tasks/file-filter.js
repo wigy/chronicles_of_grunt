@@ -115,7 +115,7 @@ module.exports = function(grunt) {
             }
 
             // Expand also for unit tests.
-            if (config.options.test.unit.external instanceof Array) {
+            if (config.options.test && config.options.test.unit && config.options.test.unit.external instanceof Array) {
                 external = config.options.test.unit.external;
                 config.options.test.unit.lib = [];
                 config.options.test.unit.css = [];
@@ -703,6 +703,7 @@ module.exports = function(grunt) {
      * new non-overlapping (i.e. atomic) categories needs to be added here.
      */
     function fileCategoryMap() {
+
         // Go over every file lookup function we export.
         var exports = module.exports(grunt);
         // This list of categories must contain all non-overlapping file categories.
