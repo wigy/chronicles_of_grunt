@@ -346,4 +346,3 @@ Licensed under the GPL-2.0 license.
 
 * Move non-task files from tasks-directory to lib-directory.
 * Split actual tasks to separate files.
-* Publish on npmjs.com if option is set for it when running publish task.

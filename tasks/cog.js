@@ -484,6 +484,7 @@ module.exports = function(grunt) {
     }
 
     function taskPostRelease() {
+
         // Calculate new version and print out summary.
         var parsed = readme.parse();
         var version = pckg.version.replace(/[^0-9.]+$/, '');
@@ -497,7 +498,8 @@ module.exports = function(grunt) {
         }
         log.info("");
         log.info("Once commited and tagged, you can start next iteration by assigning new development version");
-        log.info("and making plans by collecting goals for the next version into README.md.");
+        log.info("and making plans by collecting goals for the next version into README.md. Also remember run");
+        log.info("npm publish"["red"] + " after commiting, if this is published as a npm-package.");
         log.info("");
         // Re-calculate versioning data and write it back.
         parsed.release(version);
