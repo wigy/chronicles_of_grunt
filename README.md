@@ -241,8 +241,17 @@ Build API-documentation to `docs`-directory using *JSDoc*.
 
 ### Task: `auto`
 
-Listen for file changes and automatically run `docs`, `test`, `verify:css` or `verify:js`
-based on the argument (use `css` or `js` for `verify`). Default is `docs`.
+Listen for file changes and automatically run tasks based on the files that have been
+changed. By default, all types of automated tasks are watched for changes. If given,
+the following argument can be given to follow only one:
+
+* `docs` to run task `docs` when any source code file changes
+* `test` to run task `test` when any Javascript-file or test file changes
+* `js` to run `verify:js` when any Javascript-file changes
+* `css` to run `verify:css` when any CSS-file changes
+* `pics` to run `build:pics` when any picture source file changes
+* `sounds` to run `build:sounds` when any sounds source file changes
+* `templates` to run `build:templates` when any template file changes
 
 ### Task: `files`
 
@@ -328,10 +337,9 @@ Licensed under the GPL-2.0 license.
 * Configurable path for distribution, templates and API-docs.
 * After generating docs the `files` task automatically recognizes them.
 * Combine test.unit.css and test.unit.lib parts to test.unit.external.
+* Auto-task for template building.
 
 ### Not Yet Done
-
-* Auto-task for template building.
 
 ## Future Ideas
 

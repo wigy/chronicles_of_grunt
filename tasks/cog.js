@@ -575,7 +575,22 @@ module.exports = function(grunt) {
                 files: ff.flatten(ff.allSrcFiles()),
                 tasks: ['verify:js'],
                 options: options
-            }
+            },
+            pics: {
+                files: ff.flatten(ff.picSrcFiles()),
+                tasks: ['build:pics'],
+                options: options
+            },
+            sounds: {
+                files: ff.flatten(ff.soundSrcFiles()),
+                tasks: ['build:sounds'],
+                options: options
+            },
+            templates: {
+                files: ff.flatten(ff.htmlTemplateFiles()),
+                tasks: ['build:templates'],
+                options: options
+            },
         };
 
         if (configuredUnitTesting()) {
