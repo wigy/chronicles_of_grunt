@@ -360,21 +360,24 @@ module.exports = function(grunt) {
         }
     }
 
-    function taskTest(which) {
-
-        /**
-          * Check the selected libraries for testing system.
-          */
-        function configuredUnitTesting() {
-            var lib = ff.getConfig('test.unit.lib');
-            if (lib === 'jasmine' || lib.indexOf('jasmine') >= 0) {
-                return 'jasmine';
-            }
-            if (lib === 'nodeunit' || lib.indexOf('nodeunit') >= 0) {
-                return 'nodeunit';
-            }
+    /**
+     * Check the selected libraries for testing system.
+     */
+    function configuredUnitTesting() {
+        var lib = ff.getConfig('test.unit.lib');
+        if (!lib) {
             return null;
         }
+        if (lib === 'jasmine' || lib.indexOf('jasmine') >= 0) {
+            return 'jasmine';
+        }
+        if (lib === 'nodeunit' || lib.indexOf('nodeunit') >= 0) {
+            return 'nodeunit';
+        }
+        return null;
+    }
+
+    function taskTest(which) {
 
         var settings;
 
@@ -563,11 +566,6 @@ module.exports = function(grunt) {
                 tasks: ['docs'],
                 options: options
             },
-            test: {
-                files: ff.flatten(ff.allSrcFiles().concat(ff.unitTestFiles())),
-                tasks: ['test'],
-                options: options
-            },
             css: {
                 files: ff.flatten(ff.cssFiles()),
                 tasks: ['verify:css'],
@@ -579,6 +577,14 @@ module.exports = function(grunt) {
                 options: options
             }
         };
+
+        if (configuredUnitTesting()) {
+            settings.test = {
+                files: ff.flatten(ff.allSrcFiles().concat(ff.unitTestFiles())),
+                tasks: ['test'],
+                options: options
+            }
+        }
 
         if (what && !(what in settings)) {
             grunt.fail.fatal("Invalid argument for auto-task. Only supported are " + Object.keys(settings) + ".");
