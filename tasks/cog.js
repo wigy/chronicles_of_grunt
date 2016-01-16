@@ -575,7 +575,10 @@ module.exports = function(grunt) {
                 files: ff.flatten(ff.allSrcFiles()),
                 tasks: ['verify:js'],
                 options: options
-            },
+            }
+        };
+
+        var build = {
             pics: {
                 files: ff.flatten(ff.picSrcFiles()),
                 tasks: ['build:pics'],
@@ -599,6 +602,13 @@ module.exports = function(grunt) {
                 tasks: ['test'],
                 options: options
             }
+        }
+
+        if (what === 'build') {
+            settings = build;
+            what = null;
+        } else {
+            Object.assign(settings, build);
         }
 
         if (what && !(what in settings)) {

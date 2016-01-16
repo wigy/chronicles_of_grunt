@@ -243,7 +243,7 @@ Build API-documentation to `docs`-directory using *JSDoc*.
 
 Listen for file changes and automatically run tasks based on the files that have been
 changed. By default, all types of automated tasks are watched for changes. If given,
-the following argument can be given to follow only one:
+the following argument can be given to follow only one kind of category:
 
 * `docs` to run task `docs` when any source code file changes
 * `test` to run task `test` when any Javascript-file or test file changes
@@ -252,6 +252,7 @@ the following argument can be given to follow only one:
 * `pics` to run `build:pics` when any picture source file changes
 * `sounds` to run `build:sounds` when any sounds source file changes
 * `templates` to run `build:templates` when any template file changes
+* `build` to run all build-tasks defined when any of their respective source file changes
 
 ### Task: `files`
 
@@ -337,7 +338,7 @@ Licensed under the GPL-2.0 license.
 * Configurable path for distribution, templates and API-docs.
 * After generating docs the `files` task automatically recognizes them.
 * Combine test.unit.css and test.unit.lib parts to test.unit.external.
-* Auto-task for template building.
+* Auto-task for template, pics and sound building.
 
 ### Not Yet Done
 
