@@ -716,7 +716,7 @@ module.exports = function(grunt) {
         // This list of categories must contain all non-overlapping file categories.
         var categories = ['extLibFiles', 'extLibMapFiles', 'extCssFiles', 'extFontFiles',
             'appIndexFiles', 'testIndexFiles', 'configFiles', 'modelFiles', 'dataFiles',
-            'codeFiles', 'otherJsFiles', 'taskFiles', 'cssFiles', 'picFiles', 'soundFiles', 'unitTestFiles',
+            'codeFiles', 'otherJsFiles', 'otherNonJsFiles', 'taskFiles', 'cssFiles', 'picFiles', 'soundFiles', 'unitTestFiles',
             'commonJsFiles', 'commonOtherFiles', 'ignoredFiles', 'distUncompressedFiles',
             'distLibFiles', 'distIndexFiles', 'distJsFiles', 'distCssFiles',
             'toolsShellFiles', 'unitTestDataFiles', 'picSrcFiles', 'soundSrcFiles',
