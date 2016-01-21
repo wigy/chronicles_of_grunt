@@ -726,9 +726,11 @@ module.exports = function(grunt) {
                 }
                 target = ff.generatedJsFiles('templates')[0].dst;
                 if (ff.getConfig('external.lib').indexOf('angular') >= 0 || ff.getConfig('external.lib').indexOf('coa') >= 0) {
+                    /*jshint loopfunc: true */
                     convert = function(files) {
                         return templates.generate(ff.root() + 'templates/angular.js', files[0]);
                     };
+                    /*jshint loopfunc: false */
                 } else {
                     grunt.fail.fatal("Cannot determine template system based on external libraries.");
                 }

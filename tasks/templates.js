@@ -24,6 +24,7 @@ module.exports = function(grunt) {
             // Figure out if we're getting a template, or if we need to
             // load the template - and be sure to cache the result.
             try {
+                /*jshint -W054 */
                 cache[str] =  new Function("obj",
                     "var p=[],print=function(){p.push.apply(p,arguments);};" +
 
@@ -37,8 +38,9 @@ module.exports = function(grunt) {
                     .replace(/\t=(.*?)%>/g, "',$1,'")
                     .split("\t").join("');")
                     .split("%>").join("p.push('")
-                    .split("\r").join("\\'")
-                    + "');}return p.join('');");
+                    .split("\r").join("\\'") +
+                    "');}return p.join('');");
+                /*jshint +W054 */
             } catch(e) {
                 grunt.fail.fatal("Failed to compile template:\n" + str);
             }
