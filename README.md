@@ -84,7 +84,8 @@ Source code files have various categories. The complete structure is here:
         css: ['css/*.css'],             // CSS files of the application.
         shell: ['tools/*'],             // Tools written as shell scripts.
         task: ['tasks/*.js'],           // Grunt-task definitions and their support files.
-        other: ['misc/*.js'],           // Any other Javascript-files that are not part of the distribution.
+        otherjs: ['misc/*.js'],         // Any other Javascript-files that are not part of the distribution.
+        other: ['misc/*.txt'],          // Any other (non-Javascript) files that are not part of the distribution.
     },
     index: {
         app: 'index.html'               // The initial file launcing the application.
@@ -339,6 +340,7 @@ Licensed under the GPL-2.0 license.
 * After generating docs the `files` task automatically recognizes them.
 * Combine test.unit.css and test.unit.lib parts to test.unit.external.
 * Auto-task for template, pics and sound building.
+* Separate categoroes for other files: Javascript and non-Javascript.
 
 ### Not Yet Done
 

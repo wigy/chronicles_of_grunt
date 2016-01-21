@@ -9,7 +9,8 @@ module.exports = function(grunt) {
             cog_development: true,
             src: {
                 task: 'tasks/*.js',
-                other: ['test/runner.js', 'templates/*.js']
+                otherjs: ['test/runner.js'],
+                other: ['templates/*.js']
             },
             docs: {
                 engine: 'jsdoc'

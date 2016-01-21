@@ -491,7 +491,14 @@ module.exports = function(grunt) {
      /**
       * Find other work files that are Javascript.
       */
-     function otherFiles() {
+     function otherJsFiles() {
+         return files(getConfig('src.otherjs'), 'other');
+     }
+
+     /**
+      * Find other files that are not Javascript.
+      */
+     function otherNonJsFiles() {
          return files(getConfig('src.other'), 'other');
      }
 
@@ -499,7 +506,7 @@ module.exports = function(grunt) {
      * Find all source code files needed for API-doc generation or syntax checking.
      */
      function allSrcFiles() {
-         return srcFiles().concat(otherFiles()).concat(commonJsFiles()).concat(taskFiles());
+         return srcFiles().concat(otherJsFiles()).concat(commonJsFiles()).concat(taskFiles());
      }
 
     /**
@@ -639,7 +646,7 @@ module.exports = function(grunt) {
      * Find all text based work files.
      */
     function workTextFiles() {
-        return indexFiles().concat(srcFiles()).concat(testFiles()).concat(otherFiles()).concat(taskFiles()).concat(cssFiles())
+        return indexFiles().concat(srcFiles()).concat(testFiles()).concat(otherJsFiles()).concat(otherNonJsFiles()).concat(taskFiles()).concat(cssFiles())
             .concat(toolsShellFiles()).concat(commonJsFiles()).concat(htmlTemplateFiles());
     }
 
@@ -709,7 +716,7 @@ module.exports = function(grunt) {
         // This list of categories must contain all non-overlapping file categories.
         var categories = ['extLibFiles', 'extLibMapFiles', 'extCssFiles', 'extFontFiles',
             'appIndexFiles', 'testIndexFiles', 'configFiles', 'modelFiles', 'dataFiles',
-            'codeFiles', 'otherFiles', 'taskFiles', 'cssFiles', 'picFiles', 'soundFiles', 'unitTestFiles',
+            'codeFiles', 'otherJsFiles', 'taskFiles', 'cssFiles', 'picFiles', 'soundFiles', 'unitTestFiles',
             'commonJsFiles', 'commonOtherFiles', 'ignoredFiles', 'distUncompressedFiles',
             'distLibFiles', 'distIndexFiles', 'distJsFiles', 'distCssFiles',
             'toolsShellFiles', 'unitTestDataFiles', 'picSrcFiles', 'soundSrcFiles',
@@ -786,7 +793,8 @@ module.exports = function(grunt) {
         srcFiles: srcFiles,
         allSrcFiles: allSrcFiles,
         taskFiles: taskFiles,
-        otherFiles: otherFiles,
+        otherJsFiles: otherJsFiles,
+        otherNonJsFiles: otherNonJsFiles,
         cssFiles: cssFiles,
         picFiles: picFiles,
         picSrcFiles: picSrcFiles,

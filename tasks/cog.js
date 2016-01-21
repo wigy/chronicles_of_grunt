@@ -85,7 +85,8 @@ module.exports = function(grunt) {
         dumpFiles('Picture source files', ff.picSrcFiles);
         dumpFiles('Sound source files', ff.soundSrcFiles);
         dumpFiles('Grunt task-files', ff.taskFiles);
-        dumpFiles('Other Javascript-files', ff.otherFiles);
+        dumpFiles('Other Javascript-files', ff.otherJsFiles);
+        dumpFiles('Other non-Javascript-files', ff.otherNonJsFiles);
         dumpFiles('Unit test libraries', ff.unitTestLibraryFiles);
         dumpFiles('Unit test CSS-files', ff.includeUnitTestCssFiles);
         dumpFiles('Unit tests', ff.unitTestFiles);
@@ -604,7 +605,7 @@ module.exports = function(grunt) {
                 files: ff.flatten(ff.allSrcFiles().concat(ff.unitTestFiles())),
                 tasks: ['test'],
                 options: options
-            }
+            };
         }
 
         if (what === 'build') {
