@@ -279,6 +279,13 @@ Licensed under the GPL-2.0 license.
 
 ## Release History
 
+* v1.10.0
+    - Template builder.
+    - Configurable path for distribution, templates and API-docs.
+    - After generating docs the `files` task automatically recognizes them.
+    - Combine test.unit.css and test.unit.lib parts to test.unit.external.
+    - Auto-task for template, pics and sound building.
+    - Separate categoroes for other files: Javascript and non-Javascript.
 * v1.9.0
     - Configurable documentation system and support now both *jsdoc* or *ngdocs*.
     - Test for `docs` task.
@@ -334,13 +341,6 @@ Licensed under the GPL-2.0 license.
 ## Next Version
 
 ### Done
-
-* Template builder.
-* Configurable path for distribution, templates and API-docs.
-* After generating docs the `files` task automatically recognizes them.
-* Combine test.unit.css and test.unit.lib parts to test.unit.external.
-* Auto-task for template, pics and sound building.
-* Separate categoroes for other files: Javascript and non-Javascript.
 
 ### Not Yet Done
 
