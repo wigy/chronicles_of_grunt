@@ -1,7 +1,7 @@
 /*
  * Chronicles of Grunt
  *
- * (C) 2015 Tommi Ronkainen
+ * (C) 2016 Tommi Ronkainen
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -47,95 +47,6 @@ module.exports = function(grunt) {
     grunt.loadTasks(modules + 'grunt-contrib-watch/tasks/');
     grunt.loadTasks(modules + 'grunt-shell/tasks/');
     grunt.loadTasks(modules + 'grunt-ngdocs/tasks/');
-
-    function taskInfo() {
-
-        /**
-         * List files returned by the given listing function on screen.
-         */
-        function dumpFiles(title, fn) {
-            var matches = fn();
-            if (matches.length) {
-                log.info("");
-                log.info((title + ":")['green']);
-                for (var i = 0; i < matches.length; i++) {
-                    if (matches[i].src === matches[i].dst) {
-                        log.info(matches[i].dst);
-                    } else {
-                        log.info(matches[i].dst + ' (from ' + matches[i].src + ')');
-                    }
-                }
-            }
-        }
-
-        log.info("");
-        log.info("Project: " + ff.getConfig('name'));
-        log.info("Title: " + ff.getConfig('title'));
-        log.info("Version: " + pckg.version);
-        dumpFiles('External Libraries', ff.extLibFiles);
-        dumpFiles('External Library map files', ff.extLibMapFiles);
-        dumpFiles('External CSS-files', ff.extCssFiles);
-        dumpFiles('External Fonts', ff.extFontFiles);
-        dumpFiles('Index files', ff.indexFiles);
-        dumpFiles('Configuration and global utilities', ff.configFiles);
-        dumpFiles('Model files', ff.modelFiles);
-        dumpFiles('Data files', ff.dataFiles);
-        dumpFiles('Code files', ff.codeFiles);
-        dumpFiles('CSS-files', ff.cssFiles);
-        dumpFiles('Picture source files', ff.picSrcFiles);
-        dumpFiles('Sound source files', ff.soundSrcFiles);
-        dumpFiles('Grunt task-files', ff.taskFiles);
-        dumpFiles('Other Javascript-files', ff.otherJsFiles);
-        dumpFiles('Other non-Javascript-files', ff.otherNonJsFiles);
-        dumpFiles('Unit test libraries', ff.unitTestLibraryFiles);
-        dumpFiles('Unit test CSS-files', ff.includeUnitTestCssFiles);
-        dumpFiles('Unit tests', ff.unitTestFiles);
-        dumpFiles('Tools (shell script)', ff.toolsShellFiles);
-    }
-
-    function taskLibs() {
-        log.info("");
-        var matches = ff.extFiles();
-        for (var i = 0; i < matches.length; i++) {
-            log.info(matches[i].src + ' -> ' + matches[i].dst);
-            grunt.file.copy(matches[i].src, matches[i].dst);
-        }
-    }
-
-    function taskIndex() {
-
-        var i, indices, jsFiles, cssFiles;
-
-        log.info("");
-
-        indices = ff.flatten(ff.appIndexFiles());
-        if (indices.length) {
-            log.info("Application:");
-            jsFiles = ff.flatten(ff.includeJsFiles());
-            log.info('- Found ' + jsFiles.length + " Javascript-files.");
-            cssFiles = ff.flatten(ff.includeCssFiles());
-            log.info('- Found ' + cssFiles.length + " CSS-files.");
-
-            for (i=0; i < indices.length; i++) {
-                log.info('Updating ' + indices[i]);
-                ff.writeIndex(indices[i], jsFiles, cssFiles);
-            }
-        }
-
-        indices = ff.flatten(ff.testIndexFiles());
-        if (indices.length) {
-            log.info("Unit Test:");
-            jsFiles = ff.flatten(ff.includeUnitTestJsFiles());
-            log.info('- Found ' + jsFiles.length + " Javascript-files.");
-            cssFiles = ff.flatten(ff.includeUnitTestCssFiles());
-            log.info('- Found ' + cssFiles.length + " CSS-files.");
-
-            for (i=0; i < indices.length; i++) {
-                log.info('Updating ' + indices[i]);
-                ff.writeIndex(indices[i], jsFiles, cssFiles);
-            }
-        }
-    }
 
     function taskDist() {
 
@@ -815,14 +726,11 @@ module.exports = function(grunt) {
         }
     }
 
-    grunt.registerTask('info', 'Display summary of the configured files and locations.', taskInfo);
-    grunt.registerTask('libs', 'Update fresh copies of libraries from installed node-modules.', taskLibs);
-    grunt.registerTask('index', 'Scan all configured javascript and css files and update html-files using them.', taskIndex);
     grunt.registerTask('verify', 'Run all verifications required for valid build.', taskVerify);
     grunt.registerTask('dist', 'Collect and minify all application files into the dist-directory.', taskDist);
     grunt.registerTask('version', 'Query or mark the version to the source files.', taskVersion);
     grunt.registerTask('todo', 'Scan for remaining TODO-entries from the source code and display them.', taskTodo);
-    grunt.registerTask('test', 'Run all tests.', taskTest);
+    grunt.registerTask('test', 'Run all tests or tests containing argument substring in their filename.', taskTest);
     grunt.registerTask('prerelease', 'Pre checks for the relase.', taskPreRelease);
     grunt.registerTask('postrelease', 'File updating tasks relase.', taskPostRelease);
     grunt.registerTask('release', 'Make all sanity checks and if passed, create next release version.', taskRelease);
@@ -832,6 +740,7 @@ module.exports = function(grunt) {
     grunt.registerTask('files', 'Analyse and list all unknown files in the repository.', taskFiles);
     grunt.registerTask('build', 'Compile files that are created from source files.', taskBuild);
 
+    // TODO: Rename this file as usage.js onoce all tasks moved.
     grunt.registerTask('usage', 'Display summary of available tasks.', function() {
         var excludes = ['default', 'usage', 'availabletasks', 'jshint', 'uglify', 'cssmin', 'concat', 'jasmine',
                         'csslint', 'nodeunit', 'shell', 'prerelease', 'postrelease', 'jsdoc', 'clean', 'cleanup',
