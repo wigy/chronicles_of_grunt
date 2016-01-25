@@ -26,10 +26,10 @@ module.exports = function(grunt) {
     var path = require('path');
     var colors = require('colors');
     var fs = require('fs');
-    var ff = require('./file-filter.js')(grunt);
-    var log = require('./log.js')(grunt);
-    var readme = require('./readme.js')(grunt);
-    var templates = require('./templates.js')(grunt);
+    var ff = require('../lib/file-filter.js')(grunt);
+    var log = require('../lib/log.js')(grunt);
+    var readme = require('../lib/readme.js')(grunt);
+    var templates = require('../lib/templates.js')(grunt);
 
     // Load tasks needed.
     var modules = ff.prefix();
