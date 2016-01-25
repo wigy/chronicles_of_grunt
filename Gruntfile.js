@@ -9,7 +9,8 @@ module.exports = function(grunt) {
             cog_development: true,
             src: {
                 task: 'tasks/*.js',
-                otherjs: ['test/runner.js'],
+                // TODO: Maybe self-developed lib-files need to have own category.
+                otherjs: ['test/runner.js', 'lib/*.js'],
                 other: ['templates/*.js']
             },
             docs: {

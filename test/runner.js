@@ -31,7 +31,7 @@ module.exports = {
                 }
             }
         }
-        return out;
+        return output;
     },
 
     /**
@@ -99,6 +99,19 @@ module.exports = {
         return false;
     },
 
+    /**
+     * Collect lines from the output matching the regex (if regex grouping used, give first group content).
+     */
+    grep: function(regex) {
+        var ret = [];
+        for (var i = 0; i < output.length; i++) {
+            if (regex.test(output[i])) {
+                var match = output[i].match(regex);
+                ret.push(match[1] === undefined ? output[i] : match[1]);
+            }
+        }
+        return ret;
+    },
     /**
      * Parse source lines and form object based on the text interpreted as sub titles.
      * If a line ends with (:) then it is considered as a subtitle and will collect lines
