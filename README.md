@@ -343,10 +343,9 @@ Licensed under the GPL-2.0 license.
 ### Done
 
 * Move non-task files from tasks-directory to lib-directory.
+* Split actual tasks to separate files.
 * Test for `usage`-task.
 
 ### Not Yet Done
-
-* Split actual tasks to separate files.
 
 ## Future Ideas
