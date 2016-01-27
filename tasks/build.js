@@ -19,174 +19,15 @@
  */
 module.exports = function(grunt) {
 
-    // TODO: Grep through task and check these modules are loaded where needed.
-    // Get the package configuration.
-    var pckg = grunt.file.readJSON('package.json');
-
-    // Load Node-modules.
     var path = require('path');
-    var colors = require('colors');
     var fs = require('fs');
+    var colors = require('colors');
     var ff = require('../lib/file-filter.js')(grunt);
     var log = require('../lib/log.js')(grunt);
-    var readme = require('../lib/readme.js')(grunt);
     var templates = require('../lib/templates.js')(grunt);
-
-    // Load tasks needed.
     var modules = ff.prefix();
 
-    grunt.loadTasks(modules + 'grunt-available-tasks/tasks/');
-    grunt.loadTasks(modules + 'grunt-jsdoc/tasks/');
-    grunt.loadTasks(modules + 'grunt-contrib-watch/tasks/');
     grunt.loadTasks(modules + 'grunt-shell/tasks/');
-    grunt.loadTasks(modules + 'grunt-ngdocs/tasks/');
-
-    function taskDocs() {
-
-        var src = ff.flatten(ff.allSrcFiles());
-        var engine = ff.getConfig('docs.engine') || 'jsdoc';
-        var dst = ff.pathDocs();
-        var settings;
-
-        if (engine === 'ngdocs') {
-
-            settings = {
-                ngdocs: {
-                    src: src,
-                    title: 'Documentation',
-                    api: true,
-                    options: {
-                        startPage: '/ngdocs',
-                        dest: dst,
-                        sourceLink: true,
-                        title: ff.getConfig('title') || ff.getConfig('name')
-                    }
-                }
-            };
-
-        } else if (engine === 'jsdoc') {
-
-            settings = {
-                docs: {
-                    src: src,
-                    options: {
-                        destination: dst,
-                    }
-                }
-            };
-
-        } else {
-            grunt.fail.fatal("Cannot recognize configured documentation engine docs.engine: '" + engine +"'.");
-        }
-
-        grunt.config.set(engine, settings);
-        grunt.task.run(engine);
-    }
-
-    function taskCleanup() {
-
-        var settings = {
-            all: [ff.pathDist() + ff.getConfig('name') + '.js']
-        };
-
-        grunt.config.set('clean', settings);
-        grunt.task.run('clean');
-    }
-
-    function taskAuto(what) {
-
-        var options = {spwan: false, interrupt: true};
-
-        var settings = {
-            docs: {
-                files: ff.flatten(ff.allSrcFiles()),
-                tasks: ['docs'],
-                options: options
-            },
-            css: {
-                files: ff.flatten(ff.cssFiles()),
-                tasks: ['verify:css'],
-                options: options
-            },
-            js: {
-                files: ff.flatten(ff.allSrcFiles()),
-                tasks: ['verify:js'],
-                options: options
-            }
-        };
-
-        var build = {
-            pics: {
-                files: ff.flatten(ff.picSrcFiles()),
-                tasks: ['build:pics'],
-                options: options
-            },
-            sounds: {
-                files: ff.flatten(ff.soundSrcFiles()),
-                tasks: ['build:sounds'],
-                options: options
-            },
-            templates: {
-                files: ff.flatten(ff.htmlTemplateFiles()),
-                tasks: ['build:templates'],
-                options: options
-            },
-        };
-
-        if (ff.configuredUnitTesting()) {
-            settings.test = {
-                files: ff.flatten(ff.allSrcFiles().concat(ff.unitTestFiles())),
-                tasks: ['test'],
-                options: options
-            };
-        }
-
-        if (what === 'build') {
-            settings = build;
-            what = null;
-        } else {
-            Object.assign(settings, build);
-        }
-
-        if (what && !(what in settings)) {
-            grunt.fail.fatal("Invalid argument for auto-task. Only supported are " + Object.keys(settings) + ".");
-        }
-        grunt.config.set('watch', settings);
-        grunt.task.run(what ? 'watch:' + what : 'watch');
-    }
-
-    function taskFiles(die) {
-        var files = ff.filesInRepository();
-        var map  = ff.fileCategoryMap();
-
-        log.info("");
-        var count = 0;
-        var docs = ff.pathDocs();
-        for (var i = 0; i < files.length; i++) {
-            if (!map[files[i]]) {
-                // Check common output files.
-                if (files[i].substr(0, docs.length) === docs) {
-                    continue;
-                } else {
-                    log.info('? ' + files[i]);
-                    count++;
-                }
-            } else if (die === 'show') {
-                log.info(map[files[i]] + ' ' + files[i]);
-            }
-        }
-        if (count) {
-            log.info("");
-            log.info(count + " file(s) unknown.");
-            if (die === 'die') {
-                grunt.fail.fatal("There are files in the repository that are not known.\n" +
-                                 "Please add them to the appropriate categories in Gruntfile.js.\n" +
-                                 "If there are no category for them, then just add them to the 'ignore' category.");
-            }
-        } else {
-            log.info("All files known!");
-        }
-    }
 
     function taskBuild(what) {
 
@@ -348,18 +189,5 @@ module.exports = function(grunt) {
         }
     }
 
-    grunt.registerTask('docs', 'Build all documentation.', taskDocs);
-    grunt.registerTask('cleanup', 'Remove unnecessary files.', taskCleanup);
-    grunt.registerTask('auto', 'Automatically run tasks when files have changed.', taskAuto);
-    grunt.registerTask('files', 'Analyse and list all unknown files in the repository.', taskFiles);
     grunt.registerTask('build', 'Compile files that are created from source files.', taskBuild);
-
-    // TODO: Rename this file as usage.js once all tasks moved.
-    grunt.registerTask('usage', 'Display summary of available tasks.', function() {
-        var excludes = ['default', 'usage', 'availabletasks', 'jshint', 'uglify', 'cssmin', 'concat', 'jasmine',
-                        'csslint', 'nodeunit', 'shell', 'prerelease', 'postrelease', 'jsdoc', 'clean', 'cleanup',
-                        'watch', 'shell', 'ngdocs'];
-        grunt.initConfig({availabletasks: {tasks: {options: {filter: 'exclude', tasks: excludes}}}});
-        grunt.task.run(['availabletasks']);
-    });
 };

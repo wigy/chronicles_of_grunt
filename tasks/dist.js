@@ -31,6 +31,16 @@ module.exports = function(grunt) {
     grunt.loadTasks(modules + 'grunt-contrib-concat/tasks/');
     grunt.loadTasks(modules + 'grunt-contrib-clean/tasks/');
 
+    function taskCleanup() {
+
+        var settings = {
+            all: [ff.pathDist() + ff.getConfig('name') + '.js'] // Uncompressed version of the distribution file.
+        };
+
+        grunt.config.set('clean', settings);
+        grunt.task.run('clean');
+    }
+
     function taskDist() {
 
         var i, dist, settings;
@@ -124,4 +134,5 @@ module.exports = function(grunt) {
     }
 
     grunt.registerTask('dist', 'Collect and minify all application files into the dist-directory.', taskDist);
+    grunt.registerTask('cleanup', 'Remove unnecessary files.', taskCleanup);
 };
