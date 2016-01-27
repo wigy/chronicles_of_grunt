@@ -54,6 +54,7 @@ module.exports = function(grunt) {
         dumpFiles('External Fonts', ff.extFontFiles);
         dumpFiles('Index files', ff.indexFiles);
         dumpFiles('Configuration and global utilities', ff.configFiles);
+        dumpFiles('Library files', ff.libFiles);
         dumpFiles('Model files', ff.modelFiles);
         dumpFiles('Data files', ff.dataFiles);
         dumpFiles('Code files', ff.codeFiles);
