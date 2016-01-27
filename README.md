@@ -279,6 +279,10 @@ Licensed under the GPL-2.0 license.
 
 ## Release History
 
+* v1.11.0
+    - Move non-task files from tasks-directory to lib-directory.
+    - Split actual tasks to separate files.
+    - Test for `usage`-task.
 * v1.10.0
     - Template builder.
     - Configurable path for distribution, templates and API-docs.
@@ -341,10 +345,6 @@ Licensed under the GPL-2.0 license.
 ## Next Version
 
 ### Done
-
-* Move non-task files from tasks-directory to lib-directory.
-* Split actual tasks to separate files.
-* Test for `usage`-task.
 
 ### Not Yet Done
 
