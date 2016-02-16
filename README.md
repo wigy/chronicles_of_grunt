@@ -345,6 +345,7 @@ Licensed under the GPL-2.0 license.
 ## Next Version
 
 * Fix task 'release' building distribution before changing the version.
+* Fix task 'test' error if no tests defined.
 
 ### Done
 
