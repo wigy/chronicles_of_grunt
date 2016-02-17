@@ -58,17 +58,21 @@ module.exports = function(grunt) {
         if (args.indexOf('build') < 0) {
             tasks.push('build');
         }
-        if (args.indexOf('dist') < 0) {
-            tasks.push('dist');
-        }
         if (args.indexOf('docs') < 0) {
             tasks.push('docs');
         }
-        tasks.push('postrelease');
+
+        var postskip = '';
+        if (args.indexOf('dist') >= 0) {
+            postskip += ':dist';
+        }
+        tasks.push('postrelease' + postskip);
         grunt.task.run(tasks);
     }
 
-    function taskPostRelease() {
+    function taskPostRelease(skipped) {
+
+        var args = Array.prototype.slice.call(arguments);
 
         // Calculate new version and print out summary.
         var parsed = readme.parse();
@@ -90,6 +94,9 @@ module.exports = function(grunt) {
         parsed.release(version);
         parsed.write();
         grunt.task.run('version:' + version);
+        if (args.indexOf('dist') < 0) {
+            grunt.task.run('dist');
+        }
     }
 
     grunt.registerTask('prerelease', 'Pre-checks for the relase.', taskPreRelease);
