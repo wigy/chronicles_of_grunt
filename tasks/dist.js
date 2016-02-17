@@ -24,8 +24,6 @@ module.exports = function(grunt) {
 
     var modules = ff.prefix();
 
-    var pckg = grunt.file.readJSON('package.json');
-
     grunt.loadTasks(modules + 'grunt-contrib-cssmin/tasks/');
     grunt.loadTasks(modules + 'grunt-contrib-uglify/tasks/');
     grunt.loadTasks(modules + 'grunt-contrib-concat/tasks/');
@@ -44,6 +42,7 @@ module.exports = function(grunt) {
     function taskDist() {
 
         var i, dist, settings;
+        var pckg = grunt.file.readJSON('package.json');
 
         log.info("");
 

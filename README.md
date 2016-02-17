@@ -279,6 +279,9 @@ Licensed under the GPL-2.0 license.
 
 ## Release History
 
+* v1.11.1
+    - Change correct generated templates file name.
+    - Fix task 'release' building distribution before changing the version.
 * v1.11.0
     - Move non-task files from tasks-directory to lib-directory.
     - Split actual tasks to separate files.
@@ -345,9 +348,6 @@ Licensed under the GPL-2.0 license.
 ## Next Version
 
 ### Done
-
-* Change correct generated templates file name.
-* Fix task 'release' building distribution before changing the version.
 
 ### Not Yet Done
 
