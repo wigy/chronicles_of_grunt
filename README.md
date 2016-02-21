@@ -349,6 +349,8 @@ Licensed under the GPL-2.0 license.
 
 ### Done
 
+* Include also generated files when running tests.
+
 ### Not Yet Done
 
 ## Future Ideas

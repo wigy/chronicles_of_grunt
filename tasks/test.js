@@ -37,7 +37,7 @@ module.exports = function(grunt) {
         }
 
         // Collect files for test.
-        var src = ff.flatten(ff.srcFiles());
+        var src = ff.flatten(ff.srcFiles().concat(ff.generatedJsFiles()));
         var specs = ff.flatten(ff.unitTestFiles());
         var libs = ff.flatten(ff.extLibFiles());
 
