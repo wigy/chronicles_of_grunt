@@ -354,3 +354,5 @@ Licensed under the GPL-2.0 license.
 ### Not Yet Done
 
 ## Future Ideas
+
+* Configuration managenent for application.
