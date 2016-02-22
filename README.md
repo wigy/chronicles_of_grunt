@@ -279,6 +279,8 @@ Licensed under the GPL-2.0 license.
 
 ## Release History
 
+* v1.11.2
+    - Include also generated files when running tests.
 * v1.11.1
     - Change correct generated templates file name.
     - Fix task 'release' building distribution before changing the version.
@@ -348,8 +350,6 @@ Licensed under the GPL-2.0 license.
 ## Next Version
 
 ### Done
-
-* Include also generated files when running tests.
 
 ### Not Yet Done
 

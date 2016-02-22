@@ -1,7 +1,7 @@
 {
   "name": "chronicles_of_grunt",
   "description": "Wigy's collection of useful utilities for Grunt.",
-  "version": "1.11.2-beta",
+  "version": "1.11.2",
   "homepage": "https://github.com/wigy/chronicles_of_grunt",
   "author": {
     "name": "Tommi Ronkainen",
