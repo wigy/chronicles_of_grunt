@@ -353,6 +353,8 @@ Licensed under the GPL-2.0 license.
 
 ### Not Yet Done
 
+* Ability to build uncompressed library with `dist:debug`.
+
 ## Future Ideas
 
 * Configuration managenent for application.
