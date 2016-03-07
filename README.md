@@ -285,6 +285,8 @@ Licensed under the GPL-2.0 license.
 
 ## Release History
 
+* v1.11.4
+    - Fix `dist:debug`.
 * v1.11.3
     - Ability to build uncompressed library with `dist:debug`.
 * v1.11.2
