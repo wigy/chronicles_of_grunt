@@ -285,6 +285,8 @@ Licensed under the GPL-2.0 license.
 
 ## Release History
 
+* v1.11.3
+    - Ability to build uncompressed library with `dist:debug`.
 * v1.11.2
     - Include also generated files when running tests.
 * v1.11.1
@@ -357,10 +359,7 @@ Licensed under the GPL-2.0 license.
 
 ### Done
 
-* Ability to build uncompressed library with `dist:debug`.
-
 ### Not Yet Done
-
 
 ## Future Ideas
 
