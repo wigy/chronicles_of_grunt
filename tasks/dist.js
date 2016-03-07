@@ -39,10 +39,19 @@ module.exports = function(grunt) {
         grunt.task.run('clean');
     }
 
-    function taskDist() {
+    function taskDist(args) {
 
+        var debug = false;
         var i, dist, settings;
         var pckg = grunt.file.readJSON('package.json');
+
+        if (args) {
+            if (args === 'debug') {
+                debug = true;
+            } else {
+                grunt.fail.fatal("Invalid arguments for dist-task.");
+            }
+        }
 
         log.info("");
 
@@ -105,17 +114,19 @@ module.exports = function(grunt) {
             log.info("Compressing Javascript...");
             log.info("");
             var banner = '';
-            banner += '/* ' + pckg.name + ' v' + pckg.version + '\n';
+            banner += '/* ' + pckg.title + ' v' + pckg.version + '\n';
             banner += ' * Copyright (c) ' + grunt.template.today("yyyy") + (pckg.author ? ' ' + pckg.author.name : '') + '\n';
             banner += ' */\n';
 
-            settings = {options: {banner: banner}, dist: {}};
-            compressedJsFiles.push(dist.dst.replace(ff.pathDist(), ''));
-            settings.dist.src = dist.src;
-            settings.dist.dest = dist.dst;
-            grunt.config.set('uglify', settings);
-            grunt.task.run('uglify');
-            grunt.task.run('cleanup');
+            if (!debug) {
+                settings = {options: {banner: banner}, dist: {}};
+                compressedJsFiles.push(dist.dst.replace(ff.pathDist(), ''));
+                settings.dist.src = dist.src;
+                settings.dist.dest = dist.dst;
+                grunt.config.set('uglify', settings);
+                grunt.task.run('uglify');
+                grunt.task.run('cleanup');
+            }
         }
 
         // Build index file(s).

@@ -216,7 +216,8 @@ Javascript code and `verify:css` can be used to verify CSS.
 
 ### Task: `dist`
 
-Build functional minimized application into `dist` directory.
+Build functional minimized application into `dist` directory. Alternatively you can
+build uncompressed version with `dist:debug`.
 
 ### Task: `version`:*version*
 
@@ -356,9 +357,10 @@ Licensed under the GPL-2.0 license.
 
 ### Done
 
+* Ability to build uncompressed library with `dist:debug`.
+
 ### Not Yet Done
 
-* Ability to build uncompressed library with `dist:debug`.
 
 ## Future Ideas
 
