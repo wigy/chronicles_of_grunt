@@ -114,7 +114,7 @@ module.exports = function(grunt) {
             log.info("Compressing Javascript...");
             log.info("");
             var banner = '';
-            banner += '/* ' + pckg.title + ' v' + pckg.version + '\n';
+            banner += '/* ' + ff.getConfig('title', pckg.name) + ' v' + pckg.version + '\n';
             banner += ' * Copyright (c) ' + grunt.template.today("yyyy") + (pckg.author ? ' ' + pckg.author.name : '') + '\n';
             banner += ' */\n';
 
