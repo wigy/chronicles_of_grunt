@@ -7,6 +7,11 @@ which loads entry point HTML-file of the application and works out of the box.
 To achieve this, certain conventions needs to be followed and this toolkit
 helps you to perform necessary steps in the development process.
 
+Overall philosophy is *configure once, use many times*. That means that instead
+of configuring every Grunt-package separetly, you configure just one `cog` section,
+where you define files as per their purpose. After doing that, selected Grunt-packages
+are automatically using that configuration with the help of this tool.
+
 ## Getting Started
 
 You may install this plugin with this command:
