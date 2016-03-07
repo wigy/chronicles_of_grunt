@@ -285,6 +285,8 @@ Licensed under the GPL-2.0 license.
 
 ## Release History
 
+* v1.11.5
+    - Fix banner for compressed Javascript in `dist`.
 * v1.11.4
     - Fix `dist:debug`.
 * v1.11.3
