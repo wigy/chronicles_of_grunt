@@ -118,9 +118,10 @@ module.exports = function(grunt) {
             banner += ' * Copyright (c) ' + grunt.template.today("yyyy") + (pckg.author ? ' ' + pckg.author.name : '') + '\n';
             banner += ' */\n';
 
+            compressedJsFiles.push(dist.dst.replace(ff.pathDist(), ''));
+
             if (!debug) {
                 settings = {options: {banner: banner}, dist: {}};
-                compressedJsFiles.push(dist.dst.replace(ff.pathDist(), ''));
                 settings.dist.src = dist.src;
                 settings.dist.dest = dist.dst;
                 grunt.config.set('uglify', settings);
