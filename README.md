@@ -368,3 +368,4 @@ Licensed under the GPL-2.0 license.
 ## Future Ideas
 
 * Configuration managenent for application.
+* Automatically test files node_modules/foo/foo.min.js when lookin for libs.
