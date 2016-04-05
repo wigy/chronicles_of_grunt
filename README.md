@@ -285,6 +285,8 @@ Licensed under the GPL-2.0 license.
 
 ## Release History
 
+* v1.11.6
+    - Support neat-dump.
 * v1.11.5
     - Fix banner for compressed Javascript in `dist`.
 * v1.11.4
@@ -365,9 +367,7 @@ Licensed under the GPL-2.0 license.
 
 ### Not Yet Done
 
-* Use new neat-dump.
-
 ## Future Ideas
 
 * Configuration managenent for application.
-* Automatically test files node_modules/foo/foo.min.js when looking for libs.
+* Automatically check files node_modules/foo/foo.min.js when looking for libs.
