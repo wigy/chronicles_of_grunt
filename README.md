@@ -66,6 +66,8 @@ predefined constants are supported:
 * `jquery` --- jQuery.
 * `bootstrap` --- Bootstrap.
 * `coa` --- Wigy's Chronicles of Angular (implies `angular`).
+* `mingo` --- Mingo query language (implies `underscore`).
+* `underscore` --- Underscore utility library.
 
 In addition, default locations of various paths can be changed:
 ```js
@@ -364,6 +366,8 @@ Licensed under the GPL-2.0 license.
 ## Next Version
 
 ### Done
+
+* Support Mingo and Underscore.
 
 ### Not Yet Done
 
