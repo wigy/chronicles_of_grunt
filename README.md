@@ -287,6 +287,9 @@ Licensed under the GPL-2.0 license.
 
 ## Release History
 
+* v1.11.7
+    - Support compressed neat-dump, Mingo and Underscore.
+    - Add templates correctly to the dist-files.
 * v1.11.6
     - Support neat-dump.
 * v1.11.5
@@ -366,9 +369,6 @@ Licensed under the GPL-2.0 license.
 ## Next Version
 
 ### Done
-
-* Support compressed neat-dump, Mingo and Underscore.
-* Add templates correctly to the dist-files.
 
 ### Not Yet Done
 

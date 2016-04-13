@@ -1,6 +1,5 @@
 module.exports = function(grunt) {
 
-require("neat-dump")
   // Project configuration.
   grunt.initConfig({
     cog: {
