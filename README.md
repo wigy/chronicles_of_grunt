@@ -367,7 +367,8 @@ Licensed under the GPL-2.0 license.
 
 ### Done
 
-* Support Mingo and Underscore.
+* Support compressed neat-dump, Mingo and Underscore.
+* Add templates correctly to the dist-files.
 
 ### Not Yet Done
 

@@ -96,7 +96,7 @@ module.exports = function(grunt) {
         }
 
         // Compress code.
-        var jsFiles = ff.srcFiles();
+        var jsFiles = ff.srcFiles().concat(ff.generatedJsFiles());
         if (jsFiles.length) {
             log.info("");
             log.info("Collecting Javascript...");
