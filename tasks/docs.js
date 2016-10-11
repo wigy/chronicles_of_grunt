@@ -19,6 +19,7 @@
  */
 module.exports = function(grunt) {
 
+    var cog = require('../lib/cog.js')(grunt);
     var ff = require('../lib/file-filter.js')(grunt);
     var modules = ff.prefix();
 

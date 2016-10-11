@@ -370,7 +370,13 @@ Licensed under the GPL-2.0 license.
 
 ### Done
 
+* Add version test for Node before running any task.
+
 ### Not Yet Done
+
+* Fix template test.
+* Add tags to mark CoG-specific additions in the header.
+* Live reload support.
 
 ## Future Ideas
 

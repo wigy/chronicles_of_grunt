@@ -22,6 +22,7 @@ module.exports = function(grunt) {
     var pckg = grunt.file.readJSON('package.json');
 
     var colors = require('colors');
+    var cog = require('../lib/cog.js')(grunt);
     var log = require('../lib/log.js')(grunt);
     var readme = require('../lib/readme.js')(grunt);
 

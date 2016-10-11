@@ -22,6 +22,7 @@ module.exports = function(grunt) {
     var path = require('path');
     var fs = require('fs');
     var colors = require('colors');
+    var cog = require('../lib/cog.js')(grunt);
     var ff = require('../lib/file-filter.js')(grunt);
     var log = require('../lib/log.js')(grunt);
     var templates = require('../lib/templates.js')(grunt);
