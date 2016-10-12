@@ -382,6 +382,7 @@ Licensed under the GPL-2.0 license.
 * Add version test for Node before running any task.
 * Live reload support.
 * Support for custom library directory.
+* Remove all external library files from source code files if they happen to overlap.
 
 ### Not Yet Done
 
