@@ -27,7 +27,7 @@ module.exports = function(grunt) {
 
     function taskAuto(what) {
 
-        var options = {spwan: false, interrupt: true};
+        var options = {spawn: false, interrupt: true};
 
         var settings = {
             docs: {

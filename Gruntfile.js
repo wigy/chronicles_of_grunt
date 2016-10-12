@@ -7,10 +7,12 @@ module.exports = function(grunt) {
             name: 'cog',
             title: 'Chronicles of Grunt',
             cog_development: true,
+            index: {
+                app: 'index.html'
+            },
             src: {
                 task: 'tasks/*.js',
-                libs: 'lib/*.js',
-                otherjs: 'test/runner.js',
+                otherjs: ['lib/*.js', 'test/runner.js'],
                 other: 'templates/*.js'
             },
             docs: {

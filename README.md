@@ -192,62 +192,6 @@ In order to compile templates, run `build:templates` task.
 
 ## Tasks
 
-### Task: `usage`
-
-This task is recommended default. It displays configured tasks that are
-available for developer.
-
-### Task: `info`
-
-List summary of all existing application files according to the configuration.
-
-### Task: `libs`
-
-After all requirements are installed with `npm install --save`, this task can be used
-to copy all needed files from `node_modules` to the `lib` directory of the project root.
-
-### Task: `index`
-
-Based on the configuration, this builds a list of CSS and Javascript files and
-updates configured index-files to include all requirements.
-
-### Task: `verify`
-
-Run syntax checker for project files. Alternatively `verify:js` can be used to verify
-Javascript code and `verify:css` can be used to verify CSS.
-
-### Task: `dist`
-
-Build functional minimized application into `dist` directory. Alternatively you can
-build uncompressed version with `dist:debug`.
-
-### Task: `version`:*version*
-
-This task can be used to change the version of the current code base.
-The version numbers supported have format *x.y.z* for public release or
-*x.y.z-beta* for development release. The change is made to the `packages.json`
-file. If *version* is not given, then the current version is given.
-
-### Task: `todo`
-
-Display all remaining TODO-entries found from the source code. Additional argument
-`todo:die` causes the script end with an error, if any TODO-entries are found.
-
-### Task: `test`
-
-Run all unit-tests defined. Optional arguments are matched against test file names
-and if given, only files containing arguments as substrings are selected for running.
-
-### Task: `release`
-
-Run all checks for code and then update README.md file and the version. You can disable
-some checks by adding them as separate arguments each: `verify`, `todo`, `files`, `test`.
-It is also possible to disable two other standard steps `dist` and `docs`.
-
-### Task: `docs`
-
-Build API-documentation to `docs`-directory using *JSDoc*.
-
 ### Task: `auto`
 
 Listen for file changes and automatically run tasks based on the files that have been
@@ -263,13 +207,6 @@ the following argument can be given to follow only one kind of category:
 * `templates` to run `build:templates` when any template file changes
 * `build` to run all build-tasks defined when any of their respective source file changes
 
-### Task: `files`
-
-Run complete scan of files in the repository and compare files found to the configuration.
-Report all files that does not belong to the configuration or are not commonly known files.
-Running `files:die` causes the script end with an error, if any unknown files are found.
-With `files:show` we can list all files and see categories how they are seen by the system.
-
 ### Task: `build`
 
 Generate files that are created from the source files. By default, everything that can
@@ -278,6 +215,75 @@ be found from the configuration, are generated.
 If parameter is `pics` or `sounds`, then the corresponding media files are generated.
 
 If parameter is `templates`, then the collection of templates is compiled.
+
+### Task: `dist`
+
+Build functional minimized application into `dist` directory. Alternatively you can
+build uncompressed version with `dist:debug`.
+
+### Task: `docs`
+
+Build API-documentation to `docs`-directory using *JSDoc*.
+
+### Task: `files`
+
+Run complete scan of files in the repository and compare files found to the configuration.
+Report all files that does not belong to the configuration or are not commonly known files.
+Running `files:die` causes the script end with an error, if any unknown files are found.
+With `files:show` we can list all files and see categories how they are seen by the system.
+
+### Task: `index`
+
+Based on the configuration, this builds a list of CSS and Javascript files and
+updates configured index-files to include all requirements.
+
+### Task: `info`
+
+List summary of all existing application files according to the configuration.
+
+### Task: `libs`
+
+After all requirements are installed with `npm install --save`, this task can be used
+to copy all needed files from `node_modules` to the `lib` directory of the project root.
+
+### Task: `release`
+
+Run all checks for code and then update README.md file and the version. You can disable
+some checks by adding them as separate arguments each: `verify`, `todo`, `files`, `test`.
+It is also possible to disable two other standard steps `dist` and `docs`.
+
+### Task: `server`:*port*:*what*
+
+By default, this task launces two servers on ports 9000 and 9001. The first one serves
+project directory as static files and the second one as an autoreload server. Individiual
+servers are internally started with *what* parameter being either `files` or `autoreload`.
+
+### Task: `test`
+
+Run all unit-tests defined. Optional arguments are matched against test file names
+and if given, only files containing arguments as substrings are selected for running.
+
+### Task: `todo`
+
+Display all remaining TODO-entries found from the source code. Additional argument
+`todo:die` causes the script end with an error, if any TODO-entries are found.
+
+### Task: `usage`
+
+This task is recommended default. It displays configured tasks that are
+available for developer.
+
+### Task: `verify`
+
+Run syntax checker for project files. Alternatively `verify:js` can be used to verify
+Javascript code and `verify:css` can be used to verify CSS.
+
+### Task: `version`:*version*
+
+This task can be used to change the version of the current code base.
+The version numbers supported have format *x.y.z* for public release or
+*x.y.z-beta* for development release. The change is made to the `packages.json`
+file. If *version* is not given, then the current version is given.
 
 
 ## License
@@ -371,12 +377,12 @@ Licensed under the GPL-2.0 license.
 ### Done
 
 * Add version test for Node before running any task.
+* Live reload support.
 
 ### Not Yet Done
 
 * Fix template test.
 * Add tags to mark CoG-specific additions in the header.
-* Live reload support.
 
 ## Future Ideas
 
