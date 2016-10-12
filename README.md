@@ -383,10 +383,10 @@ Licensed under the GPL-2.0 license.
 * Live reload support.
 * Support for custom library directory.
 * Remove all external library files from source code files if they happen to overlap.
+* Fix template test.
 
 ### Not Yet Done
 
-* Fix template test.
 * Add tags to mark CoG-specific additions in the header.
 
 ## Future Ideas

@@ -21,6 +21,7 @@ module.exports = function(grunt) {
 
     var cog = require('../lib/cog.js')(grunt);
     var ff = require('../lib/file-filter.js')(grunt);
+    var fw = require('../lib/file-writer.js')(grunt);
     var log = require('../lib/log.js')(grunt);
 
     function taskIndex() {
@@ -39,7 +40,7 @@ module.exports = function(grunt) {
 
             for (i=0; i < indices.length; i++) {
                 log.info('Updating ' + indices[i]);
-                ff.writeIndex(indices[i], jsFiles, cssFiles);
+                fw.writeIndex(indices[i], jsFiles, cssFiles);
             }
         }
 
@@ -53,7 +54,7 @@ module.exports = function(grunt) {
 
             for (i=0; i < indices.length; i++) {
                 log.info('Updating ' + indices[i]);
-                ff.writeIndex(indices[i], jsFiles, cssFiles);
+                fw.writeIndex(indices[i], jsFiles, cssFiles);
             }
         }
     }

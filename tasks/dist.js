@@ -21,6 +21,7 @@ module.exports = function(grunt) {
 
     var cog = require('../lib/cog.js')(grunt);
     var ff = require('../lib/file-filter.js')(grunt);
+    var fw = require('../lib/file-writer.js')(grunt);
     var log = require('../lib/log.js')(grunt);
 
     var modules = ff.prefix();
@@ -140,7 +141,7 @@ module.exports = function(grunt) {
             for (i = 0; i < indices.length; i++) {
                 log.info(indices[i].src + ' -> ' + indices[i].dst);
                 grunt.file.copy(indices[i].src, indices[i].dst);
-                ff.writeIndex(indices[i].dst, compressedJsFiles, compressedCssFiles);
+                fw.writeIndex(indices[i].dst, compressedJsFiles, compressedCssFiles);
             }
         }
     }
