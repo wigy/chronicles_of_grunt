@@ -127,15 +127,18 @@ module.exports = function(grunt) {
                 var n;
 
                 // Find the destination file and create directory.
-                var dst = subst(target, files[j]);
+                var dst;
 
-                grunt.file.mkdir(path.dirname(dst));
                 log.info("");
                 if (files[j] instanceof Array) {
                     for (n = 0; n < files[j].length; n++) {
+                        dst = subst(target, files[j][n]);
+                        grunt.file.mkdir(path.dirname(dst));
                         log.info("  " + files[j][n] + (n === files[j].length - 1 ?  ' -> ' + dst : ''));
                     }
                 } else {
+                    dst = subst(target, files[j]);
+                    grunt.file.mkdir(path.dirname(dst));
                     log.info("  " + files[j] + ' -> ' + dst);
                 }
 
