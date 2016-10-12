@@ -73,7 +73,7 @@ predefined constants are supported:
 In addition, default locations of various paths can be changed (defaults given below):
 ```js
     paths: {
-        lib: 'lib/',                       // A directory, where libraries are kept, when collected with `libs` task.
+        libs: 'lib/',                       // A directory, where libraries are kept, when collected with `libs` task.
         dist: 'dist/',                     // Build directory where compressed application is stored.
         docs: 'docs/',                     // Build directory for API docs.
         template: 'generated-template.js', // Name of the file, where pre-compiled templates are stored.
@@ -381,10 +381,10 @@ Licensed under the GPL-2.0 license.
 
 * Add version test for Node before running any task.
 * Live reload support.
+* Support for custom library directory.
 
 ### Not Yet Done
 
-* Support for custom library directory.
 * Fix template test.
 * Add tags to mark CoG-specific additions in the header.
 
