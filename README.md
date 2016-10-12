@@ -62,19 +62,21 @@ Additionally a human readable `title` can be defined.
 Dependencies to other libraries are listed as an array in `external`. The following
 predefined constants are supported:
 
-* `angular` --- AngularJS.
-* `jquery` --- jQuery.
-* `bootstrap` --- Bootstrap.
-* `coa` --- Wigy's Chronicles of Angular (implies `angular`).
-* `mingo` --- Mingo query language (implies `underscore`).
-* `underscore` --- Underscore utility library.
+* `angular` --- [AngularJS](https://angularjs.org/).
+* `jquery` --- [jQuery](https://jquery.com/).
+* `bootstrap` --- [Bootstrap](http://getbootstrap.com/).
+* `coa` --- [Wigy's Chronicles of Angular](https://github.com/wigy/chronicles_of_angular) (implies `angular`).
+* `mingo` --- [Mingo query language](https://github.com/kofrasa/mingo) (implies `underscore`).
+* `underscore` --- [Underscore utility library](http://underscorejs.org/).
+* `neat-dump` --- [Wigy's Neat Dump](https://github.com/wigy/neat-dump).
 
-In addition, default locations of various paths can be changed:
+In addition, default locations of various paths can be changed (defaults given below):
 ```js
     paths: {
+        lib: 'lib/',                       // A directory, where libraries are kept, when collected with `libs` task.
         dist: 'dist/',                     // Build directory where compressed application is stored.
         docs: 'docs/',                     // Build directory for API docs.
-        template: 'generated-template.js', // Name of the while, where pre-compiled templates are stored.
+        template: 'generated-template.js', // Name of the file, where pre-compiled templates are stored.
     }
 ```
 
@@ -85,6 +87,7 @@ Source code files have various categories. The complete structure is here:
 ```js
     src: {
         config: ['src/settings.js'],    // Configuration and other source code files that has to be included first.
+        libs: ['lib/**/*.js'],          // Libraries written in this project to be included second.
         models: ['src/models/**/*.js'], // Data model source code files that are included second.
         data: ['data/**/*.js'],         // Data files to be included after models.
         code: ['src/**/*.js'],          // The rest of the source code files.
@@ -381,6 +384,7 @@ Licensed under the GPL-2.0 license.
 
 ### Not Yet Done
 
+* Support for custom library directory.
 * Fix template test.
 * Add tags to mark CoG-specific additions in the header.
 
