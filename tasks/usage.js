@@ -28,7 +28,7 @@ module.exports = function(grunt) {
     function taskUsage() {
         var excludes = ['default', 'usage', 'availabletasks', 'jshint', 'uglify', 'cssmin', 'concat', 'jasmine',
                         'csslint', 'nodeunit', 'shell', 'prerelease', 'postrelease', 'jsdoc', 'clean', 'cleanup',
-                        'watch', 'shell', 'ngdocs'];
+                        'watch', 'shell', 'ngdocs', 'concurrent', 'connect'];
         grunt.initConfig({availabletasks: {tasks: {options: {filter: 'exclude', tasks: excludes}}}});
         grunt.task.run(['availabletasks']);
     }

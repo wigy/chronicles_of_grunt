@@ -73,7 +73,7 @@ predefined constants are supported:
 In addition, default locations of various paths can be changed (defaults given below):
 ```js
     paths: {
-        libs: 'lib/',                       // A directory, where libraries are kept, when collected with `libs` task.
+        libs: 'lib/',                      // A directory, where libraries are kept, when collected with `libs` task.
         dist: 'dist/',                     // Build directory where compressed application is stored.
         docs: 'docs/',                     // Build directory for API docs.
         template: 'generated-template.js', // Name of the file, where pre-compiled templates are stored.
@@ -391,5 +391,6 @@ Licensed under the GPL-2.0 license.
 
 ## Future Ideas
 
+* Put all defaults to CoG file in single structure and use it in getConfig().
 * Configuration managenent for application.
 * Automatically check files node_modules/foo/foo.min.js when looking for libs.

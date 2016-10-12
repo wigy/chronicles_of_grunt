@@ -4,7 +4,7 @@ module.exports = {
 
     'Task `usage`': function(test) {
 
-        var tasks = ['auto', 'build', 'dist', 'docs', 'files', 'index', 'info', 'libs', 'release', 'test', 'todo', 'verify', 'version'];
+        var tasks = ['auto', 'build', 'dist', 'docs', 'files', 'index', 'info', 'libs', 'release', 'server', 'test', 'todo', 'verify', 'version'];
 
         test.expect(1);
         runner.run('usage');
