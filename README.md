@@ -296,6 +296,13 @@ Licensed under the GPL-2.0 license.
 
 ## Release History
 
+* v1.11.8
+    - Add version test for Node before running any task.
+    - Live reload support.
+    - Support for custom library directory.
+    - Remove all external library files from source code files if they happen to overlap.
+    - Fix template test.
+    - Add tags to mark CoG-specific additions in the header.
 * v1.11.7
     - Support compressed neat-dump, Mingo and Underscore.
     - Add templates correctly to the dist-files.
@@ -378,13 +385,6 @@ Licensed under the GPL-2.0 license.
 ## Next Version
 
 ### Done
-
-* Add version test for Node before running any task.
-* Live reload support.
-* Support for custom library directory.
-* Remove all external library files from source code files if they happen to overlap.
-* Fix template test.
-* Add tags to mark CoG-specific additions in the header.
 
 ### Not Yet Done
 
