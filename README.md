@@ -430,6 +430,8 @@ Licensed under the GPL-2.0 license.
 
 ### Not Yet Done
 
+* Arbitrary prefix like / for Ember, when adding included files.
+
 ## Future Ideas
 
 * Move all configuration related stuff to the separate module with framework specific defaults.
