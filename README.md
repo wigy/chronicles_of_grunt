@@ -409,6 +409,9 @@ Licensed under the GPL-2.0 license.
 ### Done
 
 * Create initial `Gruntfile.js`, `index.html` and `test.html`.
+* Support *Ember*.
+* Fix a bug causing directories to be listed in explicit file patterns.
+* New file categories: *other media files*.
 
 ### Not Yet Done
 

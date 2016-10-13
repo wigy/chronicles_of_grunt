@@ -10,12 +10,12 @@ module.exports = function(grunt) {
                 name: 'code_name_of_project',
                 title: 'Title of the Project',
                 paths: {
-                    external: [],                      // A list of external libraries used like 'angular' or 'jquery'.
                     libs: 'lib/',                      // A directory, where libraries are kept, when collected with `libs` task.
                     dist: 'dist/',                     // Build directory where compressed application is stored.
                     docs: 'docs/',                     // Build directory for API docs.
                     template: 'generated-template.js', // Name of the file, where pre-compiled templates are stored.
                 },
+                external: [],                          // A list of external libraries used like 'angular' or 'jquery'.
                 index: {
                     app: 'index.html',                 // Application launhcher. Remove this if not used.
                     test: 'test.html',                 // Visual presentation of the testing. Remove this if not used.
