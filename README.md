@@ -331,6 +331,14 @@ Licensed under the GPL-2.0 license.
 
 ## Release History
 
+* v1.11.9
+    - Create initial `Gruntfile.js`, `index.html` and `test.html`.
+    - Support *Ember*.
+    - Fix a bug causing directories to be listed in explicit file patterns.
+    - New file categories: *other media files*, *unit test helper*, *python*, *compiled python*.
+    - Support framework specific options to change behaviour.
+    - Support for compiled files, i.e. ignored in most cases.
+    - Support for Python files, which can be verified with `pep8`.
 * v1.11.8
     - Add version test for Node before running any task.
     - Live reload support.
@@ -420,18 +428,10 @@ Licensed under the GPL-2.0 license.
 
 ### Done
 
-* Create initial `Gruntfile.js`, `index.html` and `test.html`.
-* Support *Ember*.
-* Fix a bug causing directories to be listed in explicit file patterns.
-* New file categories: *other media files*, *unit test helper*, *python*, *compiled python*.
-* Support framework specific flags to change behaviour.
-* Support for compiled files, i.e. ignored in most cases.
-* Support for Python files, which can be verified with `pep8`.
-
 ### Not Yet Done
 
 ## Future Ideas
 
-* Put all defaults to CoG file in single structure and use it in getConfig().
+* Move all configuration related stuff to the separate module with framework specific defaults.
 * Configuration managenent for application.
 * Automatically check files node_modules/foo/foo.min.js when looking for libs.
