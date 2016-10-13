@@ -13,7 +13,7 @@ module.exports = function(grunt) {
             src: {
                 task: 'tasks/*.js',
                 otherjs: ['lib/*.js', 'test/runner.js'],
-                other: 'templates/*.js'
+                other: 'templates/**'
             },
             docs: {
                 engine: 'jsdoc'

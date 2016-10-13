@@ -14,9 +14,29 @@ are automatically using that configuration with the help of this tool.
 
 ## Getting Started
 
-You may install this plugin with this command:
+You may install this plugin into your project with this command:
 ```shell
 npm install chronicles_of_grunt --save-dev
+```
+Then you can get initial configuration and templates by
+```shell
+cp node_modules/chronicles_of_grunt/templates/init/Gruntfile.js .
+cp node_modules/chronicles_of_grunt/templates/init/index.html .
+cp node_modules/chronicles_of_grunt/templates/init/test.html .
+```
+Check that the installation is correct and try if you see basic info of your project
+```shell
+grunt info
+```
+Then you can start configuring your existing files into the project definition by running
+```shell
+grunt files
+```
+and adding all listed files into the some categories in the `Gruntfile.js`. Once Done
+you can generate list of files to include and add them to both `index.html` and `test.html`
+by running
+```shell
+grunt index
 ```
 
 ## Configuration
@@ -119,8 +139,9 @@ Unit-testing environment and files are specified as follows:
 ```js
     test: {
         unit: {
+            external: ['jasmine'],      // Testing frameworks and libs.
             tests: 'test/**/*_spec.js', // Actual tests.
-            external: ['jasmine'],           // Testing frameworks and libs.
+            data: ['test/data/*']       // Additional data used in testing.
         }
     }
     index: {
@@ -164,6 +185,7 @@ here we create **png** files from **dia** diagrams using simple shell commands.
                 ]
             }
         }
+    }
 ```
 
 The supported variables in double curly braces are:
@@ -386,7 +408,12 @@ Licensed under the GPL-2.0 license.
 
 ### Done
 
+* Create initial `Gruntfile.js`, `index.html` and `test.html`.
+
 ### Not Yet Done
+
+* Support for compiled files, i.e. ignored in most cases.
+* Support for Python files, which can be verified with `pep8`.
 
 ## Future Ideas
 
