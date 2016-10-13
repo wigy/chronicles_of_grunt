@@ -425,11 +425,10 @@ Licensed under the GPL-2.0 license.
 * Fix a bug causing directories to be listed in explicit file patterns.
 * New file categories: *other media files*, *unit test helper*, *python*, *compiled python*.
 * Support framework specific flags to change behaviour.
-
-### Not Yet Done
-
 * Support for compiled files, i.e. ignored in most cases.
 * Support for Python files, which can be verified with `pep8`.
+
+### Not Yet Done
 
 ## Future Ideas
 

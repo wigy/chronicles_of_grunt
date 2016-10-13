@@ -30,7 +30,7 @@ module.exports = function(grunt) {
 
         var i,j;
         var count = 0;
-        var files = ff.flatten(ff.workTextFiles());
+        var files = ff.flatten(ff.removeDuplicates(ff.workTextFiles(),ff.unitTestDataFiles()));
         var TODO = "TODO" + ":";
 
         for (i=0; i<files.length; i++) {
