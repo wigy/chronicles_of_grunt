@@ -33,10 +33,11 @@ module.exports = function(grunt) {
                     code: [],                          // The rest of the source code files.
                     templates: [],                     // A list of HTML-file templates (usage depends on the framework).
                     css: [],                           // CSS files of the application.
-                    shell: [],                         // Tools written as shell scripts.
                     task: [],                          // Grunt-task definitions and their support files.
                     otherjs: [],                       // Any other Javascript-files that are not part of the distribution.
                     other: [],                         // Any other (non-Javascript) files that are not part of the distribution.
+                    shell: [],                         // Tools written as shell scripts.
+                    python: [],                        // Python source code.
                 },
                 media: {
                     pics: [],                          // All images for the application.

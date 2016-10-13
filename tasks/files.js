@@ -43,16 +43,19 @@ module.exports = function(grunt) {
                 log.info(map[files[i]] + ' ' + files[i]);
             }
         }
+
         if (count) {
             log.info("");
-            log.info(count + " file(s) unknown.");
+            log.info((count + " file(s) unknown.")['red']);
             if (die === 'die') {
                 grunt.fail.fatal("There are files in the repository that are not known.\n" +
                                  "Please add them to the appropriate categories in Gruntfile.js.\n" +
                                  "If there are no category for them, then just add them to the 'ignore' category.");
             }
         } else {
-            log.info("All files known!");
+            if (die !== 'show') {
+                log.info("All files known!"['green']);
+            }
         }
     }
 

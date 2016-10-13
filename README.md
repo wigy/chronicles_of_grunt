@@ -422,7 +422,7 @@ Licensed under the GPL-2.0 license.
 * Create initial `Gruntfile.js`, `index.html` and `test.html`.
 * Support *Ember*.
 * Fix a bug causing directories to be listed in explicit file patterns.
-* New file categories: *other media files*, *unit test helper*.
+* New file categories: *other media files*, *unit test helper*, *python*, *compiled python*.
 * Support framework specific flags to change behaviour.
 
 ### Not Yet Done
