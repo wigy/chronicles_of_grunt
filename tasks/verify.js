@@ -30,67 +30,78 @@ module.exports = function(grunt) {
 
     function taskVerify(what) {
 
-        var settings;
+        var settings, files;
 
         log.info("");
 
         // Verify Javascript
         if (!what || what === "js") {
-            settings = {
-                all: ff.flatten(ff.allJavascriptFiles()),
-                options: {
-                    curly: true,
-                    eqeqeq: true,
-                    immed: true,
-                    latedef: true,
-                    newcap: true,
-                    noarg: true,
-                    sub: true,
-                    undef: false,
-                    unused: false,
-                    boss: true,
-                    eqnull: true,
-                    browser: true,
-                    globals: {
-                        jQuery: true
+            files = ff.flatten(ff.allJavascriptFiles());
+            if (files.length) {
+                settings = {
+                    all: files,
+                    options: {
+                        curly: true,
+                        eqeqeq: true,
+                        immed: true,
+                        latedef: true,
+                        newcap: true,
+                        noarg: true,
+                        sub: true,
+                        esnext: true,
+                        undef: false,
+                        unused: false,
+                        boss: true,
+                        eqnull: true,
+                        browser: true,
+                        globals: {
+                            jQuery: true
+                        }
+                    },
+                };
+
+                // Check for tabs first.
+                var fails = [];
+                for (var i = 0; i < files.length; i++) {
+                    if (grunt.file.read(files[i]).indexOf('\t') >= 0) {
+                        fails.push(files[i]);
                     }
-                },
-            };
-            // Check for tabs first.
-            var fails = [];
-            for (var i = 0; i < settings.all.length; i++) {
-                if (grunt.file.read(settings.all[i]).indexOf('\t') >= 0) {
-                    fails.push(settings.all[i]);
                 }
+                if (fails.length) {
+                    grunt.fail.fatal("The following files have tabs:\n" + fails.join("\n"));
+                }
+                // Then use JSHint.
+                grunt.config.set('jshint', settings);
+                grunt.task.run('jshint');
             }
-            if (fails.length) {
-                grunt.fail.fatal("The following files have tabs:\n" + fails.join("\n"));
-            }
-            // Then use JSHint.
-            grunt.config.set('jshint', settings);
-            grunt.task.run('jshint');
         }
 
         // Verify CSS
         if (!what || what === "css") {
-            settings = {
-                src: ff.flatten(ff.cssFiles()),
-                options: {
-                    "fallback-colors": false
-                },
-            };
-            grunt.config.set('csslint', settings);
-            grunt.task.run('csslint');
+            files = ff.flatten(ff.cssFiles());
+            if (files.length) {
+                settings = {
+                    src: files,
+                    options: {
+                        "fallback-colors": false
+                    },
+                };
+                grunt.config.set('csslint', settings);
+                grunt.task.run('csslint');
+            }
         }
 
         // Verify Python
         if (!what || what === "python") {
-            var python = ff.flatten(ff.pythonFiles());
-            settings = {
-                pep8: 'pep8 ' + python.join(' ')
-            };
-            grunt.config.set('shell', settings);
-            grunt.task.run('shell');
+            files = ff.flatten(ff.pythonFiles());
+            // TODO: Escape spaces etc.
+            if (files.length) {
+                settings = {
+                    pep8: 'pep8 --show-source --show-pep8 --max-line-length=120 ' + files.join(' ')
+                };
+                grunt.config.set('shell', settings);
+                grunt.task.run('shell');
+            }
         }
     }
 
