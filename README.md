@@ -215,6 +215,17 @@ the templates can be used. Currently supported systems for templates are
 
 In order to compile templates, run `build:templates` task.
 
+### Options
+
+There are few flags implemented and they are mainly used internally to change behaviour for different frameworks automatically.
+However, they can be used directly as well.
+```js
+    options: {
+        include_only_external: false,      // If set, only external libraries are added to the application index.
+        test_include_only_external: false, // If set, only external libraries are added to the unit test index.
+    }
+```
+
 ## Tasks
 
 ### Task: `auto`
@@ -399,8 +410,7 @@ Licensed under the GPL-2.0 license.
 * v1.3.0
     - Support for `test` task in order to run unit-tests.
     - Support new `other`-category for work files.
-    - Scan more files when checking for TODO-notes.
-    - New task `todo` to display TODO-notes from source code.
+    - Scan more files when checking for TODO-notes.    - New task `todo` to display TODO-notes from source code.
 * v1.0.0
     - Basic tasks `info`, `dist`, `index`, `verify`, `usage` and `version`.
 
@@ -411,7 +421,8 @@ Licensed under the GPL-2.0 license.
 * Create initial `Gruntfile.js`, `index.html` and `test.html`.
 * Support *Ember*.
 * Fix a bug causing directories to be listed in explicit file patterns.
-* New file categories: *other media files*.
+* New file categories: *other media files*, *unit test helper*.
+* Support framework specific flags to change behaviour.
 
 ### Not Yet Done
 

@@ -15,6 +15,10 @@ module.exports = function(grunt) {
                     docs: 'docs/',                     // Build directory for API docs.
                     template: 'generated-template.js', // Name of the file, where pre-compiled templates are stored.
                 },
+                options: {
+                    include_only_external: false,      // If set, only external libraries are added to the application index.
+                    test_include_only_external: false, // If set, only external libraries are added to the unit test index.
+                },
                 external: [],                          // A list of external libraries used like 'angular' or 'jquery'.
                 index: {
                     app: 'index.html',                 // Application launhcher. Remove this if not used.
@@ -48,6 +52,7 @@ module.exports = function(grunt) {
                     unit: {
                         external: [],                  // Testing frameworks and libs, e.g. 'jasmine'.
                         tests: [],                     // Actual tests.
+                        helpers: [],                   // Javascript helpers for unit testing.
                         data: [],                      // Additional data used in testing.
                     },
                 },
