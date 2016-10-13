@@ -12,6 +12,7 @@ module.exports = function(grunt) {
             },
             src: {
                 task: 'tasks/*.js',
+                python: '*.py',
                 otherjs: ['lib/*.js', 'test/runner.js'],
                 other: 'templates/**'
             },

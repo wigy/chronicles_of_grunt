@@ -94,10 +94,10 @@ module.exports = function(grunt) {
         // Verify Python
         if (!what || what === "python") {
             files = ff.flatten(ff.pythonFiles());
-            // TODO: Escape spaces etc.
+            files = files.map(function(name) {return name.replace(/([ '"])/g, '\\$1');});
             if (files.length) {
                 settings = {
-                    pep8: 'pep8 --show-source --show-pep8 --max-line-length=120 ' + files.join(' ')
+                    pep8: 'pep8 --show-source --max-line-length=120 ' + files.join(' ')
                 };
                 grunt.config.set('shell', settings);
                 grunt.task.run('shell');
