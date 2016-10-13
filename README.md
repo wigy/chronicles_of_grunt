@@ -312,8 +312,9 @@ available for developer.
 
 ### Task: `verify`
 
-Run syntax checker for project files. Alternatively `verify:js` can be used to verify
-Javascript code and `verify:css` can be used to verify CSS.
+Run syntax checker for all project files having validation.
+Alternatively `verify:js` can be used to verify Javascript code,
+`verify:python` to run *PEP8* on Python files or `verify:css` to verify CSS.
 
 ### Task: `version`:*version*
 

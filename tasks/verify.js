@@ -33,6 +33,8 @@ module.exports = function(grunt) {
         var settings;
 
         log.info("");
+
+        // Verify Javascript
         if (!what || what === "js") {
             settings = {
                 all: ff.flatten(ff.allJavascriptFiles()),
@@ -68,6 +70,8 @@ module.exports = function(grunt) {
             grunt.config.set('jshint', settings);
             grunt.task.run('jshint');
         }
+
+        // Verify CSS
         if (!what || what === "css") {
             settings = {
                 src: ff.flatten(ff.cssFiles()),
@@ -77,6 +81,16 @@ module.exports = function(grunt) {
             };
             grunt.config.set('csslint', settings);
             grunt.task.run('csslint');
+        }
+
+        // Verify Python
+        if (!what || what === "python") {
+            var python = ff.flatten(ff.pythonFiles());
+            settings = {
+                pep8: 'pep8 ' + python.join(' ')
+            };
+            grunt.config.set('shell', settings);
+            grunt.task.run('shell');
         }
     }
 
