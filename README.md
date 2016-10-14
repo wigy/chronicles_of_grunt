@@ -428,9 +428,9 @@ Licensed under the GPL-2.0 license.
 
 ### Done
 
-### Not Yet Done
-
 * Arbitrary prefix like / for Ember, when adding included files.
+
+### Not Yet Done
 
 ## Future Ideas
 
