@@ -21,7 +21,7 @@ module.exports = function(grunt) {
 
     var cog = require('../lib/cog.js')(grunt);
     var ff = require('../lib/file-filter.js')(grunt);
-    var modules = ff.prefix();
+    var modules = cog.prefix();
 
     grunt.loadTasks(modules + 'grunt-available-tasks/tasks/');
 

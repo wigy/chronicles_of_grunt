@@ -55,7 +55,7 @@ module.exports = function(grunt) {
                 },
                 test: {
                     unit: {
-                        external: [],                  // Testing frameworks and libs, e.g. 'jasmine'.
+                        external: [],                  // Testing frameworks and libs, e.g. 'jasmine' or 'nodeunit'.
                         tests: [],                     // Actual tests.
                         helpers: [],                   // Javascript helpers for unit testing.
                         data: [],                      // Additional data used in testing.

@@ -23,7 +23,7 @@ module.exports = function(grunt) {
     var ff = require('../lib/file-filter.js')(grunt);
     var log = require('../lib/log.js')(grunt);
 
-    var modules = ff.prefix();
+    var modules = cog.prefix();
 
     grunt.loadTasks(modules + 'grunt-contrib-jshint/tasks/');
     grunt.loadTasks(modules + 'grunt-contrib-csslint/tasks/');

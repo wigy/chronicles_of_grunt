@@ -39,6 +39,11 @@ module.exports = function(grunt) {
                           convert: 'cp {{SRC}} {{DST}}'
                       }
                   }
+              },
+              test: {
+                  unit: {
+                      external: ['nodeunit'],
+                  }
               }
           }
       }

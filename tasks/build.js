@@ -26,7 +26,7 @@ module.exports = function(grunt) {
     var ff = require('../lib/file-filter.js')(grunt);
     var log = require('../lib/log.js')(grunt);
     var templates = require('../lib/templates.js')(grunt);
-    var modules = ff.prefix();
+    var modules = cog.prefix();
 
     grunt.loadTasks(modules + 'grunt-shell/tasks/');
 
@@ -38,10 +38,10 @@ module.exports = function(grunt) {
         if (args.length === 0) {
             // Resolve from the config, what is buildable.
             args = [];
-            if (ff.getConfig('media.src.pics.dst')) {
+            if (cog.getConfig('media.src.pics.dst')) {
                 args.push('pics');
             }
-            if (ff.getConfig('media.src.sounds.dst')) {
+            if (cog.getConfig('media.src.sounds.dst')) {
                 args.push('sounds');
             }
             if (ff.generatedJsFiles().length) {
@@ -88,22 +88,22 @@ module.exports = function(grunt) {
             // Resolve parameters.
             if (args[i] === 'pics') {
                 files = ff.flatten(ff.picSrcFiles());
-                target = ff.getConfig('media.src.pics.dst');
-                convert = ff.getConfig('media.src.pics.convert');
+                target = cog.getConfig('media.src.pics.dst');
+                convert = cog.getConfig('media.src.pics.convert');
             } else if (args[i] === 'sounds'){
                 files = ff.flatten(ff.soundSrcFiles());
-                target = ff.getConfig('media.src.sounds.dst');
-                convert = ff.getConfig('media.src.sounds.convert');
+                target = cog.getConfig('media.src.sounds.dst');
+                convert = cog.getConfig('media.src.sounds.convert');
             } else if (args[i] === 'templates'){
                 files = [ff.flatten(ff.htmlTemplateFiles())]; // Single target, multiple source files.
                 if (!files[0].length) {
                     grunt.fail.fatal("No template files defined.");
                 }
                 target = ff.generatedJsFiles('templates')[0].dst;
-                if (ff.configuredFramework() === 'angular') {
+                if (cog.configuredFramework() === 'angular') {
                     /*jshint loopfunc: true */
                     convert = function(files) {
-                        return templates.generate(ff.root() + 'templates/angular.js', files[0]);
+                        return templates.generate(cog.root() + 'templates/angular.js', files[0]);
                     };
                     /*jshint loopfunc: false */
                 } else {

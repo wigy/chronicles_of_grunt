@@ -33,7 +33,7 @@ module.exports = function(grunt) {
         indices = ff.flatten(ff.appIndexFiles());
         if (indices.length) {
             log.info("Application:");
-            if (ff.getOption('include_only_external')) {
+            if (cog.getOption('include_only_external')) {
                 log.info('- Note: including only external Javascript-files.');
             }
             jsFiles = ff.flatten(ff.includeJsFiles());
@@ -50,7 +50,7 @@ module.exports = function(grunt) {
         indices = ff.flatten(ff.testIndexFiles());
         if (indices.length) {
             log.info("Unit Test:");
-            if (ff.getOption('test_include_only_external')) {
+            if (cog.getOption('test_include_only_external')) {
                 log.info('- Note: including only external Javascript-files.');
             }
             jsFiles = ff.flatten(ff.includeUnitTestJsFiles());

@@ -21,7 +21,7 @@ module.exports = function(grunt) {
 
     var cog = require('../lib/cog.js')(grunt);
     var ff = require('../lib/file-filter.js')(grunt);
-    var modules = ff.prefix();
+    var modules = cog.prefix();
 
     grunt.loadTasks(modules + 'grunt-jsdoc/tasks/');
     grunt.loadTasks(modules + 'grunt-ngdocs/tasks/');
@@ -29,7 +29,7 @@ module.exports = function(grunt) {
     function taskDocs() {
 
         var src = ff.flatten(ff.allSrcFiles());
-        var engine = ff.getConfig('docs.engine') || 'jsdoc';
+        var engine = cog.getConfig('docs.engine') || 'jsdoc';
         var dst = ff.pathDocs();
         var settings;
 
@@ -44,7 +44,7 @@ module.exports = function(grunt) {
                         startPage: '/ngdocs',
                         dest: dst,
                         sourceLink: true,
-                        title: ff.getConfig('title') || ff.getConfig('name')
+                        title: cog.getConfig('title') || cog.getConfig('name')
                     }
                 }
             };

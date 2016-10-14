@@ -21,7 +21,7 @@ module.exports = function(grunt) {
 
     var cog = require('../lib/cog.js')(grunt);
     var ff = require('../lib/file-filter.js')(grunt);
-    var modules = ff.prefix();
+    var modules = cog.prefix();
 
     grunt.loadTasks(modules + 'grunt-contrib-watch/tasks/');
 
@@ -65,7 +65,7 @@ module.exports = function(grunt) {
             },
         };
 
-        if (ff.configuredUnitTesting()) {
+        if (cog.configuredUnitTesting()) {
             settings.test = {
                 files: ff.flatten(ff.allSrcFiles().concat(ff.unitTestFiles())),
                 tasks: ['test'],

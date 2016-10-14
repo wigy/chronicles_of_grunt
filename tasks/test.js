@@ -22,7 +22,7 @@ module.exports = function(grunt) {
     var cog = require('../lib/cog.js')(grunt);
     var ff = require('../lib/file-filter.js')(grunt);
     var log = require('../lib/log.js')(grunt);
-    var modules = ff.prefix();
+    var modules = cog.prefix();
 
     grunt.loadTasks(modules + 'grunt-contrib-jasmine/tasks/');
     grunt.loadTasks(modules + 'grunt-contrib-nodeunit/tasks/');
@@ -32,7 +32,7 @@ module.exports = function(grunt) {
         var settings;
 
         // Select test runner.
-        var type = ff.configuredUnitTesting();
+        var type = cog.configuredUnitTesting();
         if (!type) {
             grunt.fail.fatal("Testing system is not configured. Please set test.unit.external to the ['jasmine'] or ['nodeunit'].");
         }

@@ -46,8 +46,8 @@ module.exports = function(grunt) {
         }
 
         log.info("");
-        log.info("Project: " + ff.getConfig('name'));
-        log.info("Title: " + ff.getConfig('title'));
+        log.info("Project: " + cog.getConfig('name'));
+        log.info("Title: " + cog.getConfig('title'));
         log.info("Version: " + pckg.version);
         dumpFiles('External Libraries', ff.extLibFiles);
         dumpFiles('External Library map files', ff.extLibMapFiles);

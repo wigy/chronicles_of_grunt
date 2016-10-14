@@ -24,7 +24,7 @@ module.exports = function(grunt) {
     var fw = require('../lib/file-writer.js')(grunt);
     var log = require('../lib/log.js')(grunt);
 
-    var modules = ff.prefix();
+    var modules = cog.prefix();
 
     grunt.loadTasks(modules + 'grunt-contrib-cssmin/tasks/');
     grunt.loadTasks(modules + 'grunt-contrib-uglify/tasks/');
@@ -34,7 +34,7 @@ module.exports = function(grunt) {
     function taskCleanup() {
 
         var settings = {
-            all: [ff.pathDist() + ff.getConfig('name') + '.js'] // Uncompressed version of the distribution file.
+            all: [ff.pathDist() + cog.getConfig('name') + '.js'] // Uncompressed version of the distribution file.
         };
 
         grunt.config.set('clean', settings);
@@ -116,7 +116,7 @@ module.exports = function(grunt) {
             log.info("Compressing Javascript...");
             log.info("");
             var banner = '';
-            banner += '/* ' + ff.getConfig('title', pckg.name) + ' v' + pckg.version + '\n';
+            banner += '/* ' + cog.getConfig('title', pckg.name) + ' v' + pckg.version + '\n';
             banner += ' * Copyright (c) ' + grunt.template.today("yyyy") + (pckg.author ? ' ' + pckg.author.name : '') + '\n';
             banner += ' */\n';
 
