@@ -217,15 +217,9 @@ In order to compile templates, run `build:templates` task.
 
 ### Options
 
-There are few flags implemented and they are mainly used internally to change behaviour for different frameworks automatically.
-However, they can be used directly as well.
-```js
-    options: {
-        include_drop: '',                  // Drop this string from the beginning of the include path when making application index.
-        include_only_external: false,      // If set, only external libraries are added to the application index.
-        test_include_only_external: false, // If set, only external libraries are added to the unit test index.
-    }
-```
+There are various flags implemented that are mainly used internally to change behaviour for different frameworks automatically.
+However, they can be used directly as well. See configuration template `templates/init/Gruntfile.js` for complete listing of
+configuration options.
 
 ## Tasks
 
