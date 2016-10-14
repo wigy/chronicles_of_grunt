@@ -29,7 +29,7 @@ module.exports = function(grunt) {
 
         log.info("");
         var count = 0;
-        var docs = ff.pathDocs();
+        var docs = cog.pathDocs();
         for (var i = 0; i < files.length; i++) {
             if (!map[files[i]]) {
                 // Check common output files.

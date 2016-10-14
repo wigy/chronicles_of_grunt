@@ -30,7 +30,7 @@ module.exports = function(grunt) {
 
         var src = ff.flatten(ff.allSrcFiles());
         var engine = cog.getConfig('docs.engine') || 'jsdoc';
-        var dst = ff.pathDocs();
+        var dst = cog.pathDocs();
         var settings;
 
         if (engine === 'ngdocs') {

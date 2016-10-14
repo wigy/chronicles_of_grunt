@@ -34,7 +34,7 @@ module.exports = function(grunt) {
     function taskCleanup() {
 
         var settings = {
-            all: [ff.pathDist() + cog.getConfig('name') + '.js'] // Uncompressed version of the distribution file.
+            all: [cog.pathDist() + cog.getConfig('name') + '.js'] // Uncompressed version of the distribution file.
         };
 
         grunt.config.set('clean', settings);
@@ -78,7 +78,7 @@ module.exports = function(grunt) {
             for (i = 0; i < libs.length; i++) {
                 log.info(libs[i].src + ' -> ' + libs[i].dst);
                 grunt.file.copy(libs[i].src, libs[i].dst);
-                compressedJsFiles.push(libs[i].dst.replace(ff.pathDist(), ''));
+                compressedJsFiles.push(libs[i].dst.replace(cog.pathDist(), ''));
             }
         }
 
@@ -91,7 +91,7 @@ module.exports = function(grunt) {
             log.info("");
             settings = {all: {files: {}}};
             dist = ff.distCssFiles()[0];
-            compressedCssFiles.push(dist.dst.replace(ff.pathDist(), ''));
+            compressedCssFiles.push(dist.dst.replace(cog.pathDist(), ''));
             settings.all.files[dist.dst] = ff.flatten(cssFiles);
             grunt.config.set('cssmin', settings);
             grunt.task.run('cssmin');
@@ -120,7 +120,7 @@ module.exports = function(grunt) {
             banner += ' * Copyright (c) ' + grunt.template.today("yyyy") + (pckg.author ? ' ' + pckg.author.name : '') + '\n';
             banner += ' */\n';
 
-            compressedJsFiles.push(dist.dst.replace(ff.pathDist(), ''));
+            compressedJsFiles.push(dist.dst.replace(cog.pathDist(), ''));
 
             if (!debug) {
                 settings = {options: {banner: banner}, dist: {}};
