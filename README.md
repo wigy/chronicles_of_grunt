@@ -428,6 +428,7 @@ Licensed under the GPL-2.0 license.
 
 * Arbitrary prefix like / for Ember, when adding included files.
 * API simulation by serving the content of the configured directory as JSON-data.
+* Move all `paths`-variables under `options`.
 
 ### Not Yet Done
 

@@ -9,19 +9,17 @@ module.exports = function(grunt) {
             options: {
                 name: 'code_name_of_project',
                 title: 'Title of the Project',
-                paths: {
+                options: {
                     libs: 'lib/',                      // A directory, where libraries are kept, when collected with `libs` task.
                     dist: 'dist/',                     // Build directory where compressed application is stored.
                     docs: 'docs/',                     // Build directory for API docs.
-                    template: 'generated-template.js', // Name of the file, where pre-compiled templates are stored.
-                },
-                options: {
+                    template: 'generated-template.js', // Full path to the file, where pre-compiled templates are stored.
                     include_drop: '',                  // Drop this string from the beginning of the include path when making application index.
                     include_prefix: '',                // Add this string in the beginning of the include path when making application index.
-                    include_only_external: false,      // If set, only external libraries are added to the application index.
-                    test_include_only_external: false, // If set, only external libraries are added to the unit test index.
-                    api_data: null,                    // If set with 'api_url_prefix', use this directory to server JSON-data.
-                    api_url_regex: null,               // If set with 'api_data', maps urls matching this regex to serve JSON-data.
+                    include_only_external: false,      // If set to true, only external libraries are added to the application index.
+                    test_include_only_external: false, // If set to true, only external libraries are added to the unit test index.
+                    api_data: null,                    // If set along with 'api_url_prefix', use this directory to serve JSON API-data.
+                    api_url_regex: null,               // If set along with 'api_data', then urls matching this regex are served as JSON API-data.
                 },
                 external: [],                          // A list of external libraries used like 'angular' or 'jquery'.
                 index: {
