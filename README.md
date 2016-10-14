@@ -329,6 +329,10 @@ Licensed under the GPL-2.0 license.
 
 ## Release History
 
+* v1.12.0
+    - Arbitrary prefix like / for Ember, when adding included files.
+    - API simulation by serving the content of the configured directory as JSON-data.
+    - Move all `paths`-variables under `options`.
 * v1.11.9
     - Create initial `Gruntfile.js`, `index.html` and `test.html`.
     - Support *Ember*.
@@ -426,12 +430,7 @@ Licensed under the GPL-2.0 license.
 
 ### Done
 
-* Arbitrary prefix like / for Ember, when adding included files.
-* API simulation by serving the content of the configured directory as JSON-data.
-* Move all `paths`-variables under `options`.
-
 ### Not Yet Done
-
 
 ## Future Ideas
 
