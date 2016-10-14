@@ -20,6 +20,8 @@ module.exports = function(grunt) {
                     include_prefix: '',                // Add this string in the beginning of the include path when making application index.
                     include_only_external: false,      // If set, only external libraries are added to the application index.
                     test_include_only_external: false, // If set, only external libraries are added to the unit test index.
+                    api_data: null,                    // If set with 'api_url_prefix', use this directory to server JSON-data.
+                    api_url_regex: null,               // If set with 'api_data', maps urls matching this regex to serve JSON-data.
                 },
                 external: [],                          // A list of external libraries used like 'angular' or 'jquery'.
                 index: {

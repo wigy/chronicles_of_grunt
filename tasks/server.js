@@ -23,6 +23,7 @@ module.exports = function(grunt) {
     var ff = require('../lib/file-filter.js')(grunt);
     var modules = ff.prefix();
     var log = require('../lib/log.js')(grunt);
+    var server = require('../lib/server.js')(grunt);
 
     grunt.loadTasks(modules + 'grunt-contrib-connect/tasks/');
     grunt.loadTasks(modules + 'grunt-contrib-watch/tasks/');
@@ -74,7 +75,7 @@ module.exports = function(grunt) {
             return;
         }
 
-        // This server serves static files.
+        // This server serves static files and JSON-data, if configured.
         if (what === 'files') {
 
             var connect = {
@@ -83,7 +84,15 @@ module.exports = function(grunt) {
                         protocol: 'http',
                         port: port,
                         keepalive: true,
-                        livereload: port + 1
+                        livereload: port + 1,
+                        middleware: function(connect, options, middlewares) {
+                            middlewares.unshift(function(req, res, next) {
+                                server.handle(req, res);
+                                return next();
+                            });
+
+                            return middlewares;
+                        }
                     }
                 }
             };

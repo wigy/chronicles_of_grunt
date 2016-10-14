@@ -295,6 +295,10 @@ By default, this task launces two servers on ports 9000 and 9001. The first one 
 project directory as static files and the second one as an autoreload server. Individiual
 servers are internally started with *what* parameter being either `files` or `autoreload`.
 
+In addition, if an option `api_data` points to the local directory and `api_url_regex` contains
+a regular expression, the server simulates matching API calls by prefixing URL by `api_data` and
+adding a postfix `.json`. If the file is found, it is served as JSON-data.
+
 ### Task: `test`
 
 Run all unit-tests defined. Optional arguments are matched against test file names
@@ -429,10 +433,10 @@ Licensed under the GPL-2.0 license.
 ### Done
 
 * Arbitrary prefix like / for Ember, when adding included files.
+* API simulation by serving the content of the configured directory as JSON-data.
 
 ### Not Yet Done
 
-* API simulation by serving content of the configured directory as JSON-data.
 
 ## Future Ideas
 
