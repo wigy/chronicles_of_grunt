@@ -432,6 +432,8 @@ Licensed under the GPL-2.0 license.
 
 ### Not Yet Done
 
+* API simulation by serving content of the configured directory as JSON-data.
+
 ## Future Ideas
 
 * Move all configuration related stuff to the separate module with framework specific defaults.

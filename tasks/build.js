@@ -100,7 +100,7 @@ module.exports = function(grunt) {
                     grunt.fail.fatal("No template files defined.");
                 }
                 target = ff.generatedJsFiles('templates')[0].dst;
-                if (ff.getConfig('external.lib').indexOf('angular') >= 0 || ff.getConfig('external.lib').indexOf('coa') >= 0) {
+                if (ff.configuredFramework() === 'angular') {
                     /*jshint loopfunc: true */
                     convert = function(files) {
                         return templates.generate(ff.root() + 'templates/angular.js', files[0]);
