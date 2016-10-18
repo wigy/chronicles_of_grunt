@@ -50,14 +50,16 @@ module.exports = function(grunt) {
             }
         }
 
-        var parsed = readme.parse();
-        if (parsed.next_version.not_yet_done.length) {
-            log.info("");
-            log.info(("README.md")["blue"]);
-            log.info("");
-            for (i=0; i<parsed.next_version.not_yet_done.length; i++) {
-                log.info("  Not Yet Done "["green"], parsed.next_version.not_yet_done[i]);
-                count++;
+        if (cog.getOption('todo_in_readme')) {
+            var parsed = readme.parse();
+            if (parsed.next_version.not_yet_done.length) {
+                log.info("");
+                log.info(("README.md")["blue"]);
+                log.info("");
+                for (i=0; i<parsed.next_version.not_yet_done.length; i++) {
+                    log.info("  Not Yet Done "["green"], parsed.next_version.not_yet_done[i]);
+                    count++;
+                }
             }
         }
 

@@ -430,10 +430,11 @@ Licensed under the GPL-2.0 license.
 
 ### Done
 
+* Make TODO updates on README.md optional.
+
 ### Not Yet Done
 
 ## Future Ideas
 
-* Move all configuration related stuff to the separate module with framework specific defaults.
 * Configuration managenent for application.
 * Automatically check files node_modules/foo/foo.min.js when looking for libs.
