@@ -431,6 +431,7 @@ Licensed under the GPL-2.0 license.
 ### Done
 
 * Make TODO updates on README.md optional.
+* Configurable directories that are ignored completely.
 
 ### Not Yet Done
 
