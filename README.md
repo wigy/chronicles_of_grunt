@@ -437,6 +437,6 @@ Licensed under the GPL-2.0 license.
 
 ## Future Ideas
 
-* Install task to run npm-install and then run `libs` and `index`.
+* Install task to run npm-install and then add it to appropriate `external` sections, finally run `libs` and `index`.
 * Configuration managenent for application.
 * Automatically check files node_modules/foo/foo.min.js when looking for libs.
