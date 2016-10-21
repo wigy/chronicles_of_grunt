@@ -59,9 +59,13 @@ module.exports = function(grunt) {
         // This server watches for changes and server autoreload requests.
         if (what === 'autoreload') {
 
+            var files = ff.flatten(ff.appIndexFiles().concat(ff.mediaFiles()).concat(ff.includeJsFiles()).concat(ff.includeCssFiles()));
+            if(!cog.getConfig('options.template')) {
+                files = files.concat(ff.flatten(ff.htmlTemplateFiles()));
+            }
             var watch = {
                 all: {
-                    files: ff.flatten(ff.appIndexFiles().concat(ff.mediaFiles()).concat(ff.includeJsFiles()).concat(ff.includeCssFiles())),
+                    files: files,
                     options: {
                         livereload: port
                     },
