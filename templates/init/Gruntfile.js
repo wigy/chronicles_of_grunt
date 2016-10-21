@@ -42,6 +42,9 @@ module.exports = function(grunt) {
                     shell: [],                         // Tools written as shell scripts.
                     python: [],                        // Python source code.
                 },
+                compiled: {
+                    python: '**/*.pyc'                 // Files that are compilation results that are essentially ignored.
+                },
                 media: {
                     pics: [],                          // All images for the application.
                     sounds: [],                        // All sounds for the application.
