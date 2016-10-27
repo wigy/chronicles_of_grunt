@@ -93,7 +93,8 @@ module.exports = function(grunt) {
 
         // Verify Python
         if (!what || what === "python") {
-            files = ff.flatten(ff.pythonFiles());
+            var skip = cog.getOption('python_skip_verify');
+            files = ff.flatten(ff.removeDuplicates(ff.pythonFiles(), ff.files(skip)));
             files = files.map(function(name) {return name.replace(/([ '"])/g, '\\$1');});
             if (files.length) {
                 var linelen = cog.getOption('python_line_length');
