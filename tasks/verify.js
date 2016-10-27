@@ -96,8 +96,9 @@ module.exports = function(grunt) {
             files = ff.flatten(ff.pythonFiles());
             files = files.map(function(name) {return name.replace(/([ '"])/g, '\\$1');});
             if (files.length) {
+                var linelen = cog.getOption('python_line_length');
                 settings = {
-                    pep8: 'pep8 --show-source --max-line-length=120 ' + files.join(' ')
+                    pep8: 'pep8 --show-source --max-line-length=' + linelen + ' ' + files.join(' ')
                 };
                 grunt.config.set('shell', settings);
                 grunt.task.run('shell');

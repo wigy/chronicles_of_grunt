@@ -22,6 +22,7 @@ module.exports = function(grunt) {
                     api_url_regex: null,               // If set along with 'api_data', then urls matching this regex are served as JSON API-data.
                     todo_in_readme: null,              // If set, maintain TODO entries in README.md like in this project (autodetect by default).
                     ignore_dirs: ['node_modules', 'bower_components'], // Ignore these directories.
+                    python_line_length: 120,           // Maximum line length for PEP8 Python verification.
                 },
                 external: [],                          // A list of external libraries used like 'angular' or 'jquery'.
                 index: {
