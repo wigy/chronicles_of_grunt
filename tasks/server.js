@@ -59,7 +59,8 @@ module.exports = function(grunt) {
         // This server watches for changes and server autoreload requests.
         if (what === 'autoreload') {
 
-            var files = ff.flatten(ff.appIndexFiles().concat(ff.mediaFiles()).concat(ff.includeJsFiles()).concat(ff.includeCssFiles()));
+            var files = ff.flatten(ff.indexFiles().concat(ff.mediaFiles()).concat(ff.includeJsFiles()).concat(ff.includeCssFiles())
+                .concat(ff.includeUnitTestJsFiles()).concat(ff.unitTestDataFiles()));
             if(!cog.getConfig('options.template')) {
                 files = files.concat(ff.flatten(ff.htmlTemplateFiles()));
             }
