@@ -433,6 +433,7 @@ Licensed under the GPL-2.0 license.
 * Make TODO updates on README.md optional.
 * Configurable directories that are ignored completely.
 * Fix double inclusion of Angular for unit tests.
+* Copy template files to distribution, if compile not in use.
 
 ### Not Yet Done
 

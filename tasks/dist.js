@@ -57,6 +57,7 @@ module.exports = function(grunt) {
 
         log.info("");
 
+        // Copy media files.
         var matches = ff.distUncompressedFiles();
         if (matches.length) {
             log.info("");
@@ -79,6 +80,20 @@ module.exports = function(grunt) {
                 log.info(libs[i].src + ' -> ' + libs[i].dst);
                 grunt.file.copy(libs[i].src, libs[i].dst);
                 compressedJsFiles.push(libs[i].dst.replace(cog.pathDist(), ''));
+            }
+        }
+
+        // Copy templates if they are not compiled.
+        if (!cog.getOption('template')) {
+            var html = ff.htmlTemplateFiles();
+            if (html.length) {
+                log.info("");
+                log.info("Copying libraries...");
+                log.info("");
+                for (i = 0; i < html.length; i++) {
+                    log.info(html[i].src + ' -> ' + 'dist/' + html[i].dst);
+                    grunt.file.copy(html[i].src, 'dist/' + html[i].dst);
+                }
             }
         }
 
