@@ -19,6 +19,8 @@
  */
 module.exports = function(grunt) {
 
+    var serveStatic = require('serve-static');
+
     var cog = require('../lib/cog.js')(grunt);
     var ff = require('../lib/file-filter.js')(grunt);
     var modules = cog.prefix();
@@ -61,7 +63,7 @@ module.exports = function(grunt) {
 
             var files = ff.flatten(ff.indexFiles().concat(ff.mediaFiles()).concat(ff.includeJsFiles()).concat(ff.includeCssFiles())
                 .concat(ff.includeUnitTestJsFiles()).concat(ff.unitTestDataFiles()));
-            if(!cog.getConfig('options.template')) {
+            if(!cog.getOption('template')) {
                 files = files.concat(ff.flatten(ff.htmlTemplateFiles()));
             }
             var watch = {
@@ -91,6 +93,12 @@ module.exports = function(grunt) {
                         keepalive: true,
                         livereload: port + 1,
                         middleware: function(connect, options, middlewares) {
+
+                            var static = cog.getOption('static_files');
+                            if (static) {
+                                middlewares.unshift(serveStatic(static, {}));
+                            }
+
                             middlewares.unshift(function(req, res, next) {
                                 server.handle(req, res);
                                 return next();

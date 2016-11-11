@@ -434,6 +434,7 @@ Licensed under the GPL-2.0 license.
 * Configurable directories that are ignored completely.
 * Fix double inclusion of Angular for unit tests.
 * Copy template files to distribution, if compile not in use.
+* Support additional static files in server.
 
 ### Not Yet Done
 

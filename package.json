@@ -47,6 +47,7 @@
     "grunt-jsdoc": "^1.0.0",
     "grunt-ngdocs": "^0.2.9",
     "grunt-shell": "^1.1.2",
-    "jasmine": "^2.5.2"
+    "jasmine": "^2.5.2",
+    "serve-static": "^1.11.1"
   }
 }
