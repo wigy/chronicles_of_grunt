@@ -44,6 +44,13 @@ module.exports = function(grunt) {
                     shell: [],                         // Tools written as shell scripts.
                     python: [],                        // Python source code.
                 },
+                data: {
+                    localization: [],                  // Localization files.
+                    devel: {
+                        text: [],                      // Development data files that are text.
+                        other: [],                     // Other development files.
+                    }
+                },
                 compiled: {
                     python: '**/*.pyc'                 // Files that are compilation results that are essentially ignored.
                 },

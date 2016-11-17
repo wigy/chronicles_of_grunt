@@ -62,7 +62,7 @@ module.exports = function(grunt) {
         if (what === 'autoreload') {
 
             var files = ff.flatten(ff.indexFiles().concat(ff.mediaFiles()).concat(ff.includeJsFiles()).concat(ff.includeCssFiles())
-                .concat(ff.includeUnitTestJsFiles()).concat(ff.unitTestDataFiles()));
+                .concat(ff.includeUnitTestJsFiles()).concat(ff.unitTestDataFiles()).concat(ff.dataFiles()));
             if(!cog.getOption('template')) {
                 files = files.concat(ff.flatten(ff.htmlTemplateFiles()));
             }

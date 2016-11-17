@@ -57,9 +57,10 @@ module.exports = function(grunt) {
         dumpFiles('Configuration and global utilities', ff.configFiles);
         dumpFiles('Library files', ff.libFiles);
         dumpFiles('Model files', ff.modelFiles);
-        dumpFiles('Data files', ff.dataFiles);
+        dumpFiles('Source data files', ff.srcDataFiles);
         dumpFiles('Code files', ff.codeFiles);
         dumpFiles('CSS-files', ff.cssFiles);
+        dumpFiles('Data files', ff.dataFiles);
         dumpFiles('Picture source files', ff.picSrcFiles);
         dumpFiles('Sound source files', ff.soundSrcFiles);
         dumpFiles('Grunt task-files', ff.taskFiles);

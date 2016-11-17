@@ -435,8 +435,11 @@ Licensed under the GPL-2.0 license.
 * Fix double inclusion of Angular for unit tests.
 * Copy template files to distribution, if compile not in use.
 * Support additional static files in server.
+* Support for data files.
 
 ### Not Yet Done
+
+* Support .jshintrc, if found.
 
 ## Future Ideas
 
