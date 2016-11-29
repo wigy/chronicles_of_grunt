@@ -440,6 +440,8 @@ Licensed under the GPL-2.0 license.
 
 ### Not Yet Done
 
+* Angular2 support.
+
 ## Future Ideas
 
 * Install task to run npm-install and then add it to appropriate `external` sections, finally run `libs` and `index`.
