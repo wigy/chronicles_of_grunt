@@ -30,6 +30,7 @@ module.exports = function(grunt) {
     grunt.loadTasks(modules + 'grunt-contrib-connect/tasks/');
     grunt.loadTasks(modules + 'grunt-contrib-watch/tasks/');
     grunt.loadTasks(modules + 'grunt-concurrent/tasks/');
+    grunt.loadTasks(modules + 'grunt-typescript/tasks/');
 
     function taskServer(port, what) {
 
@@ -51,6 +52,10 @@ module.exports = function(grunt) {
                     tasks: ['server:' + port + ':files', 'server:' + (port + 1) + ':autoreload']
                 }
             };
+
+            if (cog.getOption('compile_typescript')) {
+                concurrent.connect.tasks.push('server::compile');
+            }
 
             grunt.config.set('concurrent', concurrent);
             grunt.task.run('concurrent');
@@ -78,6 +83,23 @@ module.exports = function(grunt) {
 
             grunt.config.set('watch', watch);
             grunt.task.run('watch:all');
+
+            return;
+        }
+
+        // This server watches for changes on the source files that needs to be compiled.
+        if (what === 'compile') {
+            var typescript = {
+                all: {
+                    src: ff.flatten(ff.srcTypescriptFiles()),
+                    options: {
+                        watch: true
+                    }
+                }
+            };
+
+            grunt.config.set('typescript', typescript);
+            grunt.task.run('typescript');
 
             return;
         }

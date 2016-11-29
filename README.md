@@ -436,13 +436,13 @@ Licensed under the GPL-2.0 license.
 * Copy template files to distribution, if compile not in use.
 * Support additional static files in server.
 * Support for data files.
+* Support Typescript compilation.
 
 ### Not Yet Done
-
-* Support .jshintrc, if found.
 
 ## Future Ideas
 
 * Install task to run npm-install and then add it to appropriate `external` sections, finally run `libs` and `index`.
 * Configuration managenent for application.
 * Automatically check files node_modules/foo/foo.min.js when looking for libs.
+* Support .jshintrc, if found.

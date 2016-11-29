@@ -24,6 +24,7 @@ module.exports = function(grunt) {
                     todo_in_readme: null,              // If set, maintain TODO entries in README.md like in this project (autodetect by default).
                     ignore_dirs: ['node_modules', 'bower_components'], // Ignore these directories.
                     python_line_length: 120,           // Maximum line length for PEP8 Python verification.
+                    compile_typescript: true,          // If set, assume that `.ts` source files are Typescript that needs to ne compiled.
                 },
                 external: [],                          // A list of external libraries used like 'angular' or 'jquery'.
                 index: {
