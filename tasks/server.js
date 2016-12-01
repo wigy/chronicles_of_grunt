@@ -89,12 +89,17 @@ module.exports = function(grunt) {
 
         // This server watches for changes on the source files that needs to be compiled.
         if (what === 'compile') {
+            var options = {};
+
+            if (grunt.file.exists('tsconfig.json')) {
+                options = grunt.file.readJSON('tsconfig.json').compilerOptions || {};
+            }
+            options.watch = true;
+
             var typescript = {
                 all: {
                     src: ff.flatten(ff.srcTypescriptFiles()),
-                    options: {
-                        watch: true
-                    }
+                    options: options
                 }
             };
 
