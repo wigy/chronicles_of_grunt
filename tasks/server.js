@@ -30,7 +30,7 @@ module.exports = function(grunt) {
     grunt.loadTasks(modules + 'grunt-contrib-connect/tasks/');
     grunt.loadTasks(modules + 'grunt-contrib-watch/tasks/');
     grunt.loadTasks(modules + 'grunt-concurrent/tasks/');
-    grunt.loadTasks(modules + 'grunt-typescript/tasks/');
+    grunt.loadTasks(modules + 'grunt-ts/tasks/');
 
     function taskServer(port, what) {
 
@@ -94,17 +94,17 @@ module.exports = function(grunt) {
             if (grunt.file.exists('tsconfig.json')) {
                 options = grunt.file.readJSON('tsconfig.json').compilerOptions || {};
             }
-            options.watch = true;
-
+            options.compiler = "/usr/local/bin/tsc"; // TODO: Find better way.
             var typescript = {
                 all: {
                     src: ff.flatten(ff.srcTypescriptFiles()),
-                    options: options
+                    options: options,
+                    watch: ff.flatten(ff.srcTypescriptFiles()),
                 }
             };
 
-            grunt.config.set('typescript', typescript);
-            grunt.task.run('typescript');
+            grunt.config.set('ts', typescript);
+            grunt.task.run('ts');
 
             return;
         }
