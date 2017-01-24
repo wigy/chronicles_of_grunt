@@ -25,6 +25,7 @@ module.exports = function(grunt) {
                     ignore_dirs: ['node_modules', 'bower_components'], // Ignore these directories.
                     python_line_length: 120,           // Maximum line length for PEP8 Python verification.
                     compile_typescript: true,          // If set, assume that `.ts` source files are Typescript that needs to ne compiled.
+                    index_versioning: false,           // If set, add version to included files.
                 },
                 external: [],                          // A list of external libraries used like 'angular' or 'jquery'.
                 index: {
