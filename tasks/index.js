@@ -39,11 +39,6 @@ module.exports = function(grunt) {
             jsFiles = ff.flatten(ff.includeJsFiles());
             log.info('- Found ' + jsFiles.length + " Javascript-files.");
             cssFiles = ff.flatten(ff.includeCssFiles());
-            if (cog.getOption('index_versioning')) {
-                var pckg = grunt.file.readJSON('package.json');
-                jsFiles = jsFiles.map(function(name){return name + '?v' + pckg.version;});
-                cssFiles = cssFiles.map(function(name){return name + '?v' + pckg.version;});
-            }
             log.info('- Found ' + cssFiles.length + " CSS-files.");
 
             for (i=0; i < indices.length; i++) {
